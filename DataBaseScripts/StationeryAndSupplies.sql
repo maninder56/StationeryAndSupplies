@@ -79,7 +79,7 @@
 -- CREATE TABLE orders (
 -- 	OrderID INT PRIMARY KEY AUTO_INCREMENT, 
 -- 	UserID INT NOT NULL, 
--- 	TotalAmount DECIMAL NOT NULL CHECK (TotalAmount >= 0),
+-- 	TotalAmount DECIMAL(10,2) CHECK (TotalAmount >= 0.00),
 -- 	Status ENUM('pending', 'shipped', 'cancelled', 'delivered'), 
 -- 	OrderDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
 -- 	ShippingAddress TEXT NOT NULL,
@@ -93,7 +93,7 @@
 -- 	OrderID INT NOT NULL, 
 -- 	ProductID INT NOT NULL, 
 -- 	Quantity INT NOT NULL CHECK (Quantity > 0), 
--- 	UnitPrice DECIMAL NOT NULL CHECK (UnitPrice >= 0), 
+-- 	UnitPrice DECIMAL(10,2) NOT NULL CHECK (UnitPrice >= 0.00), 
 -- 	
 -- 	FOREIGN KEY (OrderID) REFERENCES orders (OrderID), 
 -- 	FOREIGN KEY (ProductID) REFERENCES products (ProductID)
@@ -103,7 +103,7 @@
 -- CREATE TABLE payments (
 -- 	PaymentID INT PRIMARY KEY AUTO_INCREMENT, 
 -- 	OrderID INT NOT NULL UNIQUE, 
--- 	Amount DECIMAL NOT NULL CHECK (Amount >= 0), 
+-- 	Amount DECIMAL(10,2) NOT NULL CHECK (Amount >= 0.00), 
 -- 	PymentMethod VARCHAR(50) NOT NULL, 
 -- 	Status ENUM('success', 'failed'), 
 -- 	PayedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -113,13 +113,18 @@
 
 
 
+
 -- Inserting Data
+
+-- categories data
+
 -- Top-level categories
 -- INSERT INTO categories (ParentID, Name) VALUES
 -- (NULL, 'Writing Instruments'),
 -- (NULL, 'Paper Products'),
 -- (NULL, 'Desk Accessories'),
--- (NULL, 'Art Supplies');
+-- (NULL, 'Art Supplies'), 
+-- (NULL, 'Office Electronics'); 
 -- 
 -- -- Subcategories of 'Writing Instruments' (assume ID 1)
 -- INSERT INTO categories (ParentID, Name) VALUES
@@ -127,41 +132,261 @@
 -- (1, 'Pencils'),
 -- (1, 'Markers');
 -- 
--- -- Subcategories of 'Paper Products' (assume ID 2)
+-- -- Subcategories of 'Paper Products' 
 -- INSERT INTO categories (ParentID, Name) VALUES
 -- (2, 'Notebooks'),
 -- (2, 'Sticky Notes'),
 -- (2, 'Printer Paper');
 -- 
--- -- Subcategories of 'Desk Accessories' (assume ID 3)
+-- -- Subcategories of 'Desk Accessories' 
 -- INSERT INTO categories (ParentID, Name) VALUES
 -- (3, 'Staplers'),
 -- (3, 'Paper Clips'),
 -- (3, 'Tape Dispensers');
 -- 
--- -- Subcategories of 'Art Supplies' (assume ID 4)
+-- -- Subcategories of 'Art Supplies' 
 -- INSERT INTO categories (ParentID, Name) VALUES
 -- (4, 'Paint Brushes'),
 -- (4, 'Sketchbooks'),
 -- (4, 'Color Pencils');
-
-
--- SELECT 
--- 	C2.Name AS ParentCategory,
--- 	C1.Name AS Category
--- FROM categories C1
--- INNER JOIN categories C2
--- 	ON C1.ParentID = C2.CategoryID; 
-
+-- 
+-- -- Subcategories of 'Office Electronics' 
+-- INSERT INTO categories (ParentID, Name) VALUES 
+-- (5, 'Calculators'),
+-- (5, 'Laminators'),
+-- (5, 'Label Makers');
 
 
 
+-- Product data 
+-- 
+-- -- Insert 10 Products
+-- INSERT INTO products (Name, Descripttion, Price, Stock, Status, ImageUrl, CategoryID) VALUES
+-- ('Pilot G2 Gel Pen', 'Smooth writing gel pen with fine point.', 1.99, 150, 'active', NULL, 6),
+-- ('BIC Round Stic Pen', 'Affordable ballpoint pen, black ink.', 0.49, 300, 'inactive', NULL, 6),
+-- ('Parker Jotter Pen', 'Classic stainless steel ballpoint pen.', 13.49, 25, 'archived', NULL, 6),
+-- ('Lamy Safari Fountain Pen', 'Stylish fountain pen with refillable ink.', 28.50, 40, 'active', NULL, 6),
+-- ('Dixon Ticonderoga Pencil', 'Classic wood pencil for writing.', 0.39, 180, 'active', NULL, 7),
+-- ('Staedtler Mechanical Pencil', '0.5mm pencil with ergonomic grip.', 4.99, 120, 'active', NULL, 7),
+-- ('Pentel GraphGear 1000', 'Professional drafting pencil.', 10.99, 70, 'active', NULL, 7),
+-- ('Sharpie Fine Point', 'Permanent marker, assorted colors.', 1.89, 120, 'active', NULL, 8),
+-- ('Expo Dry Erase Marker', 'Whiteboard marker, low odor.', 6.79, 90, 'inactive', NULL, 8),
+-- ('Crayola Washable Marker Set', 'Set of 10 colorful markers.', 4.79, 110, 'active', NULL, 8);
+-- 
+-- -- Insert 10 Products
+-- INSERT INTO products (Name, Descripttion, Price, Stock, Status, ImageUrl, CategoryID) VALUES
+-- ('Spiral Notebook A5', 'College-ruled 100-sheet notebook.', 3.29, 180, 'active', NULL, 9),
+-- ('Moleskine Classic Notebook', 'Hardcover, ruled, black.', 20.49, 60, 'archived', NULL, 9),
+-- ('Eco Notebook', 'Recycled paper, eco-friendly.', 2.99, 100, 'active', NULL, 9),
+-- ('Composition Notebook', 'Wide ruled, 100 sheets.', 1.85, 90, 'active', NULL, 9),
+-- ('Post-it Notes 3x3', 'Assorted colors, pack of 5.', 4.79, 100, 'active', NULL, 10),
+-- ('Post-it Tabs', 'Colorful, easy-to-use tabs.', 3.95, 75, 'inactive', NULL, 10),
+-- ('A4 Copy Paper', '500 sheets, 80gsm.', 6.29, 200, 'active', NULL, 11),
+-- ('Legal Size Paper', 'White, 8.5x14 inches.', 7.10, 145, 'active', NULL, 11),
+-- ('Colored Printer Paper', 'Pastel colors, 100 sheets.', 5.39, 70, 'archived', NULL, 11),
+-- ('Swingline Stapler', 'Standard stapler for office use.', 7.25, 85, 'active', NULL, 12);
+-- 
+-- -- Insert 10 Products
+-- INSERT INTO products (Name, Descripttion, Price, Stock, Status, ImageUrl, CategoryID) VALUES
+-- ('Mini Stapler', 'Compact, great for travel.', 3.45, 160, 'active', NULL, 12),
+-- ('Jumbo Paper Clips', '100 count, assorted colors.', 2.15, 300, 'active', NULL, 13),
+-- ('Metal Paper Clips', 'Rust-resistant finish.', 2.39, 80, 'inactive', NULL, 13),
+-- ('Scotch Tape Dispenser', 'Weighted, black finish.', 4.89, 100, 'active', NULL, 14),
+-- ('Double-Sided Tape Roll', 'Ideal for gift wrapping.', 2.99, 90, 'inactive', NULL, 14),
+-- ('Artist Brush Set', '10-piece assorted brush sizes.', 8.29, 50, 'active', NULL, 15),
+-- ('Watercolor Brush Pack', 'Soft bristles, wood handles.', 6.55, 75, 'active', NULL, 15),
+-- ('A4 Sketchpad', '60-sheet acid-free paper.', 5.99, 80, 'archived', NULL, 16),
+-- ('Canson Sketchbook', 'Hardcover, elastic closure.', 9.29, 60, 'active', NULL, 16),
+-- ('Crayola Colored Pencils 24-pack', 'Pre-sharpened, bright colors.', 5.25, 120, 'active', NULL, 17);
+-- 
+-- -- Insert 10 Products
+-- INSERT INTO products (Name, Descripttion, Price, Stock, Status, ImageUrl, CategoryID) VALUES
+-- ('Prismacolor Premier Set', 'Artist-quality color pencils.', 30.99, 35, 'archived', NULL, 17),
+-- ('Casio FX-991EX', 'Scientific calculator, solar-powered.', 19.29, 45, 'active', NULL, 18),
+-- ('TI-84 Plus', 'Graphing calculator with USB cable.', 124.99, 20, 'active', NULL, 18),
+-- ('Pocket Calculator', 'Basic functions, 8-digit display.', 5.95, 60, 'inactive', NULL, 18),
+-- ('Scotch Thermal Laminator', 'Quick warm-up, 9-inch input.', 31.49, 30, 'active', NULL, 19),
+-- ('Fellowes Saturn 3i', 'Advanced heat and jam control.', 46.89, 10, 'inactive', NULL, 19),
+-- ('DYMO LabelWriter 450', 'Thermal label printer.', 91.99, 25, 'active', NULL, 20),
+-- ('Brother PT-D210', 'Handheld label maker with templates.', 36.79, 40, 'active', NULL, 20),
+-- ('Mini Bluetooth Label Printer', 'Connects to phone app.', 26.50, 65, 'active', NULL, 20),
+-- ('Industrial Label Maker', 'Heavy-duty, great for warehouse use.', 78.00, 20, 'active', NULL, 20);
+-- 
+-- 
+-- -- Insert Final 10 Products
+-- INSERT INTO products (Name, Descripttion, Price, Stock, Status, ImageUrl, CategoryID) VALUES
+-- ('Sticky Note Cube', 'Multi-color cube of sticky notes.', 6.99, 75, 'active', NULL, 10),
+-- ('Translucent Sticky Notes', 'Transparent sticky notes for books.', 4.25, 90, 'active', NULL, 10),
+-- ('Mini Sketchbook', 'Pocket-sized with textured paper.', 3.99, 85, 'active', NULL, 16),
+-- ('Ergonomic Stapler', 'Reduced effort stapling.', 8.49, 60, 'active', NULL, 12),
+-- ('Wooden Pencil Set', 'Natural wood, pre-sharpened.', 2.79, 140, 'active', NULL, 7),
+-- ('Neon Markers Pack', 'Bright fluorescent ink.', 4.59, 50, 'inactive', NULL, 8),
+-- ('Aesthetic Notebook', 'Minimalist cover, 120 pages.', 6.25, 95, 'active', NULL, 9),
+-- ('Label Tape Refill', 'Compatible with Brother label makers.', 7.15, 100, 'active', NULL, 20),
+-- ('Art Eraser Pack', '3 erasers, ideal for sketches.', 1.99, 120, 'active', NULL, 15),
+-- ('Portable Calculator', 'Palm-sized and efficient.', 9.45, 70, 'active', NULL, 18);
 
 
 
 
+-- Users Data 
+-- INSERT INTO users (Name, Email, Phone) VALUES
+-- ('Alice Johnson', 'alice.johnson@example.com', '555-123-4567'),
+-- ('Bob Smith', 'bob.smith@example.com', '555-234-5678'),
+-- ('Charlie Brown', 'charlie.brown@example.com', NULL),
+-- ('Diana Prince', 'diana.prince@example.com', '555-345-6789'),
+-- ('Ethan Hunt', 'ethan.hunt@example.com', NULL),
+-- ('Fiona Gallagher', 'fiona.g@example.com', '555-456-7890'),
+-- ('George Martin', 'george.martin@example.com', '555-567-8901'),
+-- ('Hannah Wells', 'hannah.w@example.com', NULL),
+-- ('Ian Fleming', 'ian.fleming@example.com', '555-678-9012'),
+-- ('Julia Roberts', 'julia.roberts@example.com', '555-789-0123');
 
 
+
+
+-- reviews data 
+-- Note: ProductID 17 intentionally skipped
+-- INSERT INTO reviews (UserID, ProductID, Rating, Comment) VALUES
+-- (3, 1, 5, 'Fantastic pen, smooth ink flow.'),
+-- (1, 2, 4, 'Good value for the price.'),
+-- (6, 3, 3, 'Nice design, but a bit expensive.'),
+-- (9, 4, 5, 'My favorite fountain pen!'),
+-- (2, 5, 5, 'Classic pencil, writes very well.'),
+-- (8, 6, 4, 'Comfortable grip and accurate lines.'),
+-- (10, 7, 2, 'Gets the job done, but wears quickly.'),
+-- (5, 8, 5, 'Perfect for precision drawing.'),
+-- (4, 9, 5, 'Great color options, lasts long.'),
+-- (7, 10, 4, 'Good for office whiteboards.'),
+-- (1, 11, 5, 'Kids love these markers.'),
+-- (6, 12, 4, 'Reliable notebook for school.'),
+-- (2, 13, 5, 'Excellent quality and feel.'),
+-- (3, 14, 3, 'Nice concept but binding could be stronger.'),
+-- (5, 15, 4, 'Solid build, serves its purpose.'),
+-- (8, 16, 4, 'Tabs are super handy.'),
+-- (10, 17, 5, 'Crisp white pages, prints perfectly.'),
+-- (6, 18, 4, 'Good for legal documents.'),
+-- (1, 19, 3, 'Color is nice, but paper curls a bit.'),
+-- (7, 20, 5, 'Staples easily and never jams.'),
+-- (4, 21, 4, 'Great for light-duty stapling.'),
+-- (2, 22, 3, 'Colorful but sometimes bends easily.'),
+-- (9, 23, 5, 'Very durable and smooth.'),
+-- (5, 24, 4, 'Sticks well and easy to use.'),
+-- (8, 25, 4, 'Great for gift wrapping.'),
+-- (10, 26, 5, 'Perfect for acrylics and watercolors.'),
+-- (3, 27, 4, 'Nice texture, holds pigment well.'),
+-- (6, 28, 5, 'Best sketchpad I\'ve used.'),
+-- (1, 29, 4, 'Compact and stylish.'),
+-- (7, 30, 5, 'Kids enjoy coloring with these.'),
+-- (2, 31, 5, 'Rich colors and smooth shading.'),
+-- (4, 32, 5, 'Best calculator I\'ve owned.'),
+-- (9, 33, 4, 'Perfect for advanced math classes.'),
+-- (6, 34, 3, 'Works fine but feels cheap.'),
+-- (5, 35, 5, 'Great quality for the price.'),
+-- (8, 36, 4, 'Quick warm-up and easy to use.'),
+-- (10, 37, 4, 'Very reliable machine.'),
+-- (3, 38, 5, 'Fast label printing, saves time.'),
+-- (1, 39, 5, 'Excellent for organizing files.'),
+-- (7, 40, 3, 'App can be buggy, but prints well.'),
+-- (2, 41, 4, 'Stapler is a bit stiff at first.'),
+-- (4, 42, 5, 'Love the vibrant sticky notes!'),
+-- (9, 43, 5, 'Great brush set for beginners.'),
+-- (5, 44, 4, 'Does the job nicely.'),
+-- (8, 45, 3, 'Slightly thin paper but usable.'),
+-- (10, 46, 5, 'Trendy and durable.'),
+-- (6, 47, 4, 'Ink dries fast, doesn\'t smear.'),
+-- (1, 48, 2, 'Label roll jammed once.'),
+-- (7, 49, 4, 'Good display and ergonomic design.');
+
+
+
+-- orders data 
+-- INSERT INTO orders (UserID, TotalAmount, Status, OrderDate, ShippingAddress) VALUES
+-- -- Alice Johnson
+-- (1, 24.75, 'pending', '2025-05-29 14:25:00', '12 High Street, Manchester M1 1AA, United Kingdom'),
+-- 
+-- -- Bob Smith
+-- (2, 59.99, 'shipped', '2025-05-20 09:10:00', '88 Station Road, Birmingham B2 4QA, United Kingdom'),
+-- 
+-- -- Carol Martinez
+-- (3, 15.49, 'cancelled', '2025-05-22 16:42:00', '5A Mill Lane, Bristol BS1 5AH, United Kingdom'),
+-- 
+-- -- David Lee
+-- (4, 132.80, 'delivered', '2025-05-18 11:15:00', '25 King’s Road, London SW3 4NT, United Kingdom'),
+-- 
+-- -- Emily Chen
+-- (5, 74.99, 'shipped', '2025-05-25 08:55:00', '101 Queen Street, Glasgow G1 3DN, United Kingdom'),
+-- 
+-- -- Frank Wright
+-- (6, 8.99, 'pending', '2025-05-30 10:30:00', '6 Castle Terrace, Edinburgh EH1 2DP, United Kingdom'),
+-- 
+-- -- Grace Liu
+-- (7, 49.50, 'delivered', '2025-05-27 13:00:00', '44 Market Place, Leeds LS1 6AL, United Kingdom');
+
+
+
+
+SELECT *
+FROM orders ; 
+
+
+
+
+-- Queries
+
+-- categories queries
+SELECT *
+FROM categories; 
+
+SELECT 
+	C2.Name AS ParentCategory,
+	C1.Name AS Category
+FROM categories C1
+INNER JOIN categories C2
+	ON C1.ParentID = C2.CategoryID; 
+
+
+SELECT 
+	C.Name, 
+	count(*) AS NumberOfProducts
+FROM categories C
+INNER JOIN products P 
+	ON C.CategoryID  = P.CategoryID
+GROUP BY C.Name; 
+
+
+SELECT 
+	C2.Name AS ParentCategory,
+	count(*) AS NumberOfProducts
+FROM categories C1
+INNER JOIN categories C2
+	ON C1.ParentID = C2.CategoryID
+INNER JOIN products P
+	ON C1.CategoryID = P.CategoryID
+GROUP BY C2.Name; 
+
+
+
+-- products queries
+
+SELECT *
+FROM products P; 
+
+-- DELETE FROM products ; 
+
+-- ALTER TABLE products AUTO_INCREMENT = 1; 
+
+
+-- users queries 
+
+SELECT *
+FROM users U; 
+
+
+-- orders queries 
+
+SELECT *
+FROM orders O; 
 
 
 
