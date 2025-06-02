@@ -300,38 +300,6 @@
 
 
 
--- orders data 
--- INSERT INTO orders (UserID, TotalAmount, Status, OrderDate, ShippingAddress) VALUES
--- -- Alice Johnson
--- (1, 24.75, 'pending', '2025-05-29 14:25:00', '12 High Street, Manchester M1 1AA, United Kingdom'),
--- 
--- -- Bob Smith
--- (2, 59.99, 'shipped', '2025-05-20 09:10:00', '88 Station Road, Birmingham B2 4QA, United Kingdom'),
--- 
--- -- Carol Martinez
--- (3, 15.49, 'cancelled', '2025-05-22 16:42:00', '5A Mill Lane, Bristol BS1 5AH, United Kingdom'),
--- 
--- -- David Lee
--- (4, 132.80, 'delivered', '2025-05-18 11:15:00', '25 King’s Road, London SW3 4NT, United Kingdom'),
--- 
--- -- Emily Chen
--- (5, 74.99, 'shipped', '2025-05-25 08:55:00', '101 Queen Street, Glasgow G1 3DN, United Kingdom'),
--- 
--- -- Frank Wright
--- (6, 8.99, 'pending', '2025-05-30 10:30:00', '6 Castle Terrace, Edinburgh EH1 2DP, United Kingdom'),
--- 
--- -- Grace Liu
--- (7, 49.50, 'delivered', '2025-05-27 13:00:00', '44 Market Place, Leeds LS1 6AL, United Kingdom');
-
-
-
-
-SELECT *
-FROM orders ; 
-
-
-
-
 -- Queries
 
 -- categories queries
@@ -382,11 +350,6 @@ FROM products P;
 SELECT *
 FROM users U; 
 
-
--- orders queries 
-
-SELECT *
-FROM orders O; 
 
 
 
