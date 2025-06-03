@@ -9,8 +9,7 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection AddDatabaseServices(this IServiceCollection services)
     {
-        
-
+        services.AddScoped<IProductInformationService, ProductInformationService>();
 
         return services;
     }
