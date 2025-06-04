@@ -5,6 +5,12 @@
     --primary-background-color-one: #f5f5dc; 
     --primary-background-color-two: #ffb6c1;  
     --primary-background-color-three: #90EE90;  
+
+    --primary-text-color: black; 
+
+    --link-hover-text-color: rgb(73, 73, 73); 
+
+    transition: font-size 0.5s ease-in-out;
 }
 
 
@@ -33,35 +39,131 @@
     
 }
 
-
-
-body * {
-    border: solid 1px;
+body {
+    margin: 0px 0px;
 }
+
 
 /* Navigation */
 .navigation {
     margin: 0;
+    padding: 10px;
+    background-color: var(--primary-background-color-three);
+}
+
+.navigation nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .main-navigation {
-    background-color: #90EE90;
     list-style-type: none;
     padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    width: 100%;
 }
 
+/* Title */
+.main-navigation .title {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.main-navigation .title a:hover {
+    color: var(--link-hover-text-color);
+}
+
+.main-navigation .title a:active {
+    color: var(--primary-text-color);
+}
+
+.main-navigation .title a h1 {
+    margin: 0;
+}
+
+/* Main Navigation links */
+.main-navigation li {
+    margin: 0px 4px;
+    transition: margin 0.5s ease-in;  
+}
+
+.main-navigation li a {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--primary-text-color);
+}
+
+.navigation-logo-link img {
+    width: 20px;
+    transition: width 0.5s ease-in;
+}
+
+/* body * {
+    border: solid 1px;
+} */
+
+/* Product Navigation */
 .product-navigation {
     display: none;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    transition: height 0.5 ease-in;
+}
+
+.product-navigation li a {
+    text-decoration: none;
+    color: var(--primary-text-color);
+}
+
+.product-navigation li a:hover {
+    color: var(--link-hover-text-color);
+}
+
+.product-navigation li a:active {
+    color: var(--primary-text-color);
 }
 
 
-@media (min-width: 800px) {
-    .product-navigation {
-        display: block;
+
+@media (min-width: 300px) {
+
+    .main-navigation li {
+        margin: 0px 10px;
+    }
+
+    .navigation-logo-link img {
+        width: 25px;
     }
 }
 
+
+@media (min-width: 500px) {
+    .main-navigation .title a {
+        padding: 5px;
+    }
+
+    .navigation-logo-link img {
+        width: 30px;
+    }
+}
+
+@media (min-width: 800px) {
+    /* Product Navigation */
+    .product-navigation {
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+@media (min-width: 1000px) {
+    .product-navigation {
+        max-width: 1000px;
+    }
+}
