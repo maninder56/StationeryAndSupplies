@@ -1,13 +1,64 @@
 ﻿<!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
 <body>
-    <div>
+    <header>
+        <nav>
+            <ul class="navigation">
+                <li>
+                    <a href="#">Three lines</a>
+                </li>
+                <li>
+                    <a href="#">Search box</a>
+                </li>
+                <li>
+                    <a asp-page="/Index">
+                        <h1>Stationery</h1> 
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Login/signup</a>
+                </li>
+                <li>
+                    <a href="#">CartLogo</a>
+                </li>
+            </ul>
+
+            <ul class="product-navigation">
+                <li>
+                    <a href="#">Paper Products</a>
+                </li>
+                <li>
+                    <a href="#">Writing Instruments</a>
+                </li>
+                <li>
+                    <a href="#">Desk Accessories</a>
+                </li>
+                <li>
+                    <a href="#">Art Supplies</a>
+                </li>
+                <li>
+                    <a href="#">Office Electronics</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
         @RenderBody()
-    </div>
+    </main>
+
+    <footer>
+        <section>
+            <div>Footer</div>
+        </section>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
