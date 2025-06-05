@@ -2,13 +2,17 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
 
-    --primary-background-color-one: #f5f5dc; 
-    --primary-background-color-two: #ffb6c1;  
-    --primary-background-color-three: #90EE90;  
+    --primary-background-color-cream: #f5f5dc; 
+    --primary-background-color-light-yellow: #f6ffd4;  
+    --primary-background-color-dark-green: #6ca46c;  
+
+    --navigation-background-color: white; 
 
     --primary-text-color: black; 
-
     --link-hover-text-color: rgb(73, 73, 73); 
+
+    --button-hover-background-color: #ebf1bd; 
+    --botton-active-background-color: #d4d9ab; 
 
     transition: font-size 0.5s ease-in-out;
 }
@@ -48,7 +52,7 @@ body {
 .navigation {
     margin: 0;
     padding: 10px;
-    background-color: var(--primary-background-color-three);
+    background-color: var(--navigation-background-color);
 }
 
 .navigation nav {
@@ -60,12 +64,17 @@ body {
 .main-navigation {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 1px 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
+}
+
+.main-navigation .navigation-icons {
+    display: flex;
+    flex: 0 1 auto;
 }
 
 /* Title */
@@ -104,17 +113,65 @@ body {
     transition: width 0.5s ease-in;
 }
 
+.main-navigation .desktop-link .word {
+    display: none;
+}
+
+
+
 /* body * {
     border: solid 1px;
 } */
 
+
 /* Product Navigation */
+
+.menu-overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1; 
+    left: 0;
+    top: 0; 
+    background-color: var(--primary-background-color-cream);
+    overflow-x: hidden;
+}
+
+.menu-overlay-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-overlay-item {
+    display: flex;
+    justify-content: end;
+}
+
+.menu-overlay .close-button {
+    display: block;
+    margin: 20px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: var(--primary-background-color-light-yellow);
+}
+
+.menu-overlay .close-button:hover {
+    background-color: var(--button-hover-background-color);
+}
+
+.menu-overlay .close-button:active {
+    background-color: var(--botton-active-background-color);
+}
+
+
 .product-navigation {
-    display: none;
     list-style-type: none;
-    padding: 0;
-    width: 100%;
-    transition: height 0.5 ease-in;
+    padding: 10px;
+    margin: 10px;
+}
+
+.product-navigation li {
+    margin: 20px;
 }
 
 .product-navigation li a {
@@ -154,16 +211,105 @@ body {
     }
 }
 
+
 @media (min-width: 800px) {
+
+    /* Hide mobile version of navigation */
+    .menu-icon {
+        display: none;
+    }
+
+    .main-navigation .search-container {
+        flex: 1 0 auto;
+    }
+
+    .main-navigation .desktop-link a {
+        display: flex;
+        align-items: center;
+        padding: 5px 15px;
+        border-radius: 10px;
+    }
+
+    .main-navigation .desktop-link .word {
+        display: block;
+        margin: 5px;
+    }
+
+    .main-navigation .search a{
+        background-color: var(--primary-background-color-cream);
+    }
+
+    .main-navigation .desktop-link .search-word {
+        color: rgb(78, 78, 78);
+    }
+
+
+    .main-navigation .desktop-link a:hover {
+        background-color: var(--button-hover-background-color);
+    }
+
+    .main-navigation .desktop-link a:active {
+        background-color: var(--botton-active-background-color);
+    }
+
+
+
     /* Product Navigation */
+    .menu-overlay {
+        height: auto;
+        width: 100%;
+        position: relative;
+        z-index: 0; 
+        background-color: var(--navigation-background-color);
+        margin: 20px;
+    }
+
+    .menu-overlay-content {
+        display: block;
+        padding: 0;
+    }
+
+
+    .menu-overlay .close-button {
+        display: none;
+    }
+
     .product-navigation {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .product-navigation li {
+        margin: auto;
+    }
+
+    .product-navigation .login {
+        display: none;
     }
 }
 
 @media (min-width: 1000px) {
+
+    .menu-overlay {
+        max-width: 1000px;
+    }
+
+    .main-navigation {
+        max-width: 1000px;
+    }
+
     .product-navigation {
         max-width: 1000px;
     }
 }
+
+
+
+
+
+
+
+

@@ -5,55 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header class="navigation">
     <nav>
         <ul class="main-navigation">
-            <li>
-                <a href="#" class="navigation-logo-link">
-                    <img src="staticfiles/menu-icon.svg" alt="menu icon">
-                </a>
-            </li>
-            <li>
-                <a href="#" class="navigation-logo-link">
-                    <img src="staticfiles/search-icon.svg" alt="search icon">
-                </a>
-            </li>
+            <div class="navigation-icons search-container">
+                <li class="menu-icon">
+                    <a class="navigation-logo-link" onclick="openMenu()">
+                        <img src="staticfiles/menu-icon.svg" alt="menu icon">
+                    </a>
+                </li>
+                <li class="desktop-link search">
+                    <a href="#" class="navigation-logo-link">
+                        <img src="staticfiles/search-icon.svg" alt="search icon">
+                        <span class="word search-word">Search</span>
+                    </a>
+                </li>
+            </div>
             <li class="title">
                 <a asp-page="/Index" href="#">
                     <h1>Stationery</h1> 
                 </a>
             </li>
-            <li>
-                <a href="#" class="navigation-logo-link">
-                    <img src="staticfiles/user-icon.svg" alt="user account icon">
-                </a>
-            </li>
-            <li>
-                <a href="#" class="navigation-logo-link">
-                    <img src="staticfiles/shopping-bag-icon.svg" alt="cart icon">
-                </a>
-            </li>
+            <div class="navigation-icons">
+                <li class="desktop-link">
+                    <a href="#" class="navigation-logo-link">
+                        <img src="staticfiles/user-icon.svg" alt="user account icon">
+                        <span class="word">Login</span>
+                    </a>
+                </li>
+                <li class="desktop-link">
+                    <a href="#" class="navigation-logo-link">
+                        <img src="staticfiles/shopping-bag-icon.svg" alt="cart icon">
+                        <span class="word">Your Bag</span>
+                    </a>
+                </li>
+            </div>
         </ul>
 
-        <ul class="product-navigation">
-            <li>
-                <a href="#">Paper Products</a>
-            </li>
-            <li>
-                <a href="#">Writing Instruments</a>
-            </li>
-            <li>
-                <a href="#">Desk Accessories</a>
-            </li>
-            <li>
-                <a href="#">Art Supplies</a>
-            </li>
-            <li>
-                <a href="#">Office Electronics</a>
-            </li>
-        </ul>
+        <div id="product-menu" class="menu-overlay">
+
+            <div class="menu-overlay-content">
+
+                <div class="menu-overlay-item">
+                    <button class="close-button" type="button" onclick="closeMenu()">Close</button>
+                </div>
+
+                <ul class="product-navigation">
+                    <li class="login">
+                        <a href="#">login</a>
+                    </li>
+                    <li>
+                        <a href="#">Paper Products</a>
+                    </li>
+                    <li>
+                        <a href="#">Writing Instruments</a>
+                    </li>
+                    <li>
+                        <a href="#">Desk Accessories</a>
+                    </li>
+                    <li>
+                        <a href="#">Art Supplies</a>
+                    </li>
+                    <li>
+                        <a href="#">Office Electronics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 </header>
 </body>
