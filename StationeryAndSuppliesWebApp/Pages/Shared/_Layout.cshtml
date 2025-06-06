@@ -7,45 +7,89 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
 <body>
-    <header>
+    <header class="navigation">
         <nav>
-            <ul class="navigation">
-                <li>
-                    <a href="#">Three lines</a>
-                </li>
-                <li>
-                    <a href="#">Search box</a>
-                </li>
-                <li>
+            <ul class="main-navigation">
+                <div class="navigation-icons search-container">
+                    <li class="menu-icon">
+                        <a class="navigation-logo-link" onclick="openMenu()">
+                            <img src="~/icons/menu-icon.svg" alt="menu icon">
+                        </a>
+                    </li>
+                    <li class="desktop-link search">
+                        <a class="navigation-logo-link" onclick="OpenSearch()">
+                            <img src="~/icons/search-icon.svg" alt="search icon">
+                            <span class="word search-word">Search</span>
+                        </a>
+                        <div id="search-overlay" class="search-area">
+                            <div class="search-area-container">
+                                <div class="search-items">
+                                    <div class="search-close-button">
+                                        <button class="close-button" type="button" onclick="CloseSearch()">
+                                            <img src="~/icons/cross.svg" alt="cross icon">
+                                        </button>
+                                    </div>
+                                    <div class="search-form-container">
+                                        <form class="search-form">
+                                            <input type="text" name="search" placeholder="Search...">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+                <li class="title">
                     <a asp-page="/Index">
-                        <h1>Stationery</h1> 
+                        <h1>Stationery</h1>
                     </a>
                 </li>
-                <li>
-                    <a href="#">Login/signup</a>
+                <div class="navigation-icons">
+                <li class="desktop-link">
+                    <a href="#" class="navigation-logo-link">
+                        <img src="~/icons/user-icon.svg" alt="user account icon">
+                        <span class="word">Login</span>
+                    </a>
                 </li>
-                <li>
-                    <a href="#">CartLogo</a>
+                <li class="desktop-link">
+                    <a href="#" class="navigation-logo-link">
+                        <img src="~/icons/shopping-bag-icon.svg" alt="cart icon">
+                        <span class="word">Your Bag</span>
+                    </a>
                 </li>
+                </div>
             </ul>
 
-            <ul class="product-navigation">
-                <li>
-                    <a href="#">Paper Products</a>
-                </li>
-                <li>
-                    <a href="#">Writing Instruments</a>
-                </li>
-                <li>
-                    <a href="#">Desk Accessories</a>
-                </li>
-                <li>
-                    <a href="#">Art Supplies</a>
-                </li>
-                <li>
-                    <a href="#">Office Electronics</a>
-                </li>
-            </ul>
+            <div id="product-menu" class="menu-overlay">
+                <div class="menu-overlay-content">
+                    <div class="menu-overlay-close-button">
+                        <button class="close-button" type="button" onclick="closeMenu()">
+                            <img src="~/icons/cross.svg" alt="cross icon">
+                        </button>
+                    </div>
+
+                    <ul class="product-navigation">
+                        <li class="login">
+                            <a href="#">login</a>
+                        </li>
+                        <li>
+                            <a href="#">Paper Products</a>
+                        </li>
+                        <li>
+                            <a href="#">Writing Instruments</a>
+                        </li>
+                        <li>
+                            <a href="#">Desk Accessories</a>
+                        </li>
+                        <li>
+                            <a href="#">Art Supplies</a>
+                        </li>
+                        <li>
+                            <a href="#">Office Electronics</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
