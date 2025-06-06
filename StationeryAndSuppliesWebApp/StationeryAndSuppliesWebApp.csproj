@@ -13,6 +13,10 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="wwwroot\icons\" />
+    <Folder Include="wwwroot\images\products\WritingInstruments\Markers\" />
+    <Folder Include="wwwroot\images\products\WritingInstruments\Pencils\" />
+    <Folder Include="wwwroot\images\products\WritingInstruments\Pens\" />
   </ItemGroup>
 
   <PropertyGroup>
