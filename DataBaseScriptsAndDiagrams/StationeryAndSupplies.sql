@@ -16,6 +16,8 @@
 -- 	Name VARCHAR(100) NOT NULL
 -- ); 
 
+-- ALTER TABLE categories 
+-- ADD  ImageUrl VARCHAR(200) NULL; 
 
 -- CREATE TABLE products (
 -- 	ProductID INT PRIMARY KEY AUTO_INCREMENT, 
@@ -300,6 +302,162 @@
 
 
 
+
+
+
+
+-- To add CATEGORIES Images folder path
+
+
+-- To add common folders path
+-- START TRANSACTION; 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = 'images/products/'
+-- WHERE ParentID IS NOT NULL; 
+
+
+-- To add common parent folder path
+-- START TRANSACTION;
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'OfficeElectronics/')
+-- WHERE 
+-- 	ParentID IS NOT NULL
+-- 		AND 
+-- 	ParentID = 5; 
+-- 
+-- SELECT *
+-- FROM categories ; 
+
+
+
+
+-- To add category image path
+
+-- SELECT *
+-- FROM categories ; 
+-- 
+-- 
+-- 
+-- START TRANSACTION; 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Pens/PensCategoryImage.jpeg')
+-- WHERE CategoryID = 6; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Pencils/PencilCategoryImage.jpg')
+-- WHERE CategoryID = 7; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Markers/MarkersCategoryImage.jpg')
+-- WHERE CategoryID = 8; 
+-- 
+-- 
+-- SELECT *
+-- FROM categories ; 
+
+
+
+
+-- START TRANSACTION; 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Notebooks/NotebooksCategoryImage.jpg')
+-- WHERE CategoryID = 9; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'StickyNotes/StickyNotesCategoryImage.webp')
+-- WHERE CategoryID = 10; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'PrinterPaper/PrinterPaperCategoryImage.jpg')
+-- WHERE CategoryID = 11; 
+-- 
+-- SELECT *
+-- FROM categories ; 
+ 
+
+
+-- START TRANSACTION; 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Staplers/StaplersCategoryImage.jpg')
+-- WHERE CategoryID = 12; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'PaperClips/PaperClipsCategoryImage.avif')
+-- WHERE CategoryID = 13; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'TapeDispensers/TapeDispensersCategoryImage.avif')
+-- WHERE CategoryID = 14; 
+-- 
+-- 
+-- SELECT *
+-- FROM categories ; 
+-- 
+
+
+
+
+-- START TRANSACTION; 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'PaintBrushes/PaintBrushesCategoryImage.jpg')
+-- WHERE CategoryID = 15; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Sketchbooks/SketchbooksCategoryImage.webp')
+-- WHERE CategoryID = 16; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'ColorPencils/ColorPencilsCategoryImage.jpg')
+-- WHERE CategoryID = 17; 
+-- 
+-- 
+-- SELECT *
+-- FROM categories ; 
+
+
+
+
+-- START TRANSACTION; 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Calculators/CalculatorsCategoryImage.jpg')
+-- WHERE CategoryID = 18; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'Laminators/LaminatorsCategoryImage.jpg')
+-- WHERE CategoryID = 19; 
+-- 
+-- 
+-- UPDATE categories 
+-- SET ImageUrl = CONCAT(ImageUrl, 'LabelMakers/LabelMakersCategoryImage.jpg')
+-- WHERE CategoryID = 20; 
+-- 
+-- SELECT *
+-- FROM categories ; 
+-- 
+
+
+
+
+
+
+
+
 -- Queries
 
 -- categories queries
@@ -313,6 +471,10 @@ FROM categories C1
 INNER JOIN categories C2
 	ON C1.ParentID = C2.CategoryID; 
 
+SELECT 
+	C.Name AS Categories
+FROM categories C
+WHERE C.ParentID IS NULL; 
 
 SELECT 
 	C.Name, 
@@ -335,10 +497,33 @@ GROUP BY C2.Name;
 
 
 
+
+
+
+
+
+-- To Check Process list
+SELECT *
+FROM performance_schema.processlist; 
+
 -- products queries
 
 SELECT *
 FROM products P; 
+
+SELECT 
+	C2.CategoryID AS ParentCategoryID, 
+	C2.Name AS ParentCategoryName,
+	C.Name AS CategoryName, 
+	P.Name AS ProductName
+FROM categories C
+INNER JOIN categories C2
+	ON C.ParentID = C2.CategoryID
+INNER JOIN products P 
+	ON C.CategoryID = P.CategoryID; 
+
+
+
 
 -- DELETE FROM products ; 
 
@@ -350,7 +535,7 @@ FROM products P;
 SELECT *
 FROM users U; 
 
-
+-- send changes made here to clone file for github 
 
 
 
