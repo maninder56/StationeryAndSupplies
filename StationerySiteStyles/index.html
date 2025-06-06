@@ -18,19 +18,21 @@
                     </a>
                 </li>
                 <li class="desktop-link search">
-                    <a class="navigation-logo-link">
+                    <a class="navigation-logo-link" onclick="OpenSearch()">
                         <img src="staticfiles/search-icon.svg" alt="search icon">
                         <span class="word search-word">Search</span>
                     </a>
-                    <div class="search-area">
+                    <div id="search-overlay" class="search-area">
                         <div class="search-area-container">
                             <div class="search-items">
+                                <div class="search-close-button">
+                                    <button class="close-button" type="button" onclick="CloseSearch()">Close</button>
+                                </div>
                                 <div class="search-form-container">
-                                    <form>
+                                    <form class="search-form">
                                         <input type="text" name="search" placeholder="Search...">
                                     </form>
                                 </div>
-                                <button class="close-button" type="button">Close</button>
                             </div>
                         </div>
                     </div>

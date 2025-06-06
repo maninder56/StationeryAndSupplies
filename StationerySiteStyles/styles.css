@@ -7,6 +7,7 @@
     --primary-background-color-dark-green: #6ca46c;  
 
     --navigation-background-color: white; 
+    
 
     --primary-text-color: black; 
     --link-hover-text-color: rgb(73, 73, 73); 
@@ -126,18 +127,20 @@ body {
 
 /* body * {
     border: solid 1px;
-} */
+}  */
 
 /* Search Overlay */
 
 .main-navigation .search-area {
-    height: 50%;
+    height: 0;
     width: 100%;
     position: fixed;
     z-index: 2;
     left: 0;
     top: 0;
-    background-color: #6ca46c;
+    background-color: var(--navigation-background-color);
+    overflow-y: hidden;
+    transition: height 0.1s ease-in;
 }
 
 .search-area .search-area-container {
@@ -147,43 +150,29 @@ body {
 
 .search-area .search-items {
     width: 100%;
-    /* background-color: red; */
     margin: 20px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
 }
 
-.search-area .search-items .search-form-container {
-    flex: 1 0 200px;
-    /* background-color: yellow; */
-}
-
-.search-area .search-items .close-button {
-    flex: 0 0 100px;
-}
-
-.search-form-container form {
+/* Search close button syles */
+.search-items .search-close-button {
     width: 100%;
+    display: flex;
+    justify-content: end;
 }
 
-.search-form-container form input {
-    width: 80%;
-    height: 50px;
-    border-radius: 10px;
-    font-size: 1rem;
-    padding: 0px 10px;
-    margin: 10px;
-}
-
-.search-area .search-items .close-button {
-    height: 50px;
+.search-close-button .close-button {
+    height: 60px;
+    width: 100px;
     margin: 20px;
     border: none;
     border-radius: 10px;
     background-color: var(--primary-background-color-cream);
     cursor: pointer;
+    font-size: 1rem; 
 }
 
 .search-area .search-items .close-button:hover {
@@ -192,6 +181,30 @@ body {
 
 .search-area .search-items .close-button:active {
     background-color: var(--botton-active-background-color);
+}
+
+
+/* Search form styles */
+.search-items .search-form-container {
+    width: 100%;
+}
+
+.search-form-container .search-form {
+    display: flex;
+    width: 100%;
+}
+
+.search-form-container .search-form input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    border-bottom: solid;
+    font-size: 1.6rem;
+    padding: 0px 10px;
+    margin: 10px;
+    background-color: var(--primary-background-color-cream);
 }
 
 
