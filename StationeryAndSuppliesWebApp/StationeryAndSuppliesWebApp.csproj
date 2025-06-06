@@ -14,6 +14,18 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="wwwroot\icons\" />
+    <Folder Include="wwwroot\images\products\ArtSupplies\ColorPencils\" />
+    <Folder Include="wwwroot\images\products\ArtSupplies\PaintBrushes\" />
+    <Folder Include="wwwroot\images\products\ArtSupplies\Sketchbooks\" />
+    <Folder Include="wwwroot\images\products\DeskAccessories\Staplers\" />
+    <Folder Include="wwwroot\images\products\DeskAccessories\PaperClips\" />
+    <Folder Include="wwwroot\images\products\DeskAccessories\TapeDispensers\" />
+    <Folder Include="wwwroot\images\products\OfficeElectronics\LabelMakers\" />
+    <Folder Include="wwwroot\images\products\OfficeElectronics\Laminators\" />
+    <Folder Include="wwwroot\images\products\OfficeElectronics\Calculators\" />
+    <Folder Include="wwwroot\images\products\PaperProducts\Notebooks\" />
+    <Folder Include="wwwroot\images\products\PaperProducts\StickyNotes\" />
+    <Folder Include="wwwroot\images\products\PaperProducts\PrinterPaper\" />
     <Folder Include="wwwroot\images\products\WritingInstruments\Markers\" />
     <Folder Include="wwwroot\images\products\WritingInstruments\Pencils\" />
     <Folder Include="wwwroot\images\products\WritingInstruments\Pens\" />
