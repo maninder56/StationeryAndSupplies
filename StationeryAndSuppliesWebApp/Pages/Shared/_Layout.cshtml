@@ -10,13 +10,13 @@
     <header class="navigation">
         <nav>
             <ul class="main-navigation">
-                <div class="navigation-icons search-container">
-                    <li class="menu-icon">
+                <li class="navigation-icons search-container">
+                    <div class="menu-icon">
                         <a class="navigation-logo-link" onclick="openMenu()">
                             <img src="~/icons/menu-icon.svg" alt="menu icon">
                         </a>
-                    </li>
-                    <li class="desktop-link search">
+                    </div>
+                    <div class="desktop-link search">
                         <a class="navigation-logo-link" onclick="OpenSearch()">
                             <img src="~/icons/search-icon.svg" alt="search icon">
                             <span class="word search-word">Search</span>
@@ -37,27 +37,28 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </div>
+                    </div>
+                </li>
                 <li class="title">
                     <a asp-page="/Index">
                         <h1>Stationery</h1>
                     </a>
                 </li>
-                <div class="navigation-icons">
-                <li class="desktop-link">
-                    <a href="#" class="navigation-logo-link">
-                        <img src="~/icons/user-icon.svg" alt="user account icon">
-                        <span class="word">Login</span>
-                    </a>
+
+                <li class="navigation-icons">
+                    <div class="desktop-link">
+                        <a href="#" class="navigation-logo-link">
+                            <img src="~/icons/user-icon.svg" alt="user account icon">
+                            <span class="word">Login</span>
+                        </a>
+                    </div>
+                    <div class="desktop-link">
+                        <a href="#" class="navigation-logo-link">
+                            <img src="~/icons/shopping-bag-icon.svg" alt="cart icon">
+                            <span class="word">Your Bag</span>
+                        </a>
+                    </div>
                 </li>
-                <li class="desktop-link">
-                    <a href="#" class="navigation-logo-link">
-                        <img src="~/icons/shopping-bag-icon.svg" alt="cart icon">
-                        <span class="word">Your Bag</span>
-                    </a>
-                </li>
-                </div>
             </ul>
 
             <div id="product-menu" class="menu-overlay">

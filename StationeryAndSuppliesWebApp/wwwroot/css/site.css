@@ -77,6 +77,12 @@ body {
         justify-content: center;
     }
 
+        .main-navigation .title a {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary-text-color);
+        }
+
         .main-navigation .title a:hover {
             color: var(--link-hover-text-color);
         }
@@ -91,12 +97,13 @@ body {
 
 
     /* Main Navigation links */
-    .main-navigation li {
+    .main-navigation .menu-icon, 
+    .main-navigation .desktop-link {
         margin: 0px 4px;
         transition: margin 0.5s ease-in;
     }
 
-        .main-navigation li a {
+        .main-navigation .navigation-logo-link {
             display: inline-block;
             text-decoration: none;
             color: var(--primary-text-color);
@@ -203,7 +210,8 @@ body {
 
 @media (min-width: 300px) {
 
-    .main-navigation li {
+    .main-navigation .desktop-link,
+    .main-navigation .menu-icon {
         margin: 0px 10px;
     }
 
