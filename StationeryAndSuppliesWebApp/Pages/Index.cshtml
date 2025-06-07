@@ -4,10 +4,25 @@
     ViewData["Title"] = "Stationery";
 }
 
-<article>
-    <section>
+<article class="home-page">
+    <section class="first-categories-section">
         <div>
             Home page Content
         </div>
+        <ol>
+            @foreach (var item in Model.ChildCategoriesList)
+            {
+                <li>
+                    <ul>
+                        <li>@item.Id</li>
+                        <li>@item.Name</li>
+                        <li>@item.ImageUrl</li>
+                        <li>
+                            <img src="~/@item.ImageUrl" width="100px" />
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ol>
     </section>
 </article>

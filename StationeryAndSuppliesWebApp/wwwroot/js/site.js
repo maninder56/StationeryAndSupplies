@@ -1,4 +1,4 @@
-﻿const productMenu = document.getElementById("product-menu");
+﻿const productMenu = document.getElementById("product-menu-overlay");
 const searchOverlay = document.getElementById("search-overlay");
 
 // overlay buttons

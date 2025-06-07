@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\images\products\ArtSupplies\ColorPencils\" />
     <Folder Include="wwwroot\images\products\ArtSupplies\PaintBrushes\" />
