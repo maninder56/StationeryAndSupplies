@@ -11,7 +11,15 @@ function closeMenu() {
 }
 
 function OpenSearch() {
-    searchOverlay.style.height = "50%";
+    let currentHeight = window.innerHeight; 
+
+    if (currentHeight > 500) {
+        searchOverlay.style.height = "50%";
+    }
+    else {
+        searchOverlay.style.height = "300px";
+    }
+    
 }
 
 function CloseSearch() {
@@ -27,4 +35,26 @@ eightHundredPixelOrMoreMediaQuery.addEventListener("change", () => {
         searchOverlay.style.removeProperty("height");
     }
 })
+
+
+
+// Home page scrollable cards
+
+const categoryContainer = document.getElementById("categories-container"); 
+const numberOfpixelsToScroll = 400; 
+
+function leftScroll() {
+    categoryContainer.scrollBy({
+        left: - numberOfpixelsToScroll,
+        behavior: "smooth"
+    });
+}
+
+function rightScroll() {
+    categoryContainer.scrollBy({
+        left: numberOfpixelsToScroll,
+        behavior: "smooth"
+    });
+}
+
 

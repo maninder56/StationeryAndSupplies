@@ -9,6 +9,7 @@
     --link-hover-text-color: rgb(73, 73, 73);
     --button-hover-background-color: #ebf1bd;
     --botton-active-background-color: #d4d9ab;
+    --button-background-color: #f5f5dc;
     transition: font-size 0.5s ease-in-out;
 }
 
@@ -300,7 +301,7 @@ body {
     }
 }
 
-
+/* Menu Overlay */
 .menu-overlay {
     height: 100%;
     width: 0;
@@ -418,27 +419,100 @@ body {
 
 
 
- body * {
+/* body * {
     border: solid 1px;
-}  
+}*/
 
+/**/
 
+/* Home page */
+
+.home-page {
+    margin-top: 20px;
+}
 
 /* First section for categories */
 
-.home-page {
-    background-color: var(--primary-background-color-cream); 
-    margin-top: 20px; 
-}
-
 .first-categories-section {
-    background-color: red; 
-    margin: 20px 0px; 
+    background-color: var(--primary-background-color-cream);
+    margin: 20px 0px;
+    display: flex;
+}
+
+/* Scroll buttons for category cards */
+.first-categories-section .scroll-button-container {
+    flex: 0 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    padding: 3px;
 }
 
 
-.home-page img {
-    width: 100px;
+
+.first-categories-section .scroll-button {
+    height: 40px; 
+    width: 40px; 
+    border: none; 
+    border-radius: 10px;
+    background-color: var(--button-background-color); 
+    cursor: pointer; 
+}
+
+.first-categories-section .scroll-button:hover {
+    background-color: var(--button-hover-background-color);
+}
+
+.first-categories-section .scroll-button:active {
+    background-color: var(--botton-active-background-color);
+}
+
+
+
+
+
+
+
+
+
+
+.first-categories-section .product-categories-container {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth; 
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.first-categories-section .product-categories-container::-webkit-scrollbar {
+    display: none;
+}
+
+.first-categories-section .product-category {
+    flex: 0 0 auto; 
+    margin: 20px 4vw; 
+}
+
+.first-categories-section .category-link img {
+    width: 80vw; 
+    height: 90%; 
+    min-width: 200px; 
+    max-width: 500px; 
+    object-fit: cover; 
+    border-radius: 2px; 
+}
+
+.first-categories-section .category-name {
+    text-align: center; 
+    font-size: 1.6rem; 
+    margin: 10px 0px; 
 }
 
 

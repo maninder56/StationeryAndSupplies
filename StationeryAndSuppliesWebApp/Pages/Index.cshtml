@@ -6,17 +6,23 @@
 
 <article class="home-page">
     <section class="first-categories-section">
-        <div class="product-categories-container">
-            <div class="product-category">
-                @* Add links to each <a> tag, pointing to their respective pages. *@
-                @foreach(var category in Model.ChildCategoriesListInFirstSection)
-                {
-                    <a href="#">
-                        <img src="~/@category.ImageUrl" alt="@category.Name image"/>
+        <div class="scroll-button-container">
+            <button type="button" onclick="leftScroll()" class="scroll-button">Left</button>
+        </div>
+        <div id="categories-container" class="product-categories-container">
+            @* Add links to each <a> tag, pointing to their respective pages. *@
+            @foreach(var category in Model.ChildCategoriesListInFirstSection)
+            {
+                <div class="product-category">
+                    <a href="#" class="category-link">
+                        <img src="~/@category.ImageUrl" alt="@category.Name image" />
                     </a>
                     <div class="category-name">@category.Name</div>
-                }
-            </div>
+                </div>
+            }
+       </div>
+       <div class="scroll-button-container">
+            <button type="button" onclick="rightScroll()" class="scroll-button">Right</button>
        </div>
     </section>
 </article>
