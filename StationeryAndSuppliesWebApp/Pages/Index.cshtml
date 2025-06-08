@@ -6,23 +6,17 @@
 
 <article class="home-page">
     <section class="first-categories-section">
-        <div>
-            Home page Content
-        </div>
-        <ol>
-            @foreach (var item in Model.ChildCategoriesList)
-            {
-                <li>
-                    <ul>
-                        <li>@item.Id</li>
-                        <li>@item.Name</li>
-                        <li>@item.ImageUrl</li>
-                        <li>
-                            <img src="~/@item.ImageUrl" width="100px" />
-                        </li>
-                    </ul>
-                </li>
-            }
-        </ol>
+        <div class="product-categories-container">
+            <div class="product-category">
+                @* Add links to each <a> tag, pointing to their respective pages. *@
+                @foreach(var category in Model.ChildCategoriesListInFirstSection)
+                {
+                    <a href="#">
+                        <img src="~/@category.ImageUrl" alt="@category.Name image"/>
+                    </a>
+                    <div class="category-name">@category.Name</div>
+                }
+            </div>
+       </div>
     </section>
 </article>

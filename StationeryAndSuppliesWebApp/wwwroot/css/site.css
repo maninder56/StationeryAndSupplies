@@ -426,6 +426,20 @@ body {
 
 /* First section for categories */
 
+.home-page {
+    background-color: var(--primary-background-color-cream); 
+    margin-top: 20px; 
+}
+
+.first-categories-section {
+    background-color: red; 
+    margin: 20px 0px; 
+}
+
+
+.home-page img {
+    width: 100px;
+}
 
 
 
