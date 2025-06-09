@@ -417,9 +417,17 @@ body {
     }
 }
 
+ body * {
+    border: solid 1px;
+    margin: 5px;
+}
 
 
+/* Shared styels */
 
+.container {
+    
+}
 
 
 
@@ -470,6 +478,7 @@ body {
 }
 
 
+
 /* Category cards */
 .first-categories-section .product-categories-container {
     margin: 10px 0px;
@@ -498,14 +507,15 @@ body {
     width: 20vw; 
 }
 
-.first-categories-section .category-link img {
-    width: inherit; 
-    height: 80%; 
-    min-width: 200px; 
-    max-width: 400px; 
-    object-fit: cover; 
-    border-radius: 2px; 
-}
+    .first-categories-section .category-link img {
+        width: inherit;
+        height: 80%;
+        min-width: 200px;
+        max-width: 400px;
+        object-fit: cover;
+        border-radius: 2px;
+        border-radius: 20px;
+    }
 
 .first-categories-section .category-name {
     text-align: center; 
@@ -521,11 +531,6 @@ body {
     }
 }
 
-
-
-/* body * {
-    border: solid 1px;
-}*/
 
 
 
@@ -553,18 +558,24 @@ body {
 /*        background-color: red; */
 }
 
-.second-categories-section .category-link {
-    display: flex; 
-    justify-content: center; 
-}
+    .second-categories-section .category-link-image {
+        display: flex; 
+        justify-content: center; 
+    }
+
+    .second-categories-section .category-link {
+        display: flex;
+        justify-content: center;
+    }
 
 
-.second-categories-section img {
-    width: 150px; 
-    height: 150px; 
-    max-height: 200px; 
-    object-fit: cover; 
-}
+    .second-categories-section img {
+        width: 150px;
+        height: 150px;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
 
 .second-categories-section .category-name {
     text-align: center; 
@@ -576,6 +587,59 @@ body {
 
 
 
+
+/* Third section of hope page */
+
+.third-product-section {
+    background-color: var(--primary-background-color-cream); 
+    padding: 20px 0px; 
+}
+
+    .third-product-section .products-container{
+        margin: 10px; 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-gap: 30px;  
+    }
+
+    .third-product-section .product {
+        
+    }
+
+    .third-product-section .product-link-and-image {
+        display: flex; 
+        justify-content: center; 
+    }
+
+    .third-product-section .product-link {
+        display: block;
+        width: 150px;
+        height: 150px; 
+    }
+
+
+    .third-product-section img {
+        width: inherit;
+        widows: inherit;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+    .third-product-section .product-details-container {
+        display: flex; 
+        justify-content: center; 
+    }
+
+    .third-product-section .product-name-and-price {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px 5px;
+        width: 150px;
+    }
+
+    .third-product-section .product-name {
+        margin-right: 5px; 
+    }
 
 
 
