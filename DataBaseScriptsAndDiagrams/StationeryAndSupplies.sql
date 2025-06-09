@@ -497,6 +497,12 @@ GROUP BY C2.Name;
 
 
 
+SELECT *
+FROM categories
+WHERE ParentID IS NOT NULL
+ORDER BY CategoryID 
+LIMIT 10 
+OFFSET 0; 
 
 
 
@@ -521,6 +527,168 @@ INNER JOIN categories C2
 	ON C.ParentID = C2.CategoryID
 INNER JOIN products P 
 	ON C.CategoryID = P.CategoryID; 
+
+
+
+-- quering products by page 
+SELECT 
+	P.ProductID, 
+	P.Name
+FROM products P
+ORDER BY P.ProductID
+LIMIT 10 -- page size
+OFFSET 40; -- skip 40 items 
+
+
+
+SELECT 
+	C2.Name AS ParentCategoryName, 
+	C.Name AS CategoryName, 
+	P.ProductID, 
+	P.Name AS ProductName, 
+	P.ImageUrl
+FROM products P
+INNER JOIN categories C	
+	ON P.CategoryID = C.CategoryID
+INNER JOIN categories C2 
+	ON C.ParentID = C2.CategoryID 
+-- WHERE C2.Name = 'Writing Instruments'
+ORDER BY C2.Name DESC;  
+
+
+
+
+-- Updating products with parent category of WritingInstruments
+-- 
+-- START TRANSACTION; 
+-- 
+-- UPDATE products P
+-- INNER JOIN categories C	
+-- 	ON P.CategoryID = C.CategoryID
+-- INNER JOIN categories C2 
+-- 	ON C.ParentID = C2.CategoryID
+-- SET P.ImageUrl = 'images/products/WritingInstruments/'
+-- WHERE C2.Name = 'Writing Instruments'; 
+-- 
+--  
+-- 
+-- 
+-- START TRANSACTION; 
+-- 
+-- UPDATE products P
+-- INNER JOIN categories C	
+-- 	ON P.CategoryID = C.CategoryID
+-- INNER JOIN categories C2 
+-- 	ON C.ParentID = C2.CategoryID
+-- SET P.ImageUrl = CONCAT(P.ImageUrl, 'Pens/')
+-- WHERE C.Name = 'Pens'; 
+-- 
+-- 
+-- 
+-- START TRANSACTION; 
+-- 
+-- UPDATE products P
+-- INNER JOIN categories C	
+-- 	ON P.CategoryID = C.CategoryID
+-- INNER JOIN categories C2 
+-- 	ON C.ParentID = C2.CategoryID
+-- SET P.ImageUrl = CONCAT(P.ImageUrl, 'Pencils/')
+-- WHERE C.Name = 'Pencils'; 
+-- 
+-- 
+-- 
+-- START TRANSACTION; 
+-- 
+-- UPDATE products P
+-- INNER JOIN categories C	
+-- 	ON P.CategoryID = C.CategoryID
+-- INNER JOIN categories C2 
+-- 	ON C.ParentID = C2.CategoryID
+-- SET P.ImageUrl = CONCAT(P.ImageUrl, 'Markers/')
+-- WHERE C.Name = 'Markers'; 
+
+
+
+-- START TRANSACTION; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'PilotG2GelPen.jpg')
+-- WHERE ProductID = 1; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'BICRoundSticPen.jpg')
+-- WHERE ProductID = 2; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'ParkerJotterPen.webp')
+-- WHERE ProductID = 3; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'LamySafariFountainPen.jpg')
+-- WHERE ProductID = 4; 
+
+
+
+-- START TRANSACTION; 
+-- 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'WoodenPencilSet.webp')
+-- WHERE Name = 'Wooden Pencil Set'; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'PentelGraphGear1000.webp')
+-- WHERE Name = 'Pentel GraphGear 1000'; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'StaedtlerMechanicalPencil.jpg')
+-- WHERE Name = 'Staedtler Mechanical Pencil'; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'DixonTiconderogaPencil.jpg')
+-- WHERE Name = 'Dixon Ticonderoga Pencil'; 
+-- 
+
+
+
+-- START TRANSACTION;
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'NeonMarkersPack.webp')
+-- WHERE Name = 'Neon Markers Pack'; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'CrayolaWashableMarkerSet.jpg')
+-- WHERE Name = 'Crayola Washable Marker Set'; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'ExpoDryEraseMarker.jpg')
+-- WHERE Name = 'Expo Dry Erase Marker'; 
+-- 
+-- UPDATE products 
+-- SET ImageUrl = CONCAT(ImageUrl, 'SharpieFinePoint.jpg')
+-- WHERE Name = 'Sharpie Fine Point'; 
+
+
+
+
+
+SELECT 
+	C2.Name AS ParentCategoryName, 
+	C.Name AS CategoryName, 
+	P.ProductID, 
+	P.Name AS ProductName, 
+	P.ImageUrl
+FROM products P
+INNER JOIN categories C	
+	ON P.CategoryID = C.CategoryID
+INNER JOIN categories C2 
+	ON C.ParentID = C2.CategoryID 
+-- WHERE C2.Name = 'Writing Instruments'
+ORDER BY C2.Name DESC;  
+
+
+
 
 
 
