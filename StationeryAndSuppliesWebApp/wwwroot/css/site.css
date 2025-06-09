@@ -419,11 +419,9 @@ body {
 
 
 
-/* body * {
-    border: solid 1px;
-}*/
 
-/**/
+
+
 
 /* Home page */
 
@@ -435,18 +433,18 @@ body {
 
 .first-categories-section {
     background-color: var(--primary-background-color-cream);
-    margin: 20px 0px;
+    margin: 20px 0px 0px 0px;
     display: flex;
 }
 
 /* Scroll buttons for category cards */
 .first-categories-section .scroll-button-container {
-    flex: 0 0 50px;
+    flex: 0 0 auto;
     display: flex;
+    flex-wrap: wrap; 
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    padding: 3px;
 }
 
 
@@ -454,29 +452,25 @@ body {
 .first-categories-section .scroll-button {
     height: 40px; 
     width: 40px; 
-    border: none; 
+    border: none;
     border-radius: 10px;
     background-color: var(--button-background-color); 
     cursor: pointer; 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    align-content: center; 
 }
 
-.first-categories-section .scroll-button:hover {
-    background-color: var(--button-hover-background-color);
+.first-categories-section .scroll-button img {
+    width: inherit; 
+    margin: 0px; 
+    padding: 0px; 
+    object-fit: contain; 
 }
 
-.first-categories-section .scroll-button:active {
-    background-color: var(--botton-active-background-color);
-}
 
-
-
-
-
-
-
-
-
-
+/* Category cards */
 .first-categories-section .product-categories-container {
     margin: 10px 0px;
     display: flex;
@@ -497,14 +491,18 @@ body {
 
 .first-categories-section .product-category {
     flex: 0 0 auto; 
-    margin: 20px 4vw; 
+    margin: 20px 2vw; 
+}
+
+.first-categories-section .category-link {
+    width: 20vw; 
 }
 
 .first-categories-section .category-link img {
-    width: 80vw; 
-    height: 90%; 
+    width: inherit; 
+    height: 80%; 
     min-width: 200px; 
-    max-width: 500px; 
+    max-width: 400px; 
     object-fit: cover; 
     border-radius: 2px; 
 }
@@ -514,6 +512,68 @@ body {
     font-size: 1.6rem; 
     margin: 10px 0px; 
 }
+
+
+@media (min-width: 800px) {
+
+    .first-categories-section .category-link {
+        width: 30vw;
+    }
+}
+
+
+
+/* body * {
+    border: solid 1px;
+}*/
+
+
+
+
+/* Second section for categories */
+
+.second-categories-section {
+    margin: 40px 0px; 
+
+}
+
+.second-categories-section .product-categories-container {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    grid-gap: 30px; 
+    margin: 10px; 
+}
+
+
+.second-categories-section .product-category {
+    display: flex; 
+    flex-direction: column; 
+    align-content: center; 
+    justify-content: center; 
+/*        background-color: red; */
+}
+
+.second-categories-section .category-link {
+    display: flex; 
+    justify-content: center; 
+}
+
+
+.second-categories-section img {
+    width: 150px; 
+    height: 150px; 
+    max-height: 200px; 
+    object-fit: cover; 
+}
+
+.second-categories-section .category-name {
+    text-align: center; 
+    font-size: 1.3rem; 
+}
+
+
+
+
 
 
 

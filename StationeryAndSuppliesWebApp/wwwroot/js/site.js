@@ -40,19 +40,18 @@ eightHundredPixelOrMoreMediaQuery.addEventListener("change", () => {
 
 // Home page scrollable cards
 
-const categoryContainer = document.getElementById("categories-container"); 
-const numberOfpixelsToScroll = 400; 
+const categoryContainer = document.getElementById("categories-container");
 
 function leftScroll() {
     categoryContainer.scrollBy({
-        left: - numberOfpixelsToScroll,
+        left: - categoryContainer.clientWidth,
         behavior: "smooth"
     });
 }
 
 function rightScroll() {
     categoryContainer.scrollBy({
-        left: numberOfpixelsToScroll,
+        left: categoryContainer.clientWidth,
         behavior: "smooth"
     });
 }
