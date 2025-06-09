@@ -5,43 +5,72 @@
 }
 
 <article class="home-page">
-    <section class="first-categories-section">
-        <div class="scroll-button-container">
-            <button type="button" onclick="leftScroll()" class="scroll-button">
-                <img src="~/icons/left-arrow.svg" alt="left arrow" />
-            </button>
-        </div>
-        <div id="categories-container" class="product-categories-container">
-            @* Add links to each <a> tag, pointing to their respective pages. *@
-            @foreach(var category in Model.ChildCategoriesListInFirstSection)
-            {
-                <div class="product-category">
-                    <a href="#" class="category-link">
-                        <img src="~/@category.ImageUrl" alt="@category.Name image" />
-                    </a>
-                    <div class="category-name">@category.Name</div>
-                </div>
-            }
-        </div>
-        <div class="scroll-button-container">
-            <button type="button" onclick="rightScroll()" class="scroll-button">
-                <img src="~/icons/right-arrow.svg" alt="right arrow" />
-            </button>
-        </div>
-    </section>
 
-    <section class="second-categories-section">
-        <div class="product-categories-container">
-            @* Add links to each <a> tag, pointing to their respective pages. *@
-            @foreach(var category in Model.ChildCategoriesListInSecondSection)
-            {
-                <div class="product-category">
-                    <a href="#" class="category-link">
-                        <img src="~/@category.ImageUrl" alt="@category.Name image" />
-                    </a>
-                    <div class="category-name">@category.Name</div>
-                </div>
-            }
-        </div>
-    </section>
+    @if(Model.ChildCategoriesListInFirstSection.Count > 0)
+    {
+        <section class="first-categories-section">
+            <div class="scroll-button-container">
+                <button type="button" onclick="leftScroll()" class="scroll-button">
+                    <img src="~/icons/left-arrow.svg" alt="left arrow" />
+                </button>
+            </div>
+            <div id="categories-container" class="product-categories-container">
+                @* Add links to each <a> tag, pointing to their respective pages. *@
+                @foreach (var category in Model.ChildCategoriesListInFirstSection)
+                {
+                    <div class="product-category">
+                        <a href="#" class="category-link">
+                            <img src="~/@category.ImageUrl" alt="@category.Name image" />
+                        </a>
+                        <div class="category-name">@category.Name</div>
+                    </div>
+                }
+            </div>
+            <div class="scroll-button-container">
+                <button type="button" onclick="rightScroll()" class="scroll-button">
+                    <img src="~/icons/right-arrow.svg" alt="right arrow" />
+                </button>
+            </div>
+        </section>
+    }
+
+    @if(Model.ChildCategoriesListInSecondSection.Count > 0)
+    {
+        <section class="second-categories-section">
+            <div class="product-categories-container">
+                @* Add links to each <a> tag, pointing to their respective pages. *@
+                @foreach (var category in Model.ChildCategoriesListInSecondSection)
+                {
+                    <div class="product-category">
+                        <a href="#" class="category-link">
+                            <img src="~/@category.ImageUrl" alt="@category.Name image" />
+                        </a>
+                        <div class="category-name">@category.Name</div>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+
+    @if(Model.ProductsInThirdSection.Count > 0)
+    {
+        <section class="third-product-section">
+            <div class="products-container">
+                @* Add links to each <a> tag, pointing to their respective pages. *@
+                @foreach (var product in Model.ProductsInThirdSection)
+                {
+                    <div class="product">
+                        <a href="#">
+                            <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                        </a>
+                        <div class="product-name-and-price">
+                            <div class="product-name">@product.Name</div>
+                            <div class="product-price">@product.Price</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+
 </article>

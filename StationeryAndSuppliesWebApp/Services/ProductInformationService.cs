@@ -53,7 +53,25 @@ public class ProductInformationService : IProductInformationService
     }
 
 
-    
     // Products 
+
+    public async Task<List<Models.Product>> GetEightProducts()
+    {
+        logger.LogInformation("Requested to get fist eight products"); 
+
+        List<Models.Product>? list = await database.Products.AsNoTracking()
+            .OrderBy(p => p.ProductId)
+            .Take(8)
+            .Select(c => new Models.Product(c.Name, c.Price, c.ImageUrl))
+            .ToListAsync();
+
+        if (list is null || list.Count == 0)
+        {
+            logger.LogError("No product exists in products table");
+        }
+
+        return list ?? new List<Models.Product>();
+
+    }
 
 }

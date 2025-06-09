@@ -21,6 +21,7 @@ public class IndexModel : PageModel
     // Properties shared with view 
     public List<ChildCategory> ChildCategoriesListInFirstSection { get; private set; } = new List<ChildCategory>();
     public List<ChildCategory> ChildCategoriesListInSecondSection { get; private set; } = new List<ChildCategory>();
+    public List<Models.Product> ProductsInThirdSection { get; private set; } = new List<Product>(); 
 
 
     // Page Handlers
@@ -28,20 +29,21 @@ public class IndexModel : PageModel
     {
         logger.LogInformation("Index page requested");
 
-        List<ChildCategory> list = await productInformationService.GetAllChildCategoriesAsync();
+        // Get category list 
 
-        if (list.Count == 0)
+        List<ChildCategory> categoryList = await productInformationService.GetAllChildCategoriesAsync();
+
+        logger.LogInformation("Total {NumberOfChildCategories} child categories loaded in category list", categoryList.Count);
+
+        if (categoryList.Count == 0)
         {
             logger.LogWarning("Failed to get any category from service"); 
-            return Page();
         }
 
-        logger.LogInformation("Total {NumberOfChildCategories} child categories loaded in list", list.Count);
-
-        if (list.Count > 8)
+        if (categoryList.Count > 8)
         {
-            ChildCategoriesListInFirstSection = list.Slice(0, 4);
-            ChildCategoriesListInSecondSection = list.Slice(4, 4);
+            ChildCategoriesListInFirstSection = categoryList.Slice(0, 4);
+            ChildCategoriesListInSecondSection = categoryList.Slice(4, 4);
 
             logger.LogInformation("Loaded {CategoryNumber} categories in ChildCategoriesListInFirstSection list", ChildCategoriesListInFirstSection.Count);
             logger.LogInformation("Loaded {CategoryNumber} categories in ChildCategoriesListInSecondSection list", ChildCategoriesListInSecondSection.Count);
@@ -56,6 +58,20 @@ public class IndexModel : PageModel
         {
             logger.LogWarning("Failed to load categoreis in Secondsection list");
         }
+
+
+        // Get product list
+
+        List<Models.Product> productList = await productInformationService.GetEightProducts();
+
+        logger.LogInformation("Total {NumberOfProducts} products loaded in product list", productList.Count);
+
+        if (productList.Count == 0)
+        {
+            logger.LogWarning("Failed to get any products from service");
+        }
+
+        ProductsInThirdSection = productList; 
 
         return Page();
     }

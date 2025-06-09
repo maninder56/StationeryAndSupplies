@@ -10,4 +10,7 @@ public interface IProductInformationService
 
     // Get only child categories 
     public Task<List<ChildCategory>> GetAllChildCategoriesAsync();
+
+    // Get first eight products 
+    public Task<List<Models.Product>> GetEightProducts(); 
 }
