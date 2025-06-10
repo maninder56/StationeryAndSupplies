@@ -6,6 +6,7 @@
     --primary-background-color-dark-green: #6ca46c;
     --navigation-background-color: white;
     --primary-text-color: black;
+    --footer-text-color: white; 
     --link-hover-text-color: rgb(73, 73, 73);
     --button-hover-background-color: #ebf1bd;
     --botton-active-background-color: #d4d9ab;
@@ -38,7 +39,9 @@
 
 body {
     margin: 0px 0px;
+    padding: 0px;
 }
+
 
 
 /* Navigation */
@@ -419,6 +422,68 @@ body {
 
 
 
+
+
+
+/* Footer */
+
+footer {
+    background-color: #06402B; 
+    margin: 0px;
+    padding: 10px;
+}
+
+    footer section {
+        display: flex;
+        justify-content: center;
+    }
+
+    footer .container {
+        flex: 1 0 auto;
+        max-width: 800px; 
+        display: flex; 
+        justify-content: space-around; 
+    }
+
+    footer ul {
+        padding: 0px; 
+        list-style-type: none; 
+    }
+
+    footer ul li {
+        text-align: center; 
+    }
+
+        footer ul .heading {
+            font-size: 1.2rem; 
+            color: var(--footer-text-color); 
+        }
+
+        footer ul li a {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px;
+            color: var(--footer-text-color); 
+        }
+
+        footer a:hover {
+            text-decoration-line:none; 
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Home page */
 
 .home-page {
@@ -525,9 +590,9 @@ body {
 /* Second section for categories */
 
 .second-categories-section {
-    margin: 40px 0px;
+    padding: 40px 0px;
     display: flex; 
-    justify-content: center; 
+    justify-content: center;  
 }
 
 .second-categories-section .section-container {
@@ -583,8 +648,9 @@ body {
 .third-product-section {
     background-color: var(--primary-background-color-cream);
     padding: 20px 0px;
-    display: flex; 
-    justify-content: center; 
+    margin-bottom: 0px; 
+    display: flex;
+    justify-content: center;
 }
 
 .third-product-section .section-container {
@@ -639,15 +705,11 @@ body {
 
 
 
-
-
-
-
-/*body .home-page * {
+/*body footer * {
     border: solid 1px;
     margin: 5px;
-}
-*/
+}*/
+
 
 
 
