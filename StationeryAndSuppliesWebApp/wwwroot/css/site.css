@@ -84,31 +84,31 @@ body {
             color: var(--primary-text-color);
         }
 
-        .main-navigation .title a:hover {
-            color: var(--link-hover-text-color);
-        }
+            .main-navigation .title a:hover {
+                color: var(--link-hover-text-color);
+            }
 
-        .main-navigation .title a:active {
-            color: var(--primary-text-color);
-        }
+            .main-navigation .title a:active {
+                color: var(--primary-text-color);
+            }
 
-        .main-navigation .title a h1 {
-            margin: 0;
-        }
+            .main-navigation .title a h1 {
+                margin: 0;
+            }
 
 
     /* Main Navigation links */
-    .main-navigation .menu-icon, 
+    .main-navigation .menu-icon,
     .main-navigation .desktop-link {
         margin: 0px 4px;
         transition: margin 0.5s ease-in;
     }
 
-        .main-navigation .navigation-logo-link {
-            display: inline-block;
-            text-decoration: none;
-            color: var(--primary-text-color);
-        }
+    .main-navigation .navigation-logo-link {
+        display: inline-block;
+        text-decoration: none;
+        color: var(--primary-text-color);
+    }
 
     .main-navigation .navigation-logo-link {
         cursor: pointer;
@@ -417,18 +417,6 @@ body {
     }
 }
 
- body * {
-    border: solid 1px;
-    margin: 5px;
-}
-
-
-/* Shared styels */
-
-.container {
-    
-}
-
 
 
 /* Home page */
@@ -443,85 +431,84 @@ body {
     background-color: var(--primary-background-color-cream);
     margin: 20px 0px 0px 0px;
     display: flex;
-}
-
-/* Scroll buttons for category cards */
-.first-categories-section .scroll-button-container {
-    flex: 0 0 auto;
-    display: flex;
-    flex-wrap: wrap; 
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-}
-
-
-
-.first-categories-section .scroll-button {
-    height: 40px; 
-    width: 40px; 
-    border: none;
-    border-radius: 10px;
-    background-color: var(--button-background-color); 
-    cursor: pointer; 
-    display: flex; 
-    flex-wrap: wrap; 
     justify-content: center; 
-    align-content: center; 
 }
 
-.first-categories-section .scroll-button img {
-    width: inherit; 
-    margin: 0px; 
-    padding: 0px; 
-    object-fit: contain; 
-}
-
-
-
-/* Category cards */
-.first-categories-section .product-categories-container {
-    margin: 10px 0px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-behavior: smooth; 
-
-    /* Hide scrollbar for IE, Edge and Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.first-categories-section .product-categories-container::-webkit-scrollbar {
-    display: none;
-}
-
-.first-categories-section .product-category {
-    flex: 0 0 auto; 
-    margin: 20px 2vw; 
-}
-
-.first-categories-section .category-link {
-    width: 20vw; 
-}
-
-    .first-categories-section .category-link img {
-        width: inherit;
-        height: 80%;
-        min-width: 200px;
-        max-width: 400px;
-        object-fit: cover;
-        border-radius: 2px;
-        border-radius: 20px;
+    /* Scroll buttons for category cards */
+    .first-categories-section .scroll-button-container {
+        flex: 0 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
     }
 
-.first-categories-section .category-name {
-    text-align: center; 
-    font-size: 1.6rem; 
-    margin: 10px 0px; 
-}
+    .first-categories-section .scroll-button {
+        height: 40px;
+        width: 40px;
+        border: none;
+        border-radius: 10px;
+        background-color: var(--button-background-color);
+        cursor: pointer;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+    }
+
+        .first-categories-section .scroll-button img {
+            width: inherit;
+            margin: 0px;
+            padding: 0px;
+            object-fit: contain;
+        }
+
+
+
+    /* Category cards */
+    .first-categories-section .product-categories-container {
+        margin: 10px 0px;
+        display: flex;
+        flex-direction: row;
+/*        flex-wrap: nowrap;*/
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        max-width: 1000px; 
+    }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .first-categories-section .product-categories-container::-webkit-scrollbar {
+            display: none;
+        }
+
+    .first-categories-section .product-category {
+        flex: 0 0 auto;
+        margin: 20px 5px;
+    }
+
+    .first-categories-section .category-link {
+        width: 20vw;
+    }
+
+        .first-categories-section .category-link img {
+            width: inherit;
+            height: 80%;
+            min-width: 200px;
+            max-width: 400px;
+            object-fit: cover;
+            border-radius: 2px;
+            border-radius: 20px;
+        }
+
+    .first-categories-section .category-name {
+        text-align: center;
+        font-size: 1.6rem;
+        margin: 10px 0px;
+    }
 
 
 @media (min-width: 800px) {
@@ -538,29 +525,34 @@ body {
 /* Second section for categories */
 
 .second-categories-section {
-    margin: 40px 0px; 
-
-}
-
-.second-categories-section .product-categories-container {
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-    grid-gap: 30px; 
-    margin: 10px; 
-}
-
-
-.second-categories-section .product-category {
+    margin: 40px 0px;
     display: flex; 
-    flex-direction: column; 
-    align-content: center; 
     justify-content: center; 
-/*        background-color: red; */
 }
+
+.second-categories-section .section-container {
+    flex: 1 0 auto; 
+    max-width: 1000px; 
+}
+
+    .second-categories-section .product-categories-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-gap: 30px;
+        margin: 10px;
+    }
+
+
+    .second-categories-section .product-category {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
 
     .second-categories-section .category-link-image {
-        display: flex; 
-        justify-content: center; 
+        display: flex;
+        justify-content: center;
     }
 
     .second-categories-section .category-link {
@@ -577,13 +569,11 @@ body {
         border-radius: 20px;
     }
 
-.second-categories-section .category-name {
-    text-align: center; 
-    font-size: 1.3rem; 
-}
-
-
-
+    .second-categories-section .category-name {
+        text-align: center;
+        font-size: 1.3rem;
+        margin-top: 5px; 
+    }
 
 
 
@@ -591,30 +581,36 @@ body {
 /* Third section of hope page */
 
 .third-product-section {
-    background-color: var(--primary-background-color-cream); 
-    padding: 20px 0px; 
+    background-color: var(--primary-background-color-cream);
+    padding: 20px 0px;
+    display: flex; 
+    justify-content: center; 
 }
 
-    .third-product-section .products-container{
-        margin: 10px; 
-        display: grid; 
+.third-product-section .section-container {
+    flex: 1 0 auto; 
+    max-width: 1000px; 
+}
+
+    .third-product-section .products-container {
+        margin: 10px;
+        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        grid-gap: 30px;  
+        grid-gap: 30px;
     }
 
     .third-product-section .product {
-        
     }
 
     .third-product-section .product-link-and-image {
-        display: flex; 
-        justify-content: center; 
+        display: flex;
+        justify-content: center;
     }
 
     .third-product-section .product-link {
         display: block;
         width: 150px;
-        height: 150px; 
+        height: 150px;
     }
 
 
@@ -626,8 +622,8 @@ body {
     }
 
     .third-product-section .product-details-container {
-        display: flex; 
-        justify-content: center; 
+        display: flex;
+        justify-content: center;
     }
 
     .third-product-section .product-name-and-price {
@@ -638,8 +634,31 @@ body {
     }
 
     .third-product-section .product-name {
-        margin-right: 5px; 
+        margin-right: 5px;
     }
+
+
+
+
+
+
+
+/*body .home-page * {
+    border: solid 1px;
+    margin: 5px;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 

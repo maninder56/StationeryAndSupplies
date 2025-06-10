@@ -25,9 +25,6 @@
     <Folder Include="wwwroot\images\products\PaperProducts\Notebooks\" />
     <Folder Include="wwwroot\images\products\PaperProducts\StickyNotes\" />
     <Folder Include="wwwroot\images\products\PaperProducts\PrinterPaper\" />
-    <Folder Include="wwwroot\images\products\WritingInstruments\Markers\" />
-    <Folder Include="wwwroot\images\products\WritingInstruments\Pencils\" />
-    <Folder Include="wwwroot\images\products\WritingInstruments\Pens\" />
   </ItemGroup>
 
   <PropertyGroup>
