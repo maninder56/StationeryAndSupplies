@@ -1,5 +1,6 @@
 ﻿using DataBaseContextLibrary;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using StationeryAndSuppliesWebApp.Models;
 using System.Runtime.CompilerServices;
 
@@ -75,19 +76,48 @@ public class ProductInformationService : IProductInformationService
 
     }
 
-    public async Task<List<Models.Product>> GetProductListByCategoryName(
+
+    public async Task<List<Models.ProductDetails>> GetProductListByCategoryName(
         string categoryName, OrderByOptions orderBy, int pageNumber)
     {
-        logger.LogInformation("Requested to get product list by category {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
-            categoryName, orderBy.ToString(), pageNumber); 
+        int pageSize = 5; 
 
-        
-        if ()
+        logger.LogInformation("Requested to get product list by category name {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
+            categoryName, orderBy.ToString(), pageNumber);
 
-        
+        List<Models.ProductDetails>? list = await database.Products.AsNoTracking()
+            .Where(p => p.Category.Name == categoryName && p.Status == "active")
+            .OrderProductBy(orderBy)
+            .Skip(pageSize * (pageNumber - 1))
+            .Take(pageSize)
+            .Select(p =>
+                new ProductDetails
+                (
+                    p.ProductId,
+                    p.Name,
+                    p.Descripttion,
+                    p.Price,
+                    p.Stock > 0, // Compute if stock is available 
+                    p.ImageUrl
+                )
+             ).ToListAsync();    
 
+        if (list == null || list.Count == 0)
+        {
+            logger.LogWarning("No Product exists for Category {CategoryName}", categoryName); 
+        }
 
+        return list ?? new List<ProductDetails>();
     }
 
+    public async Task<List<ProductDetails>> GetProductListByParentCategoryName(string parentCategoryName, OrderByOptions orderBy, int pageNumber)
+    {
+        int pageSize = 5;
 
+        logger.LogInformation("Requested to get product list by parent category name {ParentCategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
+            parentCategoryName, orderBy.ToString(), pageNumber);
+
+        //List<Models.ProductDetails>? list = await database.Products.AsNoTracking()
+        //    .Where(p => p.Category.)
+    }
 }
