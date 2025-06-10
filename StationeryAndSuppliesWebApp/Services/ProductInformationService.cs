@@ -1,6 +1,7 @@
 ﻿using DataBaseContextLibrary;
 using Microsoft.EntityFrameworkCore;
-using StationeryAndSuppliesWebApp.Models; 
+using StationeryAndSuppliesWebApp.Models;
+using System.Runtime.CompilerServices;
 
 namespace StationeryAndSuppliesWebApp.Services;
 
@@ -62,7 +63,7 @@ public class ProductInformationService : IProductInformationService
         List<Models.Product>? list = await database.Products.AsNoTracking()
             .OrderBy(p => p.ProductId)
             .Take(8)
-            .Select(c => new Models.Product(c.Name, c.Price, c.ImageUrl))
+            .Select(c => new Models.Product(c.CategoryId, c.Name, c.Price, c.ImageUrl))
             .ToListAsync();
 
         if (list is null || list.Count == 0)
@@ -73,5 +74,20 @@ public class ProductInformationService : IProductInformationService
         return list ?? new List<Models.Product>();
 
     }
+
+    public async Task<List<Models.Product>> GetProductListByCategoryName(
+        string categoryName, OrderByOptions orderBy, int pageNumber)
+    {
+        logger.LogInformation("Requested to get product list by category {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
+            categoryName, orderBy.ToString(), pageNumber); 
+
+        
+        if ()
+
+        
+
+
+    }
+
 
 }

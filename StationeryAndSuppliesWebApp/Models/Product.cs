@@ -2,6 +2,8 @@
 
 public class Product
 {
+    public int Id { get; set; }
+
     public string Name { get; set; } = string.Empty;
 
     public decimal? Price { get; set; }
@@ -10,8 +12,9 @@ public class Product
 
     public Product() { }
 
-    public Product(string name, decimal? price, string? imageUrl)
+    public Product(int id, string name, decimal? price, string? imageUrl)
     {
+        Id = id;
         Name = name;
         Price = price;
         ImageUrl = imageUrl;

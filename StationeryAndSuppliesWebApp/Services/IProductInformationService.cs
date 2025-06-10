@@ -12,5 +12,9 @@ public interface IProductInformationService
     public Task<List<ChildCategory>> GetAllChildCategoriesAsync();
 
     // Get first eight products 
-    public Task<List<Models.Product>> GetEightProducts(); 
+    public Task<List<Models.Product>> GetEightProducts();
+
+
+    // Get product list by category based on filter
+    public Task<List<Models.Product>> GetProductListByCategoryName(string category, OrderByOptions orderBy, int pageNumber); 
 }
