@@ -1,10 +1,17 @@
-﻿@page
+﻿@page "{parentCategory}/{childCategory?}"
 @model ProductsListPageModel
 
 @{
     ViewData["Title"] = "Products";
 }
 
-<article>
-    Products
+<article class="product-list-page">
+    <section class="section-container">
+        <ol>
+            @foreach (var p in Model.ProductList)
+            {
+                <li>@p.Name</li>
+            }
+        </ol>
+    </section>
 </article>

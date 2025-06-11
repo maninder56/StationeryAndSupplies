@@ -41,10 +41,18 @@ public class ProductInformationService : IProductInformationService
         logger.LogInformation("Requested all child categories from service");
 
         List<ChildCategory>? list = await database.Categories.AsNoTracking()
-            .Where(c => c.ParentId != null)
-            .OrderBy(c => c.CategoryId)
-            .Select(c => new ChildCategory(c.CategoryId, c.Name, c.ImageUrl))
-            .ToListAsync();
+            .Join(database.Categories.AsNoTracking(), c1 => c1.ParentId, c2 => c2.CategoryId,
+            (c1, c2) => new { parentCategory = c2, childCategory = c1 })
+            .OrderBy(c => c.childCategory.CategoryId)
+            .Select(c => 
+                new ChildCategory
+                (
+                    c.childCategory.CategoryId, 
+                    c.childCategory.Name, 
+                    c.parentCategory.Name, 
+                    c.childCategory.ImageUrl
+                )
+            ).ToListAsync();
 
         if (list is null || list.Count == 0)
         {
@@ -78,25 +86,33 @@ public class ProductInformationService : IProductInformationService
 
 
     public async Task<List<Models.ProductDetails>> GetProductListByCategoryName(
-        string categoryName, OrderByOptions orderBy, int pageNumber)
+        string categoryName, OrderByOptions? orderBy, int? pageNumber)
     {
-        if (pageNumber < 1)
+        int pageSize = 5;
+
+        // if page number is null or less than 1, set it to 1 
+        if (pageNumber is null || pageNumber < 1)
         {
-            logger.LogWarning("Requested Page number {PageNumber} which is less than 1", pageNumber);
+            logger.LogInformation("Requested Page number {PageNumber} which is less than 1 or is null", pageNumber);
             
             pageNumber = 1;
             logger.LogInformation("New page number is set to 1"); 
         }
 
-        int pageSize = 5; 
+        // if order by is null set it to default
+        if (orderBy is null)
+        {
+            orderBy = OrderByOptions.Default;
+            logger.LogInformation("Order by is set to Default due to being null"); 
+        }
 
         logger.LogInformation("Requested to get product list by category name {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             categoryName, orderBy.ToString(), pageNumber);
 
         List<Models.ProductDetails>? list = await database.Products.AsNoTracking()
             .Where(p => p.Category.Name == categoryName && p.Status == "active")
-            .OrderProductBy(orderBy)
-            .Skip(pageSize * (pageNumber - 1))
+            .OrderProductBy((OrderByOptions)orderBy)
+            .Skip(pageSize * ((int)pageNumber - 1))
             .Take(pageSize)
             .Select(p =>
                 new ProductDetails
@@ -118,17 +134,30 @@ public class ProductInformationService : IProductInformationService
         return list ?? new List<ProductDetails>();
     }
 
-    public async Task<List<ProductDetails>> GetProductListByParentCategoryName(string parentCategoryName, OrderByOptions orderBy, int pageNumber)
+
+
+
+    public async Task<List<ProductDetails>> GetProductListByParentCategoryName(
+        string parentCategoryName, OrderByOptions? orderBy, int? pageNumber)
     {
-        if (pageNumber < 1)
+        int pageSize = 5;
+
+        // if page number is null or less than 1, set it to 1
+        if (pageNumber is null || pageNumber < 1)
         {
-            logger.LogWarning("Requested Page number {PageNumber} which is less than 1", pageNumber);
+            logger.LogInformation("Requested Page number {PageNumber} which is less than 1 or is null", pageNumber);
 
             pageNumber = 1;
             logger.LogInformation("New page number is set to 1");
         }
 
-        int pageSize = 5;
+        // if order by is null set it to default
+        if (orderBy is null)
+        {
+            orderBy = OrderByOptions.Default;
+            logger.LogInformation("Order by is set to Default due to being null");
+        }
+
 
         logger.LogInformation("Requested to get product list by parent category name {ParentCategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             parentCategoryName, orderBy.ToString(), pageNumber);
@@ -140,8 +169,8 @@ public class ProductInformationService : IProductInformationService
             .Join(database.Products.AsNoTracking(), c => c.childCategory.CategoryId, p => p.CategoryId,
             (c, p) => p)
             .Where(p => p.Status == "active")
-            .OrderProductBy(orderBy)
-            .Skip(pageSize * (pageNumber -1))
+            .OrderProductBy((OrderByOptions)orderBy)
+            .Skip(pageSize * ((int)pageNumber -1))
             .Take(pageSize)
             .Select(p => 
                 new ProductDetails

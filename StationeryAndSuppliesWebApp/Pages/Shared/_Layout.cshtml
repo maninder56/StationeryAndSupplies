@@ -73,24 +73,28 @@
                     </div>
 
                     <ul class="product-navigation">
-                        @* Add links to each <a> tag, pointing to their respective pages.  *@
                         <li class="login">
                             <a href="#">login</a>
                         </li>
                         <li>
-                            <a href="#">Paper Products</a>
+                            <a asp-page="/ProductsListPage"
+                               asp-route-parentCategory="Paper Products">Paper Products</a>
                         </li>
                         <li>
-                            <a href="#">Writing Instruments</a>
+                            <a asp-page="/ProductsListPage"
+                               asp-route-parentCategory="Writing Instruments">Writing Instruments</a>
                         </li>
                         <li>
-                            <a href="#">Desk Accessories</a>
+                            <a asp-page="/ProductsListPage"
+                               asp-route-parentCategory="Desk Accessories">Desk Accessories</a>
                         </li>
                         <li>
-                            <a href="#">Art Supplies</a>
+                            <a asp-page="/ProductsListPage"
+                               asp-route-parentCategory="Art Supplies">Art Supplies</a>
                         </li>
                         <li>
-                            <a href="#">Office Electronics</a>
+                            <a asp-page="/ProductsListPage"
+                               asp-route-parentCategory="Office Electronics">Office Electronics</a>
                         </li>
                     </ul>
                 </div>
@@ -108,12 +112,14 @@
                 <ul>
                     <li class="heading">Contact</li>
                     <li>
+                        @* Need to add link to contact us page *@
                         <a href="#">Contact Us</a>
                     </li>
                 </ul>
                 <ul>
                     <li class="heading">Company</li>
                     <li>
+                        @* Need to add link to about us page *@
                         <a href="#">About Us</a>
                     </li>
                 </ul>

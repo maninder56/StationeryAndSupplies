@@ -19,10 +19,13 @@
                 @foreach (var category in Model.ChildCategoriesListInFirstSection)
                 {
                     <div class="product-category">
-                        <a href="#" class="category-link">
-                            <img src="~/@category.ImageUrl" alt="@category.Name image" />
+                        <a asp-page="/ProductsListPage" 
+                            asp-route-parentCategory="@category.ParentCategoryName"
+                            asp-route-childCategory="@category.CategoryName" 
+                            class="category-link">
+                            <img src="~/@category.ImageUrl" alt="@category.CategoryName image" />
                         </a>
-                        <div class="category-name">@category.Name</div>
+                        <div class="category-name">@category.CategoryName</div>
                     </div>
                 }
             </div>
@@ -44,11 +47,14 @@
                     {
                         <div class="product-category">
                             <div class="category-link-image">
-                                <a href="#" class="category-link">
-                                    <img src="~/@category.ImageUrl" alt="@category.Name image" />
+                                <a asp-page="/ProductsListPage"
+                                   asp-route-parentCategory="@category.ParentCategoryName"
+                                   asp-route-childCategory="@category.CategoryName" 
+                                   class="category-link">
+                                    <img src="~/@category.ImageUrl" alt="@category.CategoryName image" />
                                 </a>
                             </div>
-                            <div class="category-name">@category.Name</div>
+                            <div class="category-name">@category.CategoryName</div>
                         </div>
                     }
                 </div>

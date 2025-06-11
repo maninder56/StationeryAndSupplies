@@ -40,7 +40,7 @@ switch (app.Environment.IsDevelopment())
         app.UseDeveloperExceptionPage();
         break;
     case false:
-        app.UseStatusCodePagesWithReExecute("/{0}"); // need to add error page
+        app.UseStatusCodePagesWithReExecute("/{0}"); // need to add error page to handle 404 and 500 erorr
         app.UseHsts();
         break;
 }
