@@ -72,7 +72,8 @@ public class ProductInformationService : IProductInformationService
         List<Models.Product>? list = await database.Products.AsNoTracking()
             .OrderBy(p => p.ProductId)
             .Take(8)
-            .Select(c => new Models.Product(c.CategoryId, c.Name, c.Price, c.ImageUrl))
+            .Select(c => new Models.Product
+                (c.CategoryId, c.Name, c.Price, c.ImageUrl, c.Stock > 0))
             .ToListAsync();
 
         if (list is null || list.Count == 0)
@@ -85,7 +86,7 @@ public class ProductInformationService : IProductInformationService
     }
 
 
-    public async Task<List<Models.ProductDetails>> GetProductListByCategoryName(
+    public async Task<List<Models.Product>> GetProductListByCategoryName(
         string categoryName, OrderByOptions? orderBy, int? pageNumber)
     {
         int pageSize = 5;
@@ -109,20 +110,19 @@ public class ProductInformationService : IProductInformationService
         logger.LogInformation("Requested to get product list by category name {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             categoryName, orderBy.ToString(), pageNumber);
 
-        List<Models.ProductDetails>? list = await database.Products.AsNoTracking()
+        List<Models.Product>? list = await database.Products.AsNoTracking()
             .Where(p => p.Category.Name == categoryName && p.Status == "active")
             .OrderProductBy((OrderByOptions)orderBy)
             .Skip(pageSize * ((int)pageNumber - 1))
             .Take(pageSize)
             .Select(p =>
-                new ProductDetails
+                new Models.Product
                 (
                     p.ProductId,
                     p.Name,
-                    p.Descripttion,
                     p.Price,
-                    p.Stock > 0, // Compute if stock is available 
-                    p.ImageUrl
+                    p.ImageUrl,
+                    p.Stock > 0  // Compute if stock is available 
                 )
              ).ToListAsync();    
 
@@ -131,13 +131,13 @@ public class ProductInformationService : IProductInformationService
             logger.LogWarning("No Product exists for Category {CategoryName}", categoryName); 
         }
 
-        return list ?? new List<ProductDetails>();
+        return list ?? new List<Models.Product>();
     }
 
 
 
 
-    public async Task<List<ProductDetails>> GetProductListByParentCategoryName(
+    public async Task<List<Models.Product>> GetProductListByParentCategoryName(
         string parentCategoryName, OrderByOptions? orderBy, int? pageNumber)
     {
         int pageSize = 5;
@@ -162,7 +162,7 @@ public class ProductInformationService : IProductInformationService
         logger.LogInformation("Requested to get product list by parent category name {ParentCategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             parentCategoryName, orderBy.ToString(), pageNumber);
 
-        List<Models.ProductDetails>? list = await database.Categories.AsNoTracking()
+        List<Models.Product>? list = await database.Categories.AsNoTracking()
             .Join(database.Categories.AsNoTracking(), c1 => c1.ParentId, c2 => c2.CategoryId,
             (c1, c2) => new { parentCategory = c2, childCategory = c1 })
             .Where(c => c.parentCategory.Name == parentCategoryName)
@@ -173,14 +173,13 @@ public class ProductInformationService : IProductInformationService
             .Skip(pageSize * ((int)pageNumber -1))
             .Take(pageSize)
             .Select(p => 
-                new ProductDetails
+                new Models.Product
                 (
                     p.ProductId, 
                     p.Name, 
-                    p.Descripttion, 
-                    p.Price, 
-                    p.Stock > 0,  // Compute if stock is available 
-                    p.ImageUrl
+                    p.Price,
+                    p.ImageUrl,
+                    p.Stock > 0  // Compute if stock is available 
                 )
             ).ToListAsync();
 
@@ -190,6 +189,6 @@ public class ProductInformationService : IProductInformationService
             logger.LogWarning("No Product exists for Parent Category {ParentCategoryName}", parentCategoryName);
         }
 
-        return list ?? new List<ProductDetails>();
+        return list ?? new List<Models.Product>();
     }
 }

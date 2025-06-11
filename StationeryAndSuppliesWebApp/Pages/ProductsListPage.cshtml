@@ -7,11 +7,24 @@
 
 <article class="product-list-page">
     <section class="section-container">
-        <ol>
-            @foreach (var p in Model.ProductList)
-            {
-                <li>@p.Name</li>
-            }
-        </ol>
+        <div>
+            <div class="category-title">
+                <header>@Model.CategoryName</header>
+            </div>
+            <div class="order-by-contaienr">
+                <header>Order By : </header>
+                <div>Drop down</div>
+            </div>
+        </div>
+        <div class="product-list-contaienr">
+            <div class="product-list">
+                @foreach(var product in Model.ProductList)
+                {
+                    <div class="product-container">
+
+                    </div>
+                }
+            </div>
+        </div>
     </section>
 </article>

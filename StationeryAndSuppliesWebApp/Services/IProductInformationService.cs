@@ -21,8 +21,10 @@ public interface IProductInformationService
     public Task<List<Models.Product>> GetEightProducts();
 
     // Get product list by category name 
-    public Task<List<Models.ProductDetails>> GetProductListByCategoryName(string categoryName, OrderByOptions? orderBy, int? pageNumber);
+    public Task<List<Models.Product>> GetProductListByCategoryName(
+        string categoryName, OrderByOptions? orderBy, int? pageNumber);
 
     // Get product list by parent category 
-    public Task<List<Models.ProductDetails>> GetProductListByParentCategoryName(string parentCategoryName, OrderByOptions? orderBy, int? pageNumber);
+    public Task<List<Models.Product>> GetProductListByParentCategoryName(
+        string parentCategoryName, OrderByOptions? orderBy, int? pageNumber);
 }

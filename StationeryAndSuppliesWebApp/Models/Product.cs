@@ -10,13 +10,16 @@ public class Product
 
     public string? ImageUrl { get; set; }
 
+    public bool InStock { get; set; }
+
     public Product() { }
 
-    public Product(int id, string name, decimal? price, string? imageUrl)
+    public Product(int id, string name, decimal? price, string? imageUrl, bool inStock)
     {
         Id = id;
         Name = name;
         Price = price;
         ImageUrl = imageUrl;
+        InStock = inStock;
     }
 }

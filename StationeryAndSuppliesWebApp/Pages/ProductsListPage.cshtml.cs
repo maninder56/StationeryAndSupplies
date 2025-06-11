@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StationeryAndSuppliesWebApp.Models;
 using StationeryAndSuppliesWebApp.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace StationeryAndSuppliesWebApp.Pages
 {
@@ -12,7 +14,8 @@ namespace StationeryAndSuppliesWebApp.Pages
 
         private IProductInformationService productInformationService; 
 
-        public ProductsListPageModel(ILogger<ProductsListPageModel> logger, IProductInformationService productInformationService)
+        public ProductsListPageModel(ILogger<ProductsListPageModel> logger, 
+            IProductInformationService productInformationService)
         {
             this.logger = logger;
             this.productInformationService = productInformationService;
@@ -20,8 +23,8 @@ namespace StationeryAndSuppliesWebApp.Pages
 
 
         // Properties shared with view 
-        public List<ProductDetails> ProductList { get; private set; } = new List<ProductDetails>();
-
+        public List<Models.Product> ProductList { get; private set; } = new List<Models.Product>();
+        public string CategoryName { get; private set; } = string.Empty;
 
 
         public async Task<IActionResult> OnGetAsync(
@@ -29,25 +32,49 @@ namespace StationeryAndSuppliesWebApp.Pages
             [FromQuery] OrderByOptions? orderBy, [FromQuery] int? page)
         {
 
-            logger.LogInformation("Requested Products list page with parent category {ParentCategoryName}", parentCategory); 
-
-            // Add more logging
+            logger.LogInformation("Requested Products list page with parent category {ParentCategoryName}", 
+                parentCategory); 
 
             if (!ModelState.IsValid)
             {
+                logger.LogWarning("Unvalid Model State, redirecting to hope page"); 
                 return RedirectToPage("/Index"); 
             }
 
             if (childCategory is not null)
             {
+                CategoryName = childCategory; 
+
                 ProductList = await productInformationService
                     .GetProductListByCategoryName(childCategory, orderBy, page); 
+
+                if (ProductList.Count == 0)
+                {
+                    logger.LogWarning("No Product exits in category {CategoryName} with page number {PageNumber}", 
+                        childCategory, page); 
+                }
+
+                logger.LogInformation("Loaded {ProductCount} with category {CategoryName}", ProductList.Count, 
+                    childCategory);
+
                 return Page();
             }
             else
             {
+                CategoryName = parentCategory; 
+
                 ProductList = await productInformationService
                     .GetProductListByParentCategoryName(parentCategory, orderBy, page);
+
+                if (ProductList.Count == 0)
+                {
+                    logger.LogWarning("No Product exits in Parent category {ParentCategoryName} with page number {PageNumber}",
+                        parentCategory, page);
+                }
+
+                logger.LogInformation("Loaded {ProductCount} with Parent category {ParentCategoryName}", ProductList.Count,
+                    parentCategory);
+
                 return Page();
             }
         }
