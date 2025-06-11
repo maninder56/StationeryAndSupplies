@@ -14,6 +14,8 @@ namespace StationeryAndSuppliesWebApp.Pages
 
         private IProductInformationService productInformationService; 
 
+        private string _categoryName = string.Empty; 
+
         public ProductsListPageModel(ILogger<ProductsListPageModel> logger, 
             IProductInformationService productInformationService)
         {
@@ -24,7 +26,11 @@ namespace StationeryAndSuppliesWebApp.Pages
 
         // Properties shared with view 
         public List<Models.Product> ProductList { get; private set; } = new List<Models.Product>();
-        public string CategoryName { get; private set; } = string.Empty;
+        public string CategoryName
+        {
+            get { return _categoryName; }
+            private set { _categoryName = value.Replace('-', ' '); }
+        }
 
 
         public async Task<IActionResult> OnGetAsync(

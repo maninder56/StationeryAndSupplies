@@ -6,7 +6,8 @@
     --primary-background-color-dark-green: #6ca46c;
     --navigation-background-color: white;
     --primary-text-color: black;
-    --footer-text-color: white; 
+    --footer-text-color: #e0e0e0;
+    --footer-text-hover-color: white;
     --link-hover-text-color: rgb(73, 73, 73);
     --button-hover-background-color: #ebf1bd;
     --botton-active-background-color: #d4d9ab;
@@ -484,12 +485,14 @@ footer {
             display: inline-block;
             margin: 5px;
             padding: 5px;
-            color: var(--footer-text-color); 
+            color: var(--footer-text-color);
+            text-decoration-line: none;
         }
 
-        footer a:hover {
-            text-decoration-line:none; 
-        }
+            footer ul li a:hover {
+                text-decoration-line: underline;
+                color: var(--footer-text-hover-color);
+            }
 
 
 
@@ -726,10 +729,67 @@ footer {
 
 
 
-/*body footer * {
+body * {
     border: solid 1px;
-    margin: 5px;
-}*/
+}
+
+
+
+
+/* Product List page */
+
+.product-list-page {
+    margin-top: 20px; 
+    display: flex; 
+    justify-content: center; 
+}
+
+    .product-list-page .section-container {
+        flex: 1 1 auto; 
+        max-width: 800px; 
+    }
+
+    .product-list-page .category-title-and-orderby-section {
+        margin: 10px 20px; 
+    }
+
+    .product-list-page .category-title {
+        font-size: 1.5rem; 
+        margin: 5px; 
+    }
+
+
+    .product-list-page .order-by-contaienr {
+        display:flex; 
+        justify-content: end; 
+        margin: 5px; 
+        padding: 5px; 
+    }
+
+    .product-list-page .order-by-contaienr header {
+        margin-right: 5px; 
+    }
+
+        .product-list-page .order-by-contaienr .drop-down {
+
+        }
+
+
+
+
+/* Product list container */
+
+    .product-list-page .product-list-contaienr {
+        background-color: red; 
+        margin: 10px;
+    }
+
+    .product-list-page .product-list {
+        margin: 10px; 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+        grid-gap: 20px; 
+    }
 
 
 
@@ -738,6 +798,11 @@ footer {
 
 
 
+    .product-list-page img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
 
 
 
