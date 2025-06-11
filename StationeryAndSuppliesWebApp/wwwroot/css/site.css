@@ -729,11 +729,6 @@ footer {
 
 
 
-body * {
-    border: solid 1px;
-}
-
-
 
 
 /* Product List page */
@@ -776,16 +771,25 @@ body * {
 
 
 
+/*body * {
+    border: solid 1px;
+}*/
+
+
+
+
 
 /* Product list container */
 
     .product-list-page .product-list-contaienr {
-        background-color: red; 
+/*        background-color: red; */
         margin: 10px;
+       
     }
 
     .product-list-page .product-list {
         margin: 10px; 
+        padding: 10px; 
         display: grid; 
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
         grid-gap: 20px; 

@@ -117,7 +117,7 @@ public class ProductInformationService : IProductInformationService
     public async Task<List<Models.Product>> GetProductListByCategoryName(
         string categoryName, OrderByOptions? orderBy, int? pageNumber)
     {
-        int pageSize = 5;
+        int pageSize = 10;
 
         // if page number is null or less than 1, set it to 1 
         if (pageNumber is null || pageNumber < 1)
@@ -168,7 +168,7 @@ public class ProductInformationService : IProductInformationService
     public async Task<List<Models.Product>> GetProductListByParentCategoryName(
         string parentCategoryName, OrderByOptions? orderBy, int? pageNumber)
     {
-        int pageSize = 5;
+        int pageSize = 10;
 
         // if page number is null or less than 1, set it to 1
         if (pageNumber is null || pageNumber < 1)
