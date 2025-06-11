@@ -21,7 +21,19 @@
                 @foreach(var product in Model.ProductList)
                 {
                     <div class="product-container">
-
+                        <a href="#" class="product-link">
+                            <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                        </a>
+                        <div class="product-details-container">
+                            <div>
+                                <div class="product-name">@product.Name</div>
+                                <div class="product-price">@product.Price?.ToString("C")</div>
+                            </div>
+                            @if(!product.InStock)
+                            {
+                                <div class="out-of-stock">Out of Stock</div>
+                            }
+                        </div>
                     </div>
                 }
             </div>

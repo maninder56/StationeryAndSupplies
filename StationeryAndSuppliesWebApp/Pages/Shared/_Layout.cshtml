@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject StationeryAndSuppliesWebApp.Services.IProductInformationService databaseService; 
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -76,26 +78,33 @@
                         <li class="login">
                             <a href="#">login</a>
                         </li>
-                        <li>
+                        @foreach(var category in databaseService.GetParentCategoryAsync(5).Result)
+                        {
+                            <li>
+                                <a asp-page="/ProductsListPage" 
+                                   asp-route-parentCategory="@category.Name">@category.Name.Replace('-', ' ')</a>
+                            </li>
+                        }
+                        @* <li>
                             <a asp-page="/ProductsListPage"
-                               asp-route-parentCategory="Paper Products">Paper Products</a>
+                               asp-route-parentCategory="Paper-Products">Paper Products</a>
                         </li>
                         <li>
                             <a asp-page="/ProductsListPage"
-                               asp-route-parentCategory="Writing Instruments">Writing Instruments</a>
+                               asp-route-parentCategory="Writing-Instruments">Writing Instruments</a>
                         </li>
                         <li>
                             <a asp-page="/ProductsListPage"
-                               asp-route-parentCategory="Desk Accessories">Desk Accessories</a>
+                               asp-route-parentCategory="Desk-Accessories">Desk Accessories</a>
                         </li>
                         <li>
                             <a asp-page="/ProductsListPage"
-                               asp-route-parentCategory="Art Supplies">Art Supplies</a>
+                               asp-route-parentCategory="Art-Supplies">Art Supplies</a>
                         </li>
                         <li>
                             <a asp-page="/ProductsListPage"
-                               asp-route-parentCategory="Office Electronics">Office Electronics</a>
-                        </li>
+                               asp-route-parentCategory="Office-Electronics">Office Electronics</a>
+                        </li> *@
                     </ul>
                 </div>
             </div>

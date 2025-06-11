@@ -35,6 +35,34 @@ public class ProductInformationService : IProductInformationService
         return list ?? new List<Category>(); 
     }
 
+    public async Task<List<Models.ParentCategory>> GetParentCategoryAsync(int numberOfCategories)
+    {
+        logger.LogInformation("Requested to get {NumberOfCategories} parent categories from service", 
+            numberOfCategories);
+
+        if (numberOfCategories < 1)
+        {
+            logger.LogWarning("Requested to get {NumberOfCategories} which is less than 1, new number of categories is set to 1",
+                numberOfCategories);
+            numberOfCategories = 1;
+        }
+
+        List<Models.ParentCategory>? list = await database.Categories.AsNoTracking()
+            .Where(c => c.ParentId == null)
+            .OrderBy(c => c.CategoryId)
+            .Take(numberOfCategories)
+            .Select(c => new ParentCategory(c.CategoryId, c.Name))
+            .ToListAsync();
+
+        if (list is null || list.Count == 0)
+        {
+            logger.LogError("No Parent Category exists in category table");
+        }
+
+        return list ?? new List<Models.ParentCategory>();
+
+    }
+
 
     public async Task<List<ChildCategory>> GetAllChildCategoriesAsync()
     {
