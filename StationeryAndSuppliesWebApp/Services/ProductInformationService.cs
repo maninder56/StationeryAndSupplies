@@ -80,6 +80,14 @@ public class ProductInformationService : IProductInformationService
     public async Task<List<Models.ProductDetails>> GetProductListByCategoryName(
         string categoryName, OrderByOptions orderBy, int pageNumber)
     {
+        if (pageNumber < 1)
+        {
+            logger.LogWarning("Requested Page number {PageNumber} which is less than 1", pageNumber);
+            
+            pageNumber = 1;
+            logger.LogInformation("New page number is set to 1"); 
+        }
+
         int pageSize = 5; 
 
         logger.LogInformation("Requested to get product list by category name {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
@@ -112,12 +120,47 @@ public class ProductInformationService : IProductInformationService
 
     public async Task<List<ProductDetails>> GetProductListByParentCategoryName(string parentCategoryName, OrderByOptions orderBy, int pageNumber)
     {
+        if (pageNumber < 1)
+        {
+            logger.LogWarning("Requested Page number {PageNumber} which is less than 1", pageNumber);
+
+            pageNumber = 1;
+            logger.LogInformation("New page number is set to 1");
+        }
+
         int pageSize = 5;
 
         logger.LogInformation("Requested to get product list by parent category name {ParentCategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             parentCategoryName, orderBy.ToString(), pageNumber);
 
-        //List<Models.ProductDetails>? list = await database.Products.AsNoTracking()
-        //    .Where(p => p.Category.)
+        List<Models.ProductDetails>? list = await database.Categories.AsNoTracking()
+            .Join(database.Categories.AsNoTracking(), c1 => c1.ParentId, c2 => c2.CategoryId,
+            (c1, c2) => new { parentCategory = c2, childCategory = c1 })
+            .Where(c => c.parentCategory.Name == parentCategoryName)
+            .Join(database.Products.AsNoTracking(), c => c.childCategory.CategoryId, p => p.CategoryId,
+            (c, p) => p)
+            .Where(p => p.Status == "active")
+            .OrderProductBy(orderBy)
+            .Skip(pageSize * (pageNumber -1))
+            .Take(pageSize)
+            .Select(p => 
+                new ProductDetails
+                (
+                    p.ProductId, 
+                    p.Name, 
+                    p.Descripttion, 
+                    p.Price, 
+                    p.Stock > 0,  // Compute if stock is available 
+                    p.ImageUrl
+                )
+            ).ToListAsync();
+
+
+        if (list == null || list.Count == 0)
+        {
+            logger.LogWarning("No Product exists for Parent Category {ParentCategoryName}", parentCategoryName);
+        }
+
+        return list ?? new List<ProductDetails>();
     }
 }
