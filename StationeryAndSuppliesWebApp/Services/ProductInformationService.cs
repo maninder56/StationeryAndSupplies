@@ -139,7 +139,7 @@ public class ProductInformationService : IProductInformationService
             categoryName, orderBy.ToString(), pageNumber);
 
         List<Models.Product>? list = await database.Products.AsNoTracking()
-            .Where(p => p.Category.Name == categoryName && p.Status == "active")
+            .Where(p => p.Category.Name == categoryName && p.Status != "archived")
             .OrderProductBy((OrderByOptions)orderBy)
             .Skip(pageSize * ((int)pageNumber - 1))
             .Take(pageSize)
@@ -196,7 +196,7 @@ public class ProductInformationService : IProductInformationService
             .Where(c => c.parentCategory.Name == parentCategoryName)
             .Join(database.Products.AsNoTracking(), c => c.childCategory.CategoryId, p => p.CategoryId,
             (c, p) => p)
-            .Where(p => p.Status == "active")
+            .Where(p => p.Status != "archived")
             .OrderProductBy((OrderByOptions)orderBy)
             .Skip(pageSize * ((int)pageNumber -1))
             .Take(pageSize)
