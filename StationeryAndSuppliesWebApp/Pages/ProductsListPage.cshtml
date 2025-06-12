@@ -20,11 +20,13 @@
                 @foreach(var product in Model.ProductList)
                 {
                     <div class="product-container">
-                        <a href="#" class="product-link">
-                            <img src="~/@product.ImageUrl" alt="@product.Name image" />
-                        </a>
+                        <div class="product-link-container">
+                            <a href="#" class="product-link">
+                                <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                            </a>
+                        </div>
                         <div class="product-details-container">
-                            <div>
+                            <div class="product-details">
                                 <div class="product-name">@product.Name</div>
                                 <div class="product-price">@product.Price?.ToString("C")</div>
                             </div>
@@ -39,10 +41,12 @@
         </div>
 
         <div class="page-navigation-container">
-            <div class="page-navigatoin">
-                <button>Left</button>
-                <div>Page Number</div>
-                <button>Left</button>
+            <div class="page-navigatoin-section">
+                <div class="page-navigatoin">
+                    <button class="navigation-button">Left</button>
+                    <div class="page-number">Page Number</div>
+                    <button>Left</button>
+                </div>
             </div>
         </div>
     </section>
