@@ -3,6 +3,10 @@
 
 @{
     ViewData["Title"] = "Products";
+
+    int nextPageNumber = Model.CurrentPageNumber + 1;
+    int previousPageNumber = Model.CurrentPageNumber - 1; 
+
 }
 
 <article class="product-list-page">
@@ -43,15 +47,32 @@
         <div class="page-navigation-container">
             <div class="page-navigatoin-section">
                 <div class="page-navigatoin">
-                    <a href="#" class="navigation-button">
-                        <img src="~/icons/left-arrow.svg" alt="left arrow" />
-                    </a>
+                    @if(previousPageNumber > 0)
+                    {
+                        <a asp-page="/ProductsListPage"
+                        asp-route-parentCategory="@Model.ParentCategoryName"
+                        asp-route-childCategory="@Model.ChildCategoryName"
+                        asp-route-orderBy="@Model.CurrentOrderByOptions"
+                        asp-route-pageNumber="@previousPageNumber"
+                        class="navigation-button">
+                            <img src="~/icons/left-arrow.svg" alt="left arrow" />
+                        </a>
+                    }
                     <div class="page-number-container">
                         <div class="page-number">@Model.CurrentPageNumber</div>
                     </div>
-                    <a href="#" class="navigation-button">
-                        <img src="~/icons/right-arrow.svg" alt="right arrow" />
-                    </a>
+                    @* Need check if next page is available to query *@
+                    @if(Model.CurrentPageNumber < Model.MaxPageSize)
+                    {
+                        <a asp-page="/ProductsListPage"
+                           asp-route-parentCategory="@Model.ParentCategoryName"
+                           asp-route-childCategory="@Model.ChildCategoryName"
+                           asp-route-orderBy="@Model.CurrentOrderByOptions"
+                           asp-route-pageNumber="@nextPageNumber"
+                           class="navigation-button">
+                            <img src="~/icons/right-arrow.svg" alt="right arrow" />
+                        </a>
+                    }
                 </div>
             </div>
         </div>

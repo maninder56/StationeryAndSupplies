@@ -28,4 +28,11 @@ public interface IProductInformationService
     // Get product list by parent category 
     public Task<List<Models.Product>> GetProductListByParentCategoryName(
         string parentCategoryName, OrderByOptions orderBy, int pageNumber);
+
+
+    // Get maximum page size available given category name
+    public Task<int> GetMaximumPageSizeAvailableByCategory(string categoryName);
+
+    // Get maximum page size available given category name
+    public Task<int> GetMaximumPageSizeAvailableByParentCategory(string ParentcategoryName);
 }

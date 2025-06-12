@@ -12,6 +12,8 @@ public class ProductInformationService : IProductInformationService
 
     private readonly ILogger<ProductInformationService> logger; 
 
+    private int pageSize = 10;
+
     public ProductInformationService(ILogger<ProductInformationService> logger, StationeryAndSuppliesDatabaseContext database)
     {
         this.logger = logger;
@@ -117,7 +119,6 @@ public class ProductInformationService : IProductInformationService
     public async Task<List<Models.Product>> GetProductListByCategoryName(
         string categoryName, OrderByOptions orderBy, int pageNumber)
     {
-        int pageSize = 10;
 
         logger.LogInformation("Requested to get product list by category name {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             categoryName, orderBy.ToString(), pageNumber);
@@ -152,7 +153,6 @@ public class ProductInformationService : IProductInformationService
     public async Task<List<Models.Product>> GetProductListByParentCategoryName(
         string parentCategoryName, OrderByOptions orderBy, int pageNumber)
     {
-        int pageSize = 10;
 
         logger.LogInformation("Requested to get product list by parent category name {ParentCategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             parentCategoryName, orderBy.ToString(), pageNumber);
@@ -185,5 +185,50 @@ public class ProductInformationService : IProductInformationService
         }
 
         return list ?? new List<Models.Product>();
+    }
+
+
+
+
+    public async Task<int> GetMaximumPageSizeAvailableByCategory(string categoryName)
+    {
+        logger.LogInformation("Requested to get maximum page size for category {CategoryName}", 
+            categoryName);
+
+        int totalProducts = await database.Products.AsNoTracking()
+            .Where(p => p.Category.Name == categoryName && p.Status != "archived")
+            .CountAsync(); 
+
+
+        int maxPageSize = (totalProducts / pageSize) + 1;
+
+        logger.LogInformation("{CategoryName} category has maximum page size of {MaxPageSize}", 
+            categoryName, maxPageSize);
+
+        return maxPageSize;
+    }
+
+
+
+    public async Task<int> GetMaximumPageSizeAvailableByParentCategory(string parentCategoryName)
+    {
+        logger.LogInformation("Requested to get maximum page size for Parent category {ParentCategoryName}",
+            parentCategoryName);
+
+        int totalProducts = await database.Categories.AsNoTracking()
+            .Join(database.Categories.AsNoTracking(), c1 => c1.ParentId, c2 => c2.CategoryId,
+            (c1, c2) => new { parentCategory = c2, childCategory = c1 })
+            .Where(c => c.parentCategory.Name == parentCategoryName)
+            .Join(database.Products.AsNoTracking(), c => c.childCategory.CategoryId, p => p.CategoryId,
+            (c, p) => p)
+            .Where(p => p.Status != "archived")
+            .CountAsync(); 
+
+        int maxPageSize = (totalProducts / pageSize) + 1;
+
+        logger.LogInformation("{ParentCategoryName} category has maximum page size of {MaxPageSize}",
+            parentCategoryName, maxPageSize);
+
+        return maxPageSize;
     }
 }

@@ -34,12 +34,14 @@ namespace StationeryAndSuppliesWebApp.Pages
         public List<Models.Product> ProductList { get; private set; } = new List<Models.Product>();
         public int CurrentPageNumber { get; private set; }
         public OrderByOptions CurrentOrderByOptions { get; private set; }
-
+        public string ParentCategoryName { get; private set; } = string.Empty;
+        public string ChildCategoryName { get; private set; } = string.Empty;
+        public int MaxPageSize { get; private set; } = 1; 
 
         // Page handler
         public async Task<IActionResult> OnGetAsync(
             [FromRoute] string parentCategory, [FromRoute] string? childCategory, 
-            [FromQuery] OrderByOptions? orderBy, [FromQuery] int? page)
+            [FromQuery] OrderByOptions? orderBy, [FromQuery] int? pageNumber)
         {
 
             logger.LogInformation("Requested Products list page with parent category {ParentCategoryName}", 
@@ -51,19 +53,24 @@ namespace StationeryAndSuppliesWebApp.Pages
                 return RedirectToPage("/Index"); 
             }
 
-            CurrentPageNumber = CheckPageNumber(page);
+            CurrentPageNumber = CheckPageNumber(pageNumber);
             CurrentOrderByOptions = CheckOrderByOptions(orderBy);
+
+            ParentCategoryName = parentCategory;
 
             if (childCategory is not null)
             {
-                CategoryName = childCategory; 
+                CategoryName = childCategory;
+                ChildCategoryName = childCategory; 
+                MaxPageSize = await productInformationService.GetMaximumPageSizeAvailableByCategory(childCategory);
 
                 ProductList = await productInformationService
                     .GetProductListByCategoryName(childCategory, CurrentOrderByOptions, CurrentPageNumber);
             }
             else
             {
-                CategoryName = parentCategory; 
+                CategoryName = parentCategory;
+                MaxPageSize = await productInformationService.GetMaximumPageSizeAvailableByParentCategory(parentCategory);
 
                 ProductList = await productInformationService
                     .GetProductListByParentCategoryName(parentCategory, CurrentOrderByOptions, CurrentPageNumber);
