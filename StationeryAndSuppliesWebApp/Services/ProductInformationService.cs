@@ -115,33 +115,17 @@ public class ProductInformationService : IProductInformationService
 
 
     public async Task<List<Models.Product>> GetProductListByCategoryName(
-        string categoryName, OrderByOptions? orderBy, int? pageNumber)
+        string categoryName, OrderByOptions orderBy, int pageNumber)
     {
         int pageSize = 10;
-
-        // if page number is null or less than 1, set it to 1 
-        if (pageNumber is null || pageNumber < 1)
-        {
-            logger.LogInformation("Requested Page number {PageNumber} which is less than 1 or is null", pageNumber);
-            
-            pageNumber = 1;
-            logger.LogInformation("New page number is set to 1"); 
-        }
-
-        // if order by is null set it to default
-        if (orderBy is null)
-        {
-            orderBy = OrderByOptions.Default;
-            logger.LogInformation("Order by is set to Default due to being null"); 
-        }
 
         logger.LogInformation("Requested to get product list by category name {CategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             categoryName, orderBy.ToString(), pageNumber);
 
         List<Models.Product>? list = await database.Products.AsNoTracking()
             .Where(p => p.Category.Name == categoryName && p.Status != "archived")
-            .OrderProductBy((OrderByOptions)orderBy)
-            .Skip(pageSize * ((int)pageNumber - 1))
+            .OrderProductBy(orderBy)
+            .Skip(pageSize * (pageNumber - 1))
             .Take(pageSize)
             .Select(p =>
                 new Models.Product
@@ -166,26 +150,9 @@ public class ProductInformationService : IProductInformationService
 
 
     public async Task<List<Models.Product>> GetProductListByParentCategoryName(
-        string parentCategoryName, OrderByOptions? orderBy, int? pageNumber)
+        string parentCategoryName, OrderByOptions orderBy, int pageNumber)
     {
         int pageSize = 10;
-
-        // if page number is null or less than 1, set it to 1
-        if (pageNumber is null || pageNumber < 1)
-        {
-            logger.LogInformation("Requested Page number {PageNumber} which is less than 1 or is null", pageNumber);
-
-            pageNumber = 1;
-            logger.LogInformation("New page number is set to 1");
-        }
-
-        // if order by is null set it to default
-        if (orderBy is null)
-        {
-            orderBy = OrderByOptions.Default;
-            logger.LogInformation("Order by is set to Default due to being null");
-        }
-
 
         logger.LogInformation("Requested to get product list by parent category name {ParentCategoryName}, orderBy {OrderBy}, and page number {PageNumber}",
             parentCategoryName, orderBy.ToString(), pageNumber);
@@ -197,8 +164,8 @@ public class ProductInformationService : IProductInformationService
             .Join(database.Products.AsNoTracking(), c => c.childCategory.CategoryId, p => p.CategoryId,
             (c, p) => p)
             .Where(p => p.Status != "archived")
-            .OrderProductBy((OrderByOptions)orderBy)
-            .Skip(pageSize * ((int)pageNumber -1))
+            .OrderProductBy(orderBy)
+            .Skip(pageSize * (pageNumber -1))
             .Take(pageSize)
             .Select(p => 
                 new Models.Product
