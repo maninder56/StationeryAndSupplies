@@ -25,15 +25,15 @@ namespace StationeryAndSuppliesWebApp.Pages
 
 
         // Properties shared with view 
-        public List<Models.Product> ProductList { get; private set; } = new List<Models.Product>();
-        
         public string CategoryName
         {
             get { return _categoryName; }
             private set { _categoryName = value.Replace('-', ' '); }
         }
 
-        public int currentPageNumber { get; private set; }
+        public List<Models.Product> ProductList { get; private set; } = new List<Models.Product>();
+        public int CurrentPageNumber { get; private set; }
+        public OrderByOptions CurrentOrderByOptions { get; private set; }
 
 
         // Page handler
@@ -51,42 +51,65 @@ namespace StationeryAndSuppliesWebApp.Pages
                 return RedirectToPage("/Index"); 
             }
 
+            CurrentPageNumber = CheckPageNumber(page);
+            CurrentOrderByOptions = CheckOrderByOptions(orderBy);
+
             if (childCategory is not null)
             {
                 CategoryName = childCategory; 
 
                 ProductList = await productInformationService
-                    .GetProductListByCategoryName(childCategory, orderBy, page); 
-
-                if (ProductList.Count == 0)
-                {
-                    logger.LogWarning("No Product exits in category {CategoryName} with page number {PageNumber}", 
-                        childCategory, page); 
-                }
-
-                logger.LogInformation("Loaded {ProductCount} with category {CategoryName}", ProductList.Count, 
-                    childCategory);
-
-                return Page();
+                    .GetProductListByCategoryName(childCategory, CurrentOrderByOptions, CurrentPageNumber);
             }
             else
             {
                 CategoryName = parentCategory; 
 
                 ProductList = await productInformationService
-                    .GetProductListByParentCategoryName(parentCategory, orderBy, page);
-
-                if (ProductList.Count == 0)
-                {
-                    logger.LogWarning("No Product exits in Parent category {ParentCategoryName} with page number {PageNumber}",
-                        parentCategory, page);
-                }
-
-                logger.LogInformation("Loaded {ProductCount} with Parent category {ParentCategoryName}", ProductList.Count,
-                    parentCategory);
-
-                return Page();
+                    .GetProductListByParentCategoryName(parentCategory, CurrentOrderByOptions, CurrentPageNumber);
             }
+
+            if (ProductList.Count == 0)
+            {
+                logger.LogWarning("No Product exits in category {CategoryName} with page number {PageNumber}",
+                    CategoryName, CurrentPageNumber);
+            }
+
+            logger.LogInformation("Loaded {ProductCount} with category {CategoryName}", ProductList.Count,
+                CategoryName);
+
+            return Page();
         }
+
+
+        
+        // Helper methods 
+
+        private int CheckPageNumber(int? pageNumber)
+        {
+            // if page number is null or less than 1, set it to 1 
+            if (pageNumber is null || pageNumber < 1)
+            {
+                logger.LogInformation("Requested Page number {PageNumber} which is less than 1 or is null", pageNumber);
+
+                pageNumber = 1;
+                logger.LogInformation("New page number is set to 1");
+            }
+
+            return (int)pageNumber; 
+        }
+
+        private OrderByOptions CheckOrderByOptions(OrderByOptions? orderBy)
+        {
+            // if order by is null set it to default
+            if (orderBy is null)
+            {
+                orderBy = OrderByOptions.Default;
+                logger.LogInformation("Order by is set to Default due to being null");
+            }
+
+            return (OrderByOptions)orderBy; 
+        }
+
     }
 }

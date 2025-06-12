@@ -82,7 +82,8 @@
                         {
                             <li>
                                 <a asp-page="/ProductsListPage" 
-                                   asp-route-parentCategory="@category.Name">@category.Name.Replace('-', ' ')</a>
+                                   asp-route-parentCategory="@category.Name"
+                                   asp-route-childCategory="">@category.Name.Replace('-', ' ')</a>
                             </li>
                         }
                         @* <li>
