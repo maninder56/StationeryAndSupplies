@@ -26,13 +26,17 @@ namespace StationeryAndSuppliesWebApp.Pages
 
         // Properties shared with view 
         public List<Models.Product> ProductList { get; private set; } = new List<Models.Product>();
+        
         public string CategoryName
         {
             get { return _categoryName; }
             private set { _categoryName = value.Replace('-', ' '); }
         }
 
+        public int currentPageNumber { get; private set; }
 
+
+        // Page handler
         public async Task<IActionResult> OnGetAsync(
             [FromRoute] string parentCategory, [FromRoute] string? childCategory, 
             [FromQuery] OrderByOptions? orderBy, [FromQuery] int? page)

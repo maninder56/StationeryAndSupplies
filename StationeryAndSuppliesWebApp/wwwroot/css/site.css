@@ -10,7 +10,7 @@
     --footer-text-hover-color: white;
     --link-hover-text-color: rgb(73, 73, 73);
     --button-hover-background-color: #ebf1bd;
-    --botton-active-background-color: #d4d9ab;
+    --button-active-background-color: #d4d9ab;
     --button-background-color: #f5f5dc;
     --out-of-stock-text-color: orangered;
 
@@ -207,7 +207,7 @@ footer {
 }
 
 .search-area .search-items .close-button:active {
-    background-color: var(--botton-active-background-color);
+    background-color: var(--button-active-background-color);
 }
 
 
@@ -298,7 +298,7 @@ footer {
     }
 
     .main-navigation .desktop-link a:active {
-        background-color: var(--botton-active-background-color);
+        background-color: var(--button-active-background-color);
     }
 }
 
@@ -370,7 +370,7 @@ footer {
         }
 
         .menu-overlay-close-button .close-button:active {
-            background-color: var(--botton-active-background-color);
+            background-color: var(--button-active-background-color);
         }
 
 
@@ -878,26 +878,48 @@ footer {
 
 
 .product-list-page .page-number {
-    display: inline-block; 
-
+    margin: 5px; 
+    text-align:center; 
 }
 
-    .product-list-page .navigation-button {
-        margin: 10px; 
-        height: 30px; 
-        width: 50px; 
-        cursor: pointer; 
+.product-list-page .navigation-button {
+    margin: 10px;
+    padding: 0px;
+    height: 30px;
+    width: 50px;
+    cursor: pointer;
+    background-color: var(--button-background-color);
+    border-radius: 5px;
+    border: 1px solid black;
+    display: flex; 
+    justify-content: center; 
+    align-content: center; 
+}
 
+    .product-list-page .navigation-button img {
+        width: 35px; 
+        height: 20px; 
+        margin: 4px 0px;
+        padding: 0px;
+        object-fit: contain;
     }
 
+.product-list-page .navigation-button:hover {
+    background-color: var(--button-hover-background-color)
+}
+
+.product-list-page .navigation-button:active {
+    background-color: var(--button-active-background-color)
+}
 
 
 
 
 
-    body * {
+
+/*    body * {
         border: solid 1px;
-    }
+    }*/
 
 
 
