@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StationeryAndSuppliesWebApp.Models;
 using StationeryAndSuppliesWebApp.Services;
@@ -38,6 +39,17 @@ namespace StationeryAndSuppliesWebApp.Pages
         public string ChildCategoryName { get; private set; } = string.Empty;
         public int MaxPageSize { get; private set; } = 1; 
 
+        // Sort drop down options
+        public List<SelectListItem> SortOptions  = new List<SelectListItem>
+        {
+            new SelectListItem{ Value = "Default", Text = "Default" },
+            new SelectListItem{ Value = "PriceLowToHigh", Text = "Price Low To High" },
+            new SelectListItem{ Value = "PriceHighToLow", Text = "Price High To Low" },
+            new SelectListItem{ Value = "NameAToZ", Text = "Name A To Z" },
+            new SelectListItem{ Value = "NameZToA", Text = "Name Z To A" }
+        };
+
+
         // Page handler
         public async Task<IActionResult> OnGetAsync(
             [FromRoute] string parentCategory, [FromRoute] string? childCategory, 
@@ -56,6 +68,9 @@ namespace StationeryAndSuppliesWebApp.Pages
             CurrentPageNumber = CheckPageNumber(pageNumber);
             CurrentOrderByOptions = CheckOrderByOptions(orderBy);
 
+            // set current order by drop down list
+            SetCurrentOrderByOptionOnSelectListItem(ref SortOptions, CurrentOrderByOptions.ToString());
+            
             ParentCategoryName = parentCategory;
 
             if (childCategory is not null)
@@ -116,6 +131,24 @@ namespace StationeryAndSuppliesWebApp.Pages
             }
 
             return (OrderByOptions)orderBy; 
+        }
+
+        private void SetCurrentOrderByOptionOnSelectListItem(ref List<SelectListItem> list, string value)
+        {
+            foreach (var item in list)
+            {
+                if (item.Value == value)
+                {
+                    item.Selected = true;
+                    return;
+                }
+            }
+        }
+
+
+        public class InputModel
+        {
+            public string OrderByOptionsSelectedValue { get; set; } = string.Empty;
         }
 
     }

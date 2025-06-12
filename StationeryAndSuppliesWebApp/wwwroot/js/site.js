@@ -57,3 +57,26 @@ function rightScroll() {
 }
 
 
+
+// Order by Drop down on product list page
+
+const orderbyDorpDown = document.getElementById("order-by-drop-down"); 
+
+
+orderbyDorpDown.onchange = function () {
+    window.location = window.location.href + "?orderBy=NameZToA"; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

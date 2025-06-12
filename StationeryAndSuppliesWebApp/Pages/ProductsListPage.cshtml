@@ -15,7 +15,10 @@
             <div class="category-title">@Model.CategoryName</div>
             <div class="order-by-contaienr">
                 <header>Order By : </header>
-                <div class="drop-down">Drop down</div>
+                <div class="drop-down">
+                    <select asp-items="Model.SortOptions" id="order-by-drop-down">
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -61,7 +64,6 @@
                     <div class="page-number-container">
                         <div class="page-number">@Model.CurrentPageNumber</div>
                     </div>
-                    @* Need check if next page is available to query *@
                     @if(Model.CurrentPageNumber < Model.MaxPageSize)
                     {
                         <a asp-page="/ProductsListPage"
