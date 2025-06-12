@@ -13,6 +13,7 @@
     --button-active-background-color: #d4d9ab;
     --button-background-color: #f5f5dc;
     --out-of-stock-text-color: orangered;
+    --product-card-background-color: white; 
 
     transition: font-size 0.5s ease-in-out;
 }
@@ -795,7 +796,19 @@ footer {
 
 .product-list-page .product-container {
     margin: 5px; 
+    background-color: var(--product-card-background-color); 
+    display: flex; 
+    flex-direction: column; 
+    border-radius: 10px;
+    padding: 5px; 
 }
+
+    .product-list-page .product-details-container {
+        flex: 1 0 auto;
+        display: flex; 
+        flex-direction:column; 
+        justify-content: center; 
+    }
 
 .product-list-page .product-link-container {
     display: flex; 
@@ -816,14 +829,15 @@ footer {
 }
 
 
-.product-list-page .product-details-container {
-    margin-top: 10px;  
-}
+    .product-list-page .product-details-container {
+        margin-top: 10px; 
+    }
 
 
 .product-list-page .product-details {
     display: flex; 
     justify-content: center; 
+    
 }
 
 .product-list-page .product-name {
@@ -919,8 +933,8 @@ footer {
 
 /*    body * {
         border: solid 1px;
-    }*/
-
+    }
+*/
 
 
 
