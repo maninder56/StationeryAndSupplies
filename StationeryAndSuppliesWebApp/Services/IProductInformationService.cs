@@ -19,20 +19,25 @@ public interface IProductInformationService
     // Product methods 
 
     // Get first eight products 
-    public Task<List<Models.Product>> GetEightProducts();
+    public Task<List<Models.Product>> GetEightProductsAsync();
 
     // Get product list by category name 
-    public Task<List<Models.Product>> GetProductListByCategoryName(
+    public Task<List<Models.Product>> GetProductListByCategoryNameAsync(
         string categoryName, OrderByOptions orderBy, int pageNumber);
 
     // Get product list by parent category 
-    public Task<List<Models.Product>> GetProductListByParentCategoryName(
+    public Task<List<Models.Product>> GetProductListByParentCategoryNameAsync(
         string parentCategoryName, OrderByOptions orderBy, int pageNumber);
 
 
     // Get maximum page size available given category name
-    public Task<int> GetMaximumPageSizeAvailableByCategory(string categoryName);
+    public Task<int> GetMaximumPageSizeAvailableByCategoryAsync(string categoryName);
 
     // Get maximum page size available given category name
-    public Task<int> GetMaximumPageSizeAvailableByParentCategory(string ParentcategoryName);
+    public Task<int> GetMaximumPageSizeAvailableByParentCategoryAsync(string ParentcategoryName);
+
+
+    // Get single product Details 
+    public Task<Models.ProductDetails?> GetProductDetailsByIDAsync(int productId);
+    
 }

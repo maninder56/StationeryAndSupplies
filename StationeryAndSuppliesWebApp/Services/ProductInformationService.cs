@@ -95,7 +95,7 @@ public class ProductInformationService : IProductInformationService
 
     // Products 
 
-    public async Task<List<Models.Product>> GetEightProducts()
+    public async Task<List<Models.Product>> GetEightProductsAsync()
     {
         logger.LogInformation("Requested to get fist eight products"); 
 
@@ -116,7 +116,7 @@ public class ProductInformationService : IProductInformationService
     }
 
 
-    public async Task<List<Models.Product>> GetProductListByCategoryName(
+    public async Task<List<Models.Product>> GetProductListByCategoryNameAsync(
         string categoryName, OrderByOptions orderBy, int pageNumber)
     {
 
@@ -150,7 +150,7 @@ public class ProductInformationService : IProductInformationService
 
 
 
-    public async Task<List<Models.Product>> GetProductListByParentCategoryName(
+    public async Task<List<Models.Product>> GetProductListByParentCategoryNameAsync(
         string parentCategoryName, OrderByOptions orderBy, int pageNumber)
     {
 
@@ -190,7 +190,7 @@ public class ProductInformationService : IProductInformationService
 
 
 
-    public async Task<int> GetMaximumPageSizeAvailableByCategory(string categoryName)
+    public async Task<int> GetMaximumPageSizeAvailableByCategoryAsync(string categoryName)
     {
         logger.LogInformation("Requested to get maximum page size for category {CategoryName}", 
             categoryName);
@@ -210,7 +210,7 @@ public class ProductInformationService : IProductInformationService
 
 
 
-    public async Task<int> GetMaximumPageSizeAvailableByParentCategory(string parentCategoryName)
+    public async Task<int> GetMaximumPageSizeAvailableByParentCategoryAsync(string parentCategoryName)
     {
         logger.LogInformation("Requested to get maximum page size for Parent category {ParentCategoryName}",
             parentCategoryName);
@@ -230,5 +230,33 @@ public class ProductInformationService : IProductInformationService
             parentCategoryName, maxPageSize);
 
         return maxPageSize;
+    }
+
+
+
+    public async Task<ProductDetails?> GetProductDetailsByIDAsync(int productId)
+    {
+       logger.LogInformation("Requested to get Product detials of product with ID {ProductID}", productId);
+
+        ProductDetails? productDetails = await database.Products.AsNoTracking()
+            .Where(p => p.ProductId == productId && p.Status != "archived")
+            .Select(p => 
+                new ProductDetails
+                (
+                    p.ProductId, 
+                    p.Name, 
+                    p.Descripttion, 
+                    p.Price, 
+                    p.Stock > 0, 
+                    p.ImageUrl
+                ))
+            .FirstOrDefaultAsync();
+
+        if (productDetails is null)
+        {
+            logger.LogWarning("No product with ID {ProductID} Exists", productId); 
+        }
+
+        return productDetails; 
     }
 }

@@ -62,7 +62,7 @@ public class IndexModel : PageModel
 
         // Get product list
 
-        List<Models.Product> productList = await productInformationService.GetEightProducts();
+        List<Models.Product> productList = await productInformationService.GetEightProductsAsync();
 
         logger.LogInformation("Total {NumberOfProducts} products loaded in product list", productList.Count);
 

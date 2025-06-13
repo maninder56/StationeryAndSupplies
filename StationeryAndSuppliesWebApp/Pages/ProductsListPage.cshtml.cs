@@ -91,18 +91,18 @@ namespace StationeryAndSuppliesWebApp.Pages
             {
                 CategoryName = childCategory;
                 ChildCategoryName = childCategory; 
-                MaxPageSize = await productInformationService.GetMaximumPageSizeAvailableByCategory(childCategory);
+                MaxPageSize = await productInformationService.GetMaximumPageSizeAvailableByCategoryAsync(childCategory);
 
                 ProductList = await productInformationService
-                    .GetProductListByCategoryName(childCategory, CurrentOrderByOptions, CurrentPageNumber);
+                    .GetProductListByCategoryNameAsync(childCategory, CurrentOrderByOptions, CurrentPageNumber);
             }
             else
             {
                 CategoryName = parentCategory;
-                MaxPageSize = await productInformationService.GetMaximumPageSizeAvailableByParentCategory(parentCategory);
+                MaxPageSize = await productInformationService.GetMaximumPageSizeAvailableByParentCategoryAsync(parentCategory);
 
                 ProductList = await productInformationService
-                    .GetProductListByParentCategoryName(parentCategory, CurrentOrderByOptions, CurrentPageNumber);
+                    .GetProductListByParentCategoryNameAsync(parentCategory, CurrentOrderByOptions, CurrentPageNumber);
             }
 
             if (ProductList.Count == 0)

@@ -1,4 +1,22 @@
-﻿@page
-@model StationeryAndSuppliesWebApp.Pages.SingleProductPageModel
+﻿@page "{productname?}/{productid:int}"
+@model SingleProductPageModel
+
 @{
+
 }
+
+
+<article class="single-product-page">
+    <section class="single-product-section">
+        @if(Model.Product is null)
+        {
+            <p>No product found with id: </p>
+        }
+        else
+        {
+            <p>@Model.Product.Name</p>
+            <p>@Model.Product.Description</p>
+            <p>@Model.Product.InStock</p>
+        }
+    </section>
+</article>
