@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StationeryAndSuppliesWebApp.Models;
 using StationeryAndSuppliesWebApp.Services;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.ConstrainedExecution;
 
 namespace StationeryAndSuppliesWebApp.Pages
 {
@@ -37,10 +38,10 @@ namespace StationeryAndSuppliesWebApp.Pages
         public OrderByOptions CurrentOrderByOptions { get; private set; }
         public string ParentCategoryName { get; private set; } = string.Empty;
         public string ChildCategoryName { get; private set; } = string.Empty;
-        public int MaxPageSize { get; private set; } = 1; 
+        public int MaxPageSize { get; private set; } = 1;
 
         // Sort drop down options
-        public List<SelectListItem> SortOptions  = new List<SelectListItem>
+        public List<SelectListItem> SortOptions = new List<SelectListItem>
         {
             new SelectListItem{ Value = "Default", Text = "Default" },
             new SelectListItem{ Value = "PriceLowToHigh", Text = "Price Low To High" },
@@ -48,6 +49,11 @@ namespace StationeryAndSuppliesWebApp.Pages
             new SelectListItem{ Value = "NameAToZ", Text = "Name A To Z" },
             new SelectListItem{ Value = "NameZToA", Text = "Name Z To A" }
         };
+
+
+        // Properties from view 
+        [BindProperty(SupportsGet = true)]
+        public InputModel Input {  get; set; } = new InputModel();
 
 
         // Page handler
@@ -67,6 +73,13 @@ namespace StationeryAndSuppliesWebApp.Pages
 
             CurrentPageNumber = CheckPageNumber(pageNumber);
             CurrentOrderByOptions = CheckOrderByOptions(orderBy);
+
+            if (Input.OrderByOptionsSelectedValue != string.Empty)
+            {
+                logger.LogInformation("Order by drop down changed from {OldOrderBy} to {NewOrderBy}",
+                    CurrentOrderByOptions, Input.OrderByOptionsSelectedValue); 
+                CurrentOrderByOptions = OrderByFromString(Input.OrderByOptionsSelectedValue);
+            }
 
             // set current order by drop down list
             SetCurrentOrderByOptionOnSelectListItem(ref SortOptions, CurrentOrderByOptions.ToString());
@@ -140,9 +153,23 @@ namespace StationeryAndSuppliesWebApp.Pages
                 if (item.Value == value)
                 {
                     item.Selected = true;
+                    logger.LogInformation("{SelectItem} has been selected in SelectListItem List", item.Text); 
                     return;
                 }
             }
+            logger.LogWarning("NO matching value found to be the selected value in Order By drop down"); 
+        }
+
+        private OrderByOptions OrderByFromString(string orderby)
+        {
+            return orderby switch
+            {
+                "PriceLowToHigh" => OrderByOptions.PriceLowToHigh,
+                "PriceHighToLow" => OrderByOptions.PriceHighToLow,
+                "NameAToZ" => OrderByOptions.NameAToZ,
+                "NameZToA" => OrderByOptions.NameZToA, 
+                _ => OrderByOptions.Default
+            }; 
         }
 
 

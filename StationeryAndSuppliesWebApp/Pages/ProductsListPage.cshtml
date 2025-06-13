@@ -16,8 +16,14 @@
             <div class="order-by-contaienr">
                 <header>Order By : </header>
                 <div class="drop-down">
-                    <select asp-items="Model.SortOptions" id="order-by-drop-down">
-                    </select>
+                    <form method="get" id="order-by-drop-down-form"
+                          asp-page="/ProductsListPage"
+                          asp-route-parentCategory="@Model.ParentCategoryName"
+                          asp-route-childCategory="@Model.ChildCategoryName">
+                        <select asp-for="Input.OrderByOptionsSelectedValue" 
+                                asp-items="Model.SortOptions" id="order-by-drop-down">
+                        </select>
+                    </form>
                 </div>
             </div>
         </div>

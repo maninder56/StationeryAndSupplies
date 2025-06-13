@@ -60,11 +60,12 @@ function rightScroll() {
 
 // Order by Drop down on product list page
 
+const orderByDropDownForm = document.getElementById("order-by-drop-down-form"); 
 const orderbyDorpDown = document.getElementById("order-by-drop-down"); 
 
 
 orderbyDorpDown.onchange = function () {
-    window.location = window.location.href + "?orderBy=NameZToA"; 
+    orderByDropDownForm.submit(); 
 }
 
 
