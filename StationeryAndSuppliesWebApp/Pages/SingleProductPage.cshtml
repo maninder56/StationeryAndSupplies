@@ -7,16 +7,43 @@
 
 
 <article class="single-product-page">
-    <section class="single-product-section">
+    <section class="section-container">
         @if(Model.Product is null)
         {
-            <p>No product found with id: </p>
+            @*need to test it*@
+            <div>Missing product</div>
         }
         else
         {
-            <p>@Model.Product.Name</p>
-            <p>@Model.Product.Description</p>
-            <p>@Model.Product.InStock</p>
+            <div class="product-image-container">
+                <img src="~/@Model.Product.ImageUrl" />
+            </div>
+            <div class="product-details">
+                <div class="product-details-column">
+                    <div>@Model.Product.Name</div>
+                    <div>@Model.Product.Price</div>
+                    <div>
+                        @if(!Model.Product.InStock)
+                        {
+                            <div>Out of Stock</div>
+                        }
+                    </div>
+                    <div>
+                        <div>About Product</div>
+                        <div>@Model.Product.Description</div>
+                    </div>
+                    <div>
+                        <div>Quantity: </div>
+                        <div>Drop down up to 10</div>
+                    </div>
+                    <div>
+                        <form action="#" method="get">
+                            <input value="@Model.Product.Id" hidden />
+                            <button type="submit">Add to Bag</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         }
     </section>
 </article>
