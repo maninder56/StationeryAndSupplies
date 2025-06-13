@@ -14,6 +14,7 @@
     --button-background-color: #f5f5dc;
     --out-of-stock-text-color: orangered;
     --product-card-background-color: white; 
+    --order-by-button-color: 
 
     transition: font-size 0.5s ease-in-out;
 }
@@ -747,7 +748,7 @@ footer {
     .product-list-page .section-container {
         flex: 1 1 auto; 
         max-width: 800px; 
-        margin: 40px; 
+        margin: 40px 0px; 
     }
 
     .product-list-page .category-title-and-orderby-section {
@@ -760,20 +761,61 @@ footer {
     }
 
 
-    .product-list-page .order-by-contaienr {
-        display:flex; 
+    .product-list-page .order-by-container {
+        display:flex;  
         justify-content: end; 
         margin: 5px; 
         padding: 5px; 
     }
 
-    .product-list-page .order-by-contaienr header {
-        margin-right: 5px; 
-    }
-
-        .product-list-page .order-by-contaienr .drop-down {
-
+        .product-list-page .order-by-container .order-by-title {
+            display:flex; 
+            flex-direction:column; 
+            justify-content: center; 
+            align-content: center; 
         }
+
+        .product-list-page .order-by-container .order-by-title header {
+            flex: 0 0 auto; 
+            display: inline-block;
+            text-align: center;
+        }
+
+        .product-list-page .order-by-container .drop-down {
+            display:flex; 
+            flex-direction: column; 
+            align-content: center; 
+            justify-content: center; 
+        }
+
+        .product-list-page .order-by-container .drop-down form {
+            
+        }
+
+        .product-list-page .order-by-container .order-by-drop-down-select {
+            font-size: 1rem;
+            background-color: var(--primary-background-color-cream);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 2px; 
+            cursor: pointer; 
+        }
+
+        .product-list-page .order-by-container .order-by-drop-down-select:hover {
+            background-color: var(--button-hover-background-color);
+        }
+            .product-list-page .order-by-container .order-by-drop-down-select:active {
+                background-color: var(--button-active-background-color);
+            }
+
+
+
+
+/*        body * {
+            border: solid 1px;
+        }*/
+
+
 
 
 
@@ -930,11 +972,6 @@ footer {
 
 
 
-
-/*    body * {
-        border: solid 1px;
-    }
-*/
 
 
 

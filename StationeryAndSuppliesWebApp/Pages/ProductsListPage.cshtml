@@ -13,15 +13,18 @@
     <section class="section-container">
         <div class="category-title-and-orderby-section">
             <div class="category-title">@Model.CategoryName</div>
-            <div class="order-by-contaienr">
-                <header>Order By : </header>
+            <div class="order-by-container">
+                <div class="order-by-title">
+                    <header>Order By : </header>
+                </div>
                 <div class="drop-down">
                     <form method="get" id="order-by-drop-down-form"
                           asp-page="/ProductsListPage"
                           asp-route-parentCategory="@Model.ParentCategoryName"
                           asp-route-childCategory="@Model.ChildCategoryName">
                         <select asp-for="Input.OrderByOptionsSelectedValue" 
-                                asp-items="Model.SortOptions" id="order-by-drop-down">
+                                asp-items="Model.SortOptions" 
+                                id="order-by-drop-down" class="order-by-drop-down-select">
                         </select>
                     </form>
                 </div>
