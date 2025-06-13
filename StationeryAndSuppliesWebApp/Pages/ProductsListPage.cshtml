@@ -37,7 +37,11 @@
                 {
                     <div class="product-container">
                         <div class="product-link-container">
-                            <a href="#" class="product-link">
+                            @* Link to single product details *@
+                            <a asp-page="/SingleProductPage"
+                               asp-route-productname="@product.Name.Replace(' ', '-')"
+                               asp-route-productid="@product.Id"
+                               class="product-link">
                                 <img src="~/@product.ImageUrl" alt="@product.Name image" />
                             </a>
                         </div>

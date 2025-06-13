@@ -8,10 +8,7 @@ namespace StationeryAndSuppliesWebApp.Pages
     {
         private ILogger<SingleProductPageModel> logger;
 
-        private IProductInformationService productInformationService;
-
-        [ViewData]
-        public string Title { get; set; } = "Product"; 
+        private IProductInformationService productInformationService; 
 
         public SingleProductPageModel(ILogger<SingleProductPageModel> logger, 
             IProductInformationService productInformationService)
@@ -23,8 +20,7 @@ namespace StationeryAndSuppliesWebApp.Pages
         // Properties shared with view 
         public Models.ProductDetails? Product { get; private set; }
 
-        public async Task<IActionResult> OnGetAsync(
-            [FromRoute] string? productname, [FromRoute] int productid)
+        public async Task<IActionResult> OnGetAsync([FromRoute] int productid)
         {
             // add logging 
 

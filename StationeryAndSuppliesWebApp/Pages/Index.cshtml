@@ -15,10 +15,10 @@
                 </button>
             </div>
             <div id="categories-container" class="product-categories-container">
-                @* Add links to each <a> tag, pointing to their respective pages. *@
                 @foreach (var category in Model.ChildCategoriesListInFirstSection)
                 {
                     <div class="product-category">
+                        @* Links to product list page *@
                         <a asp-page="/ProductsListPage" 
                             asp-route-parentCategory="@category.ParentCategoryName"
                             asp-route-childCategory="@category.CategoryName" 
@@ -42,11 +42,11 @@
         <section class="second-categories-section">
             <div class="section-container">
                 <div class="product-categories-container">
-                    @* Add links to each <a> tag, pointing to their respective pages. *@
                     @foreach (var category in Model.ChildCategoriesListInSecondSection)
                     {
                         <div class="product-category">
                             <div class="category-link-image">
+                                @* Links to product list page *@
                                 <a asp-page="/ProductsListPage"
                                    asp-route-parentCategory="@category.ParentCategoryName"
                                    asp-route-childCategory="@category.CategoryName" 
@@ -67,12 +67,15 @@
         <section class="third-product-section">
             <div class="section-container">
                 <div class="products-container">
-                    @* Add links to each <a> tag, pointing to their respective pages. *@
                     @foreach (var product in Model.ProductsInThirdSection)
                     {
                         <div class="product">
                             <div class="product-link-and-image">
-                                <a href="#" class="product-link">
+                                @* Links to product details page *@
+                                <a asp-page="/SingleProductPage"
+                                   asp-route-productname="@product.Name.Replace(' ', '-')"
+                                   asp-route-productid="@product.Id"
+                                   class="product-link">
                                     <img src="~/@product.ImageUrl" alt="@product.Name image" />
                                 </a>
                             </div>
