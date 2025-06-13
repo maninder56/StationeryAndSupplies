@@ -71,15 +71,15 @@ namespace StationeryAndSuppliesWebApp.Pages
                 return RedirectToPage("/Index"); 
             }
 
-            CurrentPageNumber = CheckPageNumber(pageNumber);
-            CurrentOrderByOptions = CheckOrderByOptions(orderBy);
+            CurrentPageNumber = await CheckPageNumberAsync(pageNumber);
+            CurrentOrderByOptions = await CheckOrderByOptionsAsync(orderBy);
 
             // When order by drop down changed 
             if (Input.OrderByOptionsSelectedValue != string.Empty)
             {
                 logger.LogInformation("Order by drop down changed from {OldOrderBy} to {NewOrderBy}",
                     CurrentOrderByOptions, Input.OrderByOptionsSelectedValue); 
-                CurrentOrderByOptions = OrderByFromString(Input.OrderByOptionsSelectedValue);
+                CurrentOrderByOptions = await OrderByFromStringAsync(Input.OrderByOptionsSelectedValue);
             }
 
             // set current order by drop down list
@@ -121,42 +121,51 @@ namespace StationeryAndSuppliesWebApp.Pages
         
         // Helper methods 
 
-        private int CheckPageNumber(int? pageNumber)
+        private async Task<int> CheckPageNumberAsync(int? pageNumber)
         {
-            // if page number is null or less than 1, set it to 1 
-            if (pageNumber is null || pageNumber < 1)
+            return await Task.Run(() =>
             {
-                logger.LogInformation("Requested Page number {PageNumber} which is less than 1 or is null", pageNumber);
+                // if page number is null or less than 1, set it to 1 
+                if (pageNumber is null || pageNumber < 1)
+                {
+                    logger.LogInformation("Requested Page number {PageNumber} which is less than 1 or is null", pageNumber);
 
-                pageNumber = 1;
-                logger.LogInformation("New page number is set to 1");
-            }
+                    pageNumber = 1;
+                    logger.LogInformation("New page number is set to 1");
+                }
 
-            return (int)pageNumber; 
+                return (int)pageNumber;
+            });
         }
 
-        private OrderByOptions CheckOrderByOptions(OrderByOptions? orderBy)
+        private async Task<OrderByOptions> CheckOrderByOptionsAsync(OrderByOptions? orderBy)
         {
-            // if order by is null set it to default
-            if (orderBy is null)
+            return await Task.Run(() =>
             {
-                orderBy = OrderByOptions.Default;
-                logger.LogInformation("Order by is set to Default due to being null");
-            }
+                // if order by is null set it to default
+                if (orderBy is null)
+                {
+                    orderBy = OrderByOptions.Default;
+                    logger.LogInformation("Order by is set to Default due to being null");
+                }
 
-            return (OrderByOptions)orderBy; 
+                return (OrderByOptions)orderBy;
+            });
         }
 
-        private OrderByOptions OrderByFromString(string orderby)
+        private async Task<OrderByOptions> OrderByFromStringAsync(string orderby)
         {
-            return orderby switch
+            return await Task.Run(() =>
             {
-                "PriceLowToHigh" => OrderByOptions.PriceLowToHigh,
-                "PriceHighToLow" => OrderByOptions.PriceHighToLow,
-                "NameAToZ" => OrderByOptions.NameAToZ,
-                "NameZToA" => OrderByOptions.NameZToA, 
-                _ => OrderByOptions.Default
-            }; 
+                return orderby switch
+                {
+                    "PriceLowToHigh" => OrderByOptions.PriceLowToHigh,
+                    "PriceHighToLow" => OrderByOptions.PriceHighToLow,
+                    "NameAToZ" => OrderByOptions.NameAToZ,
+                    "NameZToA" => OrderByOptions.NameZToA,
+                    _ => OrderByOptions.Default
+                };
+            });
         }
 
 
