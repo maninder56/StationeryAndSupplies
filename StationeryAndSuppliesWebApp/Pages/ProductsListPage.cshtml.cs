@@ -67,7 +67,7 @@ namespace StationeryAndSuppliesWebApp.Pages
 
             if (!ModelState.IsValid)
             {
-                logger.LogWarning("Unvalid Model State, redirecting to hope page"); 
+                logger.LogWarning("Unvalid Model State, redirecting to home page"); 
                 return RedirectToPage("/Index"); 
             }
 

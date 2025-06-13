@@ -22,14 +22,20 @@ namespace StationeryAndSuppliesWebApp.Pages
 
         public async Task<IActionResult> OnGetAsync([FromRoute] int productid)
         {
-            // add logging 
+            logger.LogInformation("Requested to get Product page with product ID {ProductID}", productid);
 
             if (!ModelState.IsValid)
             {
+                logger.LogWarning("Unvalid Model State, redirecting from SingleProductPageModel to home page"); 
                 return RedirectToPage("/Index"); 
             }
 
             Product = await productInformationService.GetProductDetailsByIDAsync(productid); 
+
+            if(Product is null)
+            {
+                logger.LogWarning("No Product recieved from service"); 
+            }
 
             return Page();
         }
