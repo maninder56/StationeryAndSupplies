@@ -74,6 +74,7 @@ namespace StationeryAndSuppliesWebApp.Pages
             CurrentPageNumber = CheckPageNumber(pageNumber);
             CurrentOrderByOptions = CheckOrderByOptions(orderBy);
 
+            // When order by drop down changed 
             if (Input.OrderByOptionsSelectedValue != string.Empty)
             {
                 logger.LogInformation("Order by drop down changed from {OldOrderBy} to {NewOrderBy}",
@@ -82,7 +83,7 @@ namespace StationeryAndSuppliesWebApp.Pages
             }
 
             // set current order by drop down list
-            SetCurrentOrderByOptionOnSelectListItem(ref SortOptions, CurrentOrderByOptions.ToString());
+            Input.OrderByOptionsSelectedValue = CurrentOrderByOptions.ToString(); 
             
             ParentCategoryName = parentCategory;
 
@@ -144,20 +145,6 @@ namespace StationeryAndSuppliesWebApp.Pages
             }
 
             return (OrderByOptions)orderBy; 
-        }
-
-        private void SetCurrentOrderByOptionOnSelectListItem(ref List<SelectListItem> list, string value)
-        {
-            foreach (var item in list)
-            {
-                if (item.Value == value)
-                {
-                    item.Selected = true;
-                    logger.LogInformation("{SelectItem} has been selected in SelectListItem List", item.Text); 
-                    return;
-                }
-            }
-            logger.LogWarning("NO matching value found to be the selected value in Order By drop down"); 
         }
 
         private OrderByOptions OrderByFromString(string orderby)
