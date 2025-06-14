@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using StationeryAndSuppliesWebApp.Services;
 
 namespace StationeryAndSuppliesWebApp.Pages
@@ -20,6 +21,11 @@ namespace StationeryAndSuppliesWebApp.Pages
         // Properties shared with view 
         public Models.ProductDetails? Product { get; private set; }
 
+        // Quantity drop down options 
+        public IEnumerable<SelectListItem> QuantityOptions { get; private set; } = Enumerable.Range(1, 10)
+            .Select(number => new SelectListItem() { Value = number.ToString(), Text = number.ToString() }); 
+
+
         public async Task<IActionResult> OnGetAsync([FromRoute] int productid)
         {
             logger.LogInformation("Requested to get Product page with product ID {ProductID}", productid);
@@ -39,5 +45,7 @@ namespace StationeryAndSuppliesWebApp.Pages
 
             return Page();
         }
+
+        
     }
 }
