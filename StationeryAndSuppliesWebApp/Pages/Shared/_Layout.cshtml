@@ -1,4 +1,4 @@
-﻿@inject StationeryAndSuppliesWebApp.Services.IProductInformationService databaseService; 
+﻿@* @inject StationeryAndSuppliesWebApp.Services.IProductInformationService databaseService;  *@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,15 +78,15 @@
                         <li class="login">
                             <a href="#">login</a>
                         </li>
-                        @foreach(var category in databaseService.GetParentCategoryAsync(5).Result)
+                        @* @foreach(var category in databaseService.GetParentCategoryAsync(5).Result)
                         {
                             <li>
                                 <a asp-page="/ProductsListPage" 
                                    asp-route-parentCategory="@category.Name"
                                    asp-route-childCategory="">@category.Name.Replace('-', ' ')</a>
                             </li>
-                        }
-                        @* <li>
+                        } *@
+                        <li>
                             <a asp-page="/ProductsListPage"
                                asp-route-parentCategory="Paper-Products">Paper Products</a>
                         </li>
@@ -105,7 +105,7 @@
                         <li>
                             <a asp-page="/ProductsListPage"
                                asp-route-parentCategory="Office-Electronics">Office Electronics</a>
-                        </li> *@
+                        </li>
                     </ul>
                 </div>
             </div>
