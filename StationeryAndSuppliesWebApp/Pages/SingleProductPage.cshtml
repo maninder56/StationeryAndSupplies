@@ -22,7 +22,10 @@
                 <div class="product-details">
                     <div class="product-details-column">
                         <div class="product-name">@Model.Product.Name</div>
-                        <div class="product-price">Price: @Model.Product.Price?.ToString("C")</div>
+                        <div class="product-price-container">
+                            Price: <span id="current-product-price" class="product-price">£@Model.Product.Price</span>
+                            <span id="original-product-price" hidden>@Model.Product.Price</span>
+                        </div>
                         <div>
                             @if (!Model.Product.InStock)
                             {
@@ -38,6 +41,7 @@
                             <div class="drop-down">
                                 <div class="title">Quantity: </div>
                                 <select asp-items="Model.QuantityOptions"
+                                        id="quantity-drop-down-options"
                                         class="quantity-drop-down-select">
                                 </select>
                             </div>

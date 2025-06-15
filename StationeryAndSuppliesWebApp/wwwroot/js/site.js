@@ -63,16 +63,32 @@ function rightScroll() {
 const orderByDropDownForm = document.getElementById("order-by-drop-down-form"); 
 const orderbyDorpDown = document.getElementById("order-by-drop-down"); 
 
-
-orderbyDorpDown.onchange = function () {
-    orderByDropDownForm.submit(); 
+if (orderbyDorpDown !== null) {
+    orderbyDorpDown.onchange = function () {
+        orderByDropDownForm.submit();
+    }
 }
 
 
 
 
+// To calculate when price when quantity changes on Single product page
+
+const originalProductPrice = document.getElementById("original-product-price");
+const currentProductPrice = document.getElementById("current-product-price"); 
+const quantityDropDownOptions = document.getElementById("quantity-drop-down-options"); 
 
 
+if (quantityDropDownOptions !== null) {
+    quantityDropDownOptions.onchange = () => {
+        let originalPrice = parseFloat(originalProductPrice.innerText);
+        let quantityNumber = Number.parseInt(quantityDropDownOptions.value);
+
+        if (!(Number.isNaN(originalPrice) || Number.isNaN(quantityNumber))) {
+            currentProductPrice.textContent = `£${(originalPrice * quantityNumber).toFixed(2)}`;
+        }
+    }
+}
 
 
 
