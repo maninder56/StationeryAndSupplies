@@ -42,12 +42,14 @@
                                 <div class="title">Quantity: </div>
                                 <select asp-items="Model.QuantityOptions"
                                         id="quantity-drop-down-options"
-                                        class="quantity-drop-down-select">
+                                        name="quantity"
+                                        class="quantity-drop-down-select"
+                                        form="add-to-bag-form">
                                 </select>
                             </div>
                             <div class="add-to-bag">
-                                <form action="#" method="get">
-                                    <input value="@Model.Product.Id" hidden />
+                                <form action="#" method="get" id="add-to-bag-form">
+                                    <input value="@Model.Product.Id" type="hidden" id="product-id" name="product-id"/>
                                     <button type="submit">Add to Bag</button>
                                 </form>
                             </div>
