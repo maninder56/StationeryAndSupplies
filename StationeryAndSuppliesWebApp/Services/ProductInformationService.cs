@@ -272,8 +272,12 @@ public class ProductInformationService : IProductInformationService
             return new List<Models.Product>();
         }
 
+        productName = productName.Trim();
+
+
         List<Models.Product>? list = await database.Products.AsNoTracking()
             .Where(p => p.Name.Contains(productName))
+            .OrderBy(p => p.Name)
             .Take(20)
             .Select(p =>
                 new Models.Product
