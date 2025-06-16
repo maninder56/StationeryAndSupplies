@@ -5,16 +5,45 @@
 }
 
 
-<article>
-    <section>
-        @foreach(var i in Model.SearchResult)
+<article class="search-result-page">
+    <section class="search-result-section">
+        @if(!Model.SearchStringValidationResult)
         {
-            <div>
-                <div>@i.Id</div>
-                <div>@i.Name</div>
-                <div>@i.Price</div>
+            <div>Please only use letters or numbers</div>
+        }
+        else
+        {
+            <div class="searched-for">
+                Search results for: @Model.SearchedStringForView
             </div>
-            <div></div>
+            <div class="search-products-continer">
+                @foreach(var product in Model.SearchResultList)
+                {
+                    <div class="product-container">
+                        <div class="product-link-container">
+                            @* Link to single product details *@
+                            <a asp-page="/SingleProductPage"
+                               asp-route-productname="@product.Name.Replace(' ', '-')"
+                               asp-route-productid="@product.Id"
+                               class="product-link">
+                                <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                            </a>
+                        </div>
+                        <div class="product-details-container">
+                            <div class="product-details">
+                                <div class="product-name">@product.Name</div>
+                                <div class="product-price">£@product.Price</div>
+                            </div>
+                            @if (!product.InStock)
+                            {
+                                <div class="out-of-stock">Out of Stock</div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
         }
     </section>
 </article>
+
+

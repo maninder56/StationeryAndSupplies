@@ -33,8 +33,10 @@
                                     </div>
                                     <div class="search-form-container">
                                         @* Need to add link to search result page *@
-                                        <form class="search-form">
-                                            <input type="text" name="search" placeholder="Search...">
+                                        <form asp-page="/Search" method="post"
+                                              class="search-form">
+                                            <input type="text" name="SearchString" id="SearchString" 
+                                                   placeholder="Search..." maxlength="20">
                                         </form>
                                     </div>
                                 </div>
