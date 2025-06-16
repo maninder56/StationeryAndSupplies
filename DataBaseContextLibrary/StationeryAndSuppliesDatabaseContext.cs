@@ -42,7 +42,7 @@ public partial class StationeryAndSuppliesDatabaseContext : DbContext
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Carts)
+            entity.HasOne(d => d.User).WithOne(p => p.Cart)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cart_ibfk_1");
         });

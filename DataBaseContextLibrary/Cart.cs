@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace DataBaseContextLibrary;
 
 [Table("cart")]
-[Index("UserId", Name = "UserID")]
+[Index("UserId", Name = "UserID", IsUnique = true)]
+[Index("UserId", Name = "UserID_2", IsUnique = true)]
 public partial class Cart
 {
     [Key]
@@ -24,6 +25,6 @@ public partial class Cart
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     [ForeignKey("UserId")]
-    [InverseProperty("Carts")]
+    [InverseProperty("Cart")]
     public virtual User User { get; set; } = null!;
 }
