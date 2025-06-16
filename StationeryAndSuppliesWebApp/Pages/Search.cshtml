@@ -1,0 +1,20 @@
+﻿@page
+@model SearchModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+
+<article>
+    <section>
+        @foreach(var i in Model.SearchResult)
+        {
+            <div>
+                <div>@i.Id</div>
+                <div>@i.Name</div>
+                <div>@i.Price</div>
+            </div>
+            <div></div>
+        }
+    </section>
+</article>

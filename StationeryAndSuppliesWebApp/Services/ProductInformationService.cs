@@ -259,4 +259,42 @@ public class ProductInformationService : IProductInformationService
 
         return productDetails; 
     }
+
+
+
+    public async Task<List<Models.Product>> SearchProductWithNameAsync(string productName)
+    {
+        logger.LogInformation("Requested to search for a product with name {ProductName}", productName);
+
+        if (string.IsNullOrEmpty(productName))
+        {
+            logger.LogWarning("Search string is empty"); 
+            return new List<Models.Product>();
+        }
+
+        List<Models.Product>? list = await database.Products.AsNoTracking()
+            .Where(p => p.Name.Contains(productName))
+            .Take(20)
+            .Select(p =>
+                new Models.Product
+                (
+                    p.ProductId,
+                    p.Name,
+                    p.Price,
+                    p.ImageUrl,
+                    p.Stock > 0  // Compute if stock is available 
+                )
+            ).ToListAsync();
+
+        if (list == null || list.Count == 0)
+        {
+            logger.LogWarning("No Product found with name {ProductName}", productName);
+        }
+
+        return list ?? new List<Models.Product>();
+    }
 }
+
+
+
+

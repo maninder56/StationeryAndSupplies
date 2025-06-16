@@ -39,5 +39,9 @@ public interface IProductInformationService
 
     // Get single product Details 
     public Task<Models.ProductDetails?> GetProductDetailsByIDAsync(int productId);
+
+
+    // Serach for a product by name, get top 20 products
+    public Task<List<Models.Product>> SearchProductWithNameAsync(string productName);
     
 }
