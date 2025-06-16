@@ -27,10 +27,9 @@ namespace StationeryAndSuppliesWebApp.Pages
 
 
         // Handlers 
-
-        public async Task<IActionResult> OnGetAsync([FromQuery] string? name)
+        public async Task<IActionResult> OnGetAsync(string? productName)
         {
-            logger.LogInformation("Search result page requested with {ProductName} from query", name);
+            logger.LogInformation("Search result page requested with {ProductName} from query", productName);
             
             if (!ModelState.IsValid)
             {
@@ -38,7 +37,7 @@ namespace StationeryAndSuppliesWebApp.Pages
                 return RedirectToPage("/Index"); 
             }
 
-            if (name is null)
+            if (productName is null)
             {
                 logger.LogWarning("Search string from query is null");
                 SearchStringValidationResult = false;
@@ -47,14 +46,14 @@ namespace StationeryAndSuppliesWebApp.Pages
 
             // Remove all whitespace characters from search string,
             // if its just whitespace characters string will be empty
-            name = name.Trim(); 
+            productName = productName.Trim(); 
 
-            if (name.Length > 20)
+            if (productName.Length > 20)
             {
-                name = name.Substring(0, 20);
+                productName = productName.Substring(0, 20);
             }
 
-            if(!await IsSearchStringValid(name))
+            if(!await IsSearchStringValid(productName))
             {
                 logger.LogWarning("Search string unvalid");
                 SearchStringValidationResult = false; 
@@ -62,7 +61,7 @@ namespace StationeryAndSuppliesWebApp.Pages
             }
 
             SearchStringValidationResult = true;
-            SearchedStringForView = name;
+            SearchedStringForView = productName;
 
             SearchResultList = await productInformationService.SearchProductWithNameAsync(SearchedStringForView);
 
@@ -73,28 +72,6 @@ namespace StationeryAndSuppliesWebApp.Pages
 
             return Page();
         }
-
-
-        public async Task<IActionResult> OnPostAsync([FromForm] string? SearchString)
-        {
-            logger.LogInformation("Search result page requested by Search form"); 
-
-            if (!ModelState.IsValid)
-            {
-                logger.LogWarning("Invalid model state, redirected to home page");
-                return RedirectToPage("/Index");
-            }
-
-            if (SearchString is null)
-            {
-                logger.LogWarning("Search string from form is null");
-                SearchStringValidationResult = false;
-                return Page(); 
-            }
-
-            return await OnGetAsync(SearchString);
-        }
-
 
 
         // Helper method for validating search string 
