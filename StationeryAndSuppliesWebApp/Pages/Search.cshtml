@@ -9,16 +9,20 @@
     <section class="search-result-section">
         @if(Model.SearchStringIsNull)
         {
-            <div>No word provided to Search</div>
+            <div class="searched-for">No word provided to Search</div>
         }
         else if(!Model.SearchStringValidationResult)
         {
-            <div>Please only use letters or numbers</div>
+            <div class="searched-for">Please only use letters or numbers</div>
+        }
+        else if (Model.SearchResultList.Count == 0)
+        {
+            <div class="searched-for">Sorry, we can not find any results for "@Model.SearchedStringForView"</div>
         }
         else
         {
             <div class="searched-for">
-                Search results for: @Model.SearchedStringForView
+                Search results for: "@Model.SearchedStringForView" 
             </div>
             <div class="search-products-continer">
                 @foreach(var product in Model.SearchResultList)
@@ -32,11 +36,15 @@
                                class="product-link">
                                 @if (product.ImageUrl is null)
                                 {
-                                    <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                    <div class="image-container">
+                                        <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                    </div>
                                 }
                                 else
                                 {
-                                    <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                    <div class="image-container">
+                                        <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                    </div>
                                 }
                             </a>
                         </div>
