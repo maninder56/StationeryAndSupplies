@@ -91,8 +91,8 @@ namespace StationeryAndSuppliesWebApp.Pages
                     return false;
                 }
 
-                // Only allow alphanumeric characters
-                if (Regex.IsMatch(searchString, @"\W"))
+                // Only allow alphanumeric characters and space
+                if (!Regex.IsMatch(searchString, @"^[a-zA-Z0-9 ]+$"))
                 {
                     logger.LogWarning("Search string containes Non-alphanumeric character"); 
                     return false;
