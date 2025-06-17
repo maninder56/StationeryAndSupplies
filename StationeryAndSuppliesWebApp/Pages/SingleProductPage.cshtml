@@ -16,7 +16,14 @@
         else
         {
             <div class="product-image-container">
-                <img src="~/@Model.Product.ImageUrl" alt="@Model.Product.Name Image"/>
+                @if(Model.Product.ImageUrl is null)
+                {
+                    <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                }
+                else
+                {
+                    <img src="~/@Model.Product.ImageUrl" alt="@Model.Product.Name Image" />
+                }
             </div>
             <div class="product-details-container">
                 <div class="product-details">

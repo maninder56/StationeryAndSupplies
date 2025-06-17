@@ -44,11 +44,15 @@
                             class="product-link">
                                 @if(product.ImageUrl is null)
                                 {
-                                    <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                    <div class="image-container">
+                                        <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                    </div>
                                 }
                                 else
                                 {
-                                    <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                    <div class="image-container">
+                                        <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                    </div>
                                 }
                             </a>
                         </div>
