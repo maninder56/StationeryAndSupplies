@@ -19,12 +19,12 @@
                 </div>
                 <div class="drop-down">
                     <form method="get" id="order-by-drop-down-form"
-                          asp-page="/ProductsListPage"
-                          asp-route-parentCategory="@Model.ParentCategoryName"
-                          asp-route-childCategory="@Model.ChildCategoryName">
+                    asp-page="/ProductsListPage"
+                    asp-route-parentCategory="@Model.ParentCategoryName"
+                    asp-route-childCategory="@Model.ChildCategoryName">
                         <select asp-for="Input.OrderByOptionsSelectedValue" 
-                                asp-items="Model.SortOptions" 
-                                id="order-by-drop-down" class="order-by-drop-down-select">
+                        asp-items="Model.SortOptions" 
+                        id="order-by-drop-down" class="order-by-drop-down-select">
                         </select>
                     </form>
                 </div>
@@ -39,10 +39,17 @@
                         <div class="product-link-container">
                             @* Link to single product details *@
                             <a asp-page="/SingleProductPage"
-                               asp-route-productname="@product.Name.Replace(' ', '-')"
-                               asp-route-productid="@product.Id"
-                               class="product-link">
-                                <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                            asp-route-productname="@product.Name.Replace(' ', '-')"
+                            asp-route-productid="@product.Id"
+                            class="product-link">
+                                @if(product.ImageUrl is null)
+                                {
+                                    <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                }
+                                else
+                                {
+                                    <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                }
                             </a>
                         </div>
                         <div class="product-details-container">

@@ -111,7 +111,7 @@ namespace StationeryAndSuppliesWebApp.Pages
                     CategoryName, CurrentPageNumber);
             }
 
-            logger.LogInformation("Loaded {ProductCount} with category {CategoryName}", ProductList.Count,
+            logger.LogInformation("Loaded {ProductCount} products with category {CategoryName}", ProductList.Count,
                 CategoryName);
 
             return Page();

@@ -30,7 +30,14 @@
                                asp-route-productname="@product.Name.Replace(' ', '-')"
                                asp-route-productid="@product.Id"
                                class="product-link">
-                                <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                @if (product.ImageUrl is null)
+                                {
+                                    <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                }
+                                else
+                                {
+                                    <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                }
                             </a>
                         </div>
                         <div class="product-details-container">

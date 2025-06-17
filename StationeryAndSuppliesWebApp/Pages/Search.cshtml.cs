@@ -72,6 +72,9 @@ namespace StationeryAndSuppliesWebApp.Pages
                 logger.LogWarning("No Item recieved from serivce"); 
             }
 
+            logger.LogInformation("Loaded {ProductCount} products for search word {SearchString}", 
+                SearchResultList.Count, SearchedStringForView);
+
             return Page();
         }
 
