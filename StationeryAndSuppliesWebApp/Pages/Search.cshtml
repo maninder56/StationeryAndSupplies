@@ -7,7 +7,11 @@
 
 <article class="search-result-page">
     <section class="search-result-section">
-        @if(!Model.SearchStringValidationResult)
+        @if(Model.SearchStringIsNull)
+        {
+            <div>No word provided to Search</div>
+        }
+        else if(!Model.SearchStringValidationResult)
         {
             <div>Please only use letters or numbers</div>
         }

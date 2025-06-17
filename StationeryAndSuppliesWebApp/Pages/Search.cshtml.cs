@@ -23,6 +23,7 @@ namespace StationeryAndSuppliesWebApp.Pages
         public List<Models.Product> SearchResultList { get; private set; } = new List<Models.Product>();
         public string SearchedStringForView { get; private set; } = string.Empty;
         public bool SearchStringValidationResult { get; private set; } = false;
+        public bool SearchStringIsNull {  get; private set; }
 
 
 
@@ -39,8 +40,9 @@ namespace StationeryAndSuppliesWebApp.Pages
 
             if (productName is null)
             {
-                logger.LogWarning("Search string from query is null");
+                logger.LogWarning("Search string is null");
                 SearchStringValidationResult = false;
+                SearchStringIsNull = true;
                 return Page();
             }
 
@@ -86,7 +88,7 @@ namespace StationeryAndSuppliesWebApp.Pages
                     return false;
                 }
 
-                
+                // Only allow alphanumeric characters
                 if (Regex.IsMatch(searchString, @"\W"))
                 {
                     logger.LogWarning("Search string containes Non-alphanumeric character"); 
