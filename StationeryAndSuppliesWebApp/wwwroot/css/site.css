@@ -17,7 +17,9 @@
     --add-to-bag-button-color: black;
     --add-to-bag-hover-button-color: #3a3a3a;
     --add-to-bag-active-button-color: #7a7a7a;
-    --bottom-border-line-color: #282828; 
+    --bottom-border-line-color: #282828;
+    --contactus-link-text-color: #3e3e3e;
+    --contactus-link-text-hover-color: black;
 
     transition: font-size 0.5s ease-in-out;
 }
@@ -1341,14 +1343,15 @@ body * {
     .contact-us-page .external-link a {
         font-size: 1.2rem;
         padding: 5px 5px; 
-        color: #3e3e3e; 
+        color: var(--contactus-link-text-color); 
         text-decoration-line: none; 
+        
     }
 
-    .contact-us-page .external-link a:hover {
-        color: black; 
-        text-decoration-line: underline; 
-    }
+        .contact-us-page .external-link a:hover {
+            color: var(--contactus-link-text-hover-color); 
+            text-decoration-line: underline;
+        }
 
     
 
