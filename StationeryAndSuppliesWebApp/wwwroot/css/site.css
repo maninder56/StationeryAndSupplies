@@ -17,6 +17,7 @@
     --add-to-bag-button-color: black;
     --add-to-bag-hover-button-color: #3a3a3a;
     --add-to-bag-active-button-color: #7a7a7a;
+    --bottom-border-line-color: #282828; 
 
     transition: font-size 0.5s ease-in-out;
 }
@@ -1250,10 +1251,45 @@ footer {
 
 
 
+
+
+/* About us page */
+
+.about-us-page {
+    height: 100%;
+    background-color: var(--primary-background-color-cream);
+    display: flex;
+    justify-content: center;
+}
+
+    .about-us-page .about-us-section {
+        flex: 1 1 auto; 
+        margin: 20px 0px; 
+        max-width: 500px; 
+        padding: 20px; 
+    }
+
+    .about-us-page .about-us-title {
+        font-size: 1.5rem;
+        text-align: center;
+        border-bottom: solid 1px;
+        border-color: var(--bottom-border-line-color); 
+        padding-bottom: 10px
+    }
+
+    .about-us-page .about-us-paragraph {
+        text-align: center; 
+    }
+
+
+
+
+
+
 /*body * {
     border: solid 1px;
-}
-*/
+}*/
+
 
 
 
