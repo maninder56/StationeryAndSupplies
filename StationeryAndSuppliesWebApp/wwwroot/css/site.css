@@ -1285,14 +1285,72 @@ footer {
 
 
 
-
-/*body * {
+/*
+body * {
     border: solid 1px;
 }*/
 
+.contact-us-page {
+    height: 100%; 
+    background-color: var(--primary-background-color-cream);
+    display: flex;
+    justify-content: center;
+}
 
+    .contact-us-page .contact-us-Section {
+        flex: 1 1 auto;
+        margin: 20px 0px;
+        max-width: 500px;
+        padding: 20px;
+    }
 
+    .contact-us-page .contact-us-title {
+        font-size: 1.5rem;
+        text-align: center;
+        border-bottom: solid 1px;
+        border-color: var(--bottom-border-line-color);
+        padding-bottom: 10px
+    }
 
+    .contact-us-page .email-container {
+        margin: 20px 0px; 
+    }
+
+    .contact-us-page .email-title {
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    .contact-us-page .email {
+        text-align: center; 
+        margin-top: 5px; 
+    }
+
+    .contact-us-page .external-links-container {
+        display: flex; 
+        flex-direction: column;
+        margin-top: 20px; 
+    }
+
+    .contact-us-page .external-link {
+        display: flex; 
+        justify-content: center; 
+        margin: 5px 5px; 
+    }
+
+    .contact-us-page .external-link a {
+        font-size: 1.2rem;
+        padding: 5px 5px; 
+        color: #3e3e3e; 
+        text-decoration-line: none; 
+    }
+
+    .contact-us-page .external-link a:hover {
+        color: black; 
+        text-decoration-line: underline; 
+    }
+
+    
 
 
 
