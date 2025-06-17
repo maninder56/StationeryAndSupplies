@@ -13,12 +13,14 @@ function closeMenu() {
 function OpenSearch() {
     let currentHeight = window.innerHeight; 
 
-    if (currentHeight > 500) {
-        searchOverlay.style.height = "50%";
-    }
-    else {
-        searchOverlay.style.height = "300px";
-    }
+    //if (currentHeight > 500) {
+    //    searchOverlay.style.height = "50%";
+    //}
+    //else {
+    //    searchOverlay.style.height = "300px";
+    //}
+
+    searchOverlay.style.height = "300px";
     
 }
 
