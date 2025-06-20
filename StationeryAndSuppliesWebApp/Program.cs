@@ -2,7 +2,8 @@ using DataBaseContextLibrary;
 using Microsoft.EntityFrameworkCore;
 using StationeryAndSuppliesWebApp.Services;
 using System.Reflection.Metadata.Ecma335;
-using Serilog; 
+using Serilog;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,21 @@ builder.Services.AddDbContext<StationeryAndSuppliesDatabaseContext>(options
     => options.UseMySQL(connectionString));
 
 builder.Services.AddDatabaseServices();
+
+
+// Add cookie authentication 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20); // change it later for production
+        options.SlidingExpiration = true;
+
+        options.LoginPath = "/Account/Login"; 
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        
+        //options.SessionStore  need to use it later to store cart items in session
+    }); 
+
 
 // Add Razor page services
 builder.Services.AddRazorPages();
@@ -46,12 +62,12 @@ switch (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection(); 
-
-// app.UseStaticFiles();
+app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapStaticAssets();
 app.MapRazorPages()

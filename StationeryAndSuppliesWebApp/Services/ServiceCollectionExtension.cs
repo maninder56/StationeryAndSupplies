@@ -11,6 +11,8 @@ public static class ServiceCollectionExtension
     {
         services.AddScoped<IProductInformationService, ProductInformationService>();
 
+        
+
         return services;
     }
 }
