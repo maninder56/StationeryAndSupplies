@@ -11,8 +11,13 @@ public static class ServiceCollectionExtension
     {
         services.AddScoped<IProductInformationService, ProductInformationService>();
 
-        
-
         return services;
+    }
+
+    public static IServiceCollection AddAccountService(this IServiceCollection services)
+    {
+        services.AddScoped<IAccountService, AccountService>();
+
+        return services; 
     }
 }

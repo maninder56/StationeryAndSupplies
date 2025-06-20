@@ -24,7 +24,7 @@ builder.Services.AddDbContext<StationeryAndSuppliesDatabaseContext>(options
     => options.UseMySQL(connectionString));
 
 builder.Services.AddDatabaseServices();
-
+builder.Services.AddAccountService();
 
 // Add cookie authentication 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
