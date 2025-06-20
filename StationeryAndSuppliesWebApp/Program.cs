@@ -37,8 +37,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/AccessDenied";
         
         //options.SessionStore  need to use it later to store cart items in session
-    }); 
+    });
 
+// To access HttpContext for custom components
+builder.Services.AddHttpContextAccessor(); 
 
 // Add Razor page services
 builder.Services.AddRazorPages();

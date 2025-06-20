@@ -1,8 +1,12 @@
-﻿namespace StationeryAndSuppliesWebApp.Services; 
+﻿using StationeryAndSuppliesWebApp.Models;
+
+namespace StationeryAndSuppliesWebApp.Services; 
 
 public interface IAccountService
 {
     //public Task<bool> UserExistsByEmailAsync(string email); 
 
-    public Task<bool> AuthenticateUserAsync(string email, string password); 
+    public Task<LoggedInUser?> AuthenticateUserAsync(string email, string password); 
+
+
 }

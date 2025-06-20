@@ -1,0 +1,33 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor; 
+
+@{
+    string? userName = HttpContextAccessor.HttpContext?.User.FindFirst("FullName")?.Value;
+
+    bool? isAuthenticatedNull = HttpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated;
+    bool isAuthenticated; 
+
+    if (isAuthenticatedNull is null)
+    {
+        isAuthenticated = false; 
+    }
+    else
+    {
+        isAuthenticated = (bool)isAuthenticatedNull; 
+    }
+}
+
+
+@if(isAuthenticated)
+{
+    <a href="#" >
+        <span class="word">@(userName is null ? "User": userName)</span>
+    </a>
+}
+else
+{
+    <a asp-page="/Account/Login" class="navigation-logo-link">
+        <img src="~/icons/user-icon.svg" alt="user account icon">
+        <span class="word">Login</span>
+    </a>
+}
+

@@ -5,6 +5,7 @@ using StationeryAndSuppliesWebApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using StationeryAndSuppliesWebApp.Models;
 
 namespace StationeryAndSuppliesWebApp.Pages.Account; 
 
@@ -55,16 +56,20 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        if (!await accountService.AuthenticateUserAsync(Input.Email, Input.Password))
+        LoggedInUser? user = await accountService.AuthenticateUserAsync(Input.Email, Input.Password); 
+
+        if (user is null)
         {
             logger.LogWarning("User {Email} had Invalid login attempt", Input.Email); 
             ValidationMessage = "Invalid Email or Password";
             return Page();
         }
 
+
         List<Claim> claims = new List<Claim>()
         {
-            new Claim(ClaimTypes.Name, Input.Email)
+            new Claim(ClaimTypes.Name, user.Email), 
+            new Claim("FullName", user.UserName)
         }; 
 
         ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, 
