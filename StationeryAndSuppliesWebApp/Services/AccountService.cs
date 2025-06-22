@@ -66,7 +66,7 @@ public class AccountService : IAccountService
 
             if (id == mockUserID)
             {
-                return new UserDetails(mockUserName, mockUserkEmail, phone: "939384940"); 
+                return new UserDetails(id, mockUserName, mockUserkEmail, phone: "939384940"); 
             }
 
             logger.LogWarning("User with ID {userID} was not Found", id); 

@@ -2,6 +2,8 @@
 
 public class UserDetails
 {
+    public int Id { get; set; }
+
     public string UserName { get; set; } = string.Empty;
 
     public string Email { get; set; } = string.Empty;
@@ -10,8 +12,8 @@ public class UserDetails
 
     public UserDetails() { }    
 
-    public UserDetails(string username, string email, string phone)
+    public UserDetails(int id, string username, string email, string phone)
     {
-        UserName = username; Email = email; Phone = phone;
+        Id = id;  UserName = username; Email = email; Phone = phone;
     }
 }

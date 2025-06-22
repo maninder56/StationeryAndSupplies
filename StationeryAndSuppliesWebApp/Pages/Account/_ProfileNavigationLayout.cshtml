@@ -17,7 +17,9 @@
 
         <div class="logout-container">
             @* Add link to logout *@
-            <a href="#" class="logout-link">Logout</a>
+            <form asp-page="/Account/Logout">
+                <button type="submit" class="log-out-button">Logout</button>
+            </form>
         </div>
     </section>
 </article>

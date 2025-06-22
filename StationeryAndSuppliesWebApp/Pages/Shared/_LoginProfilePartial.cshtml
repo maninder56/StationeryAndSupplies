@@ -3,17 +3,8 @@
 @{
     string? userName = HttpContextAccessor.HttpContext?.User.FindFirst("FullName")?.Value;
 
-    bool? isAuthenticatedNull = HttpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated;
-    bool isAuthenticated; 
+    bool isAuthenticated = HttpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated ?? false; 
 
-    if (isAuthenticatedNull is null)
-    {
-        isAuthenticated = false; 
-    }
-    else
-    {
-        isAuthenticated = (bool)isAuthenticatedNull; 
-    }
 }
 
 
