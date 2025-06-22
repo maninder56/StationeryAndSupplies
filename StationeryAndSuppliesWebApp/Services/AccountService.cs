@@ -37,7 +37,7 @@ public class AccountService : IAccountService
             if (email == mockUserkEmail &&  password == "pass")
             {
                 logger.LogInformation("User with email {Email} has provided correct credentials", email); 
-                return new LoggedInUser(mockUserName, email);
+                return new LoggedInUser(7, mockUserName, email);
             }
 
             logger.LogWarning("Authentication failed for the user with email {Eamil}", email); 
