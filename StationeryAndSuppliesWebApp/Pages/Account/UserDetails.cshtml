@@ -6,6 +6,14 @@
 }
 
 <section class="user-details-section">
-    <div>Name : </div>
-    <div>Email: </div>
+    @if(Model.UserDetails is null)
+    {
+        <div>Unable to load use Details, Please try again later.</div>
+    }
+    else
+    {
+        <div>Name : @Model.UserDetails.UserName</div>
+        <div>Email: @Model.UserDetails.Email</div>
+        <div>Phone Number: @Model.UserDetails.Phone</div>
+    }
 </section>

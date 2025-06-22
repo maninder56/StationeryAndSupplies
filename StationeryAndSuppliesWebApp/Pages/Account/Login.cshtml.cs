@@ -68,7 +68,7 @@ public class LoginModel : PageModel
 
         List<Claim> claims = new List<Claim>()
         {
-            new Claim("userID", user.Id.ToString()), 
+            new Claim("UserID", user.Id.ToString()), 
             new Claim("FullName", user.UserName)
         }; 
 

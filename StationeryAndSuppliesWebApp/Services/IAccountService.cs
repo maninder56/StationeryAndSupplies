@@ -8,5 +8,8 @@ public interface IAccountService
 
     public Task<LoggedInUser?> AuthenticateUserAsync(string email, string password);
 
-    public Task<UserDetails?> GetUserDetailsByEmailAsync(string email); 
+    public Task<UserDetails?> GetUserDetailsByIDAsync(int id);
+
+    public Task<int?> GetUserIDFromHttpContextAsync(); 
+
 }

@@ -6,10 +6,12 @@ public class UserDetails
 
     public string Email { get; set; } = string.Empty;
 
+    public string Phone { get; set; } = string.Empty; 
+
     public UserDetails() { }    
 
-    public UserDetails(string username, string email)
+    public UserDetails(string username, string email, string phone)
     {
-        UserName = username; Email = email;
+        UserName = username; Email = email; Phone = phone;
     }
 }

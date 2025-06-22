@@ -10,23 +10,30 @@ public class AccountService : IAccountService
 
     private StationeryAndSuppliesDatabaseContext database;
 
-    private string mockUserkEmail = "user@gmail.com";
-    private string mockUserName = "Dazai Ken"; 
+    private IHttpContextAccessor httpContextAccessor; 
 
-    public AccountService(ILogger<AccountService> logger, StationeryAndSuppliesDatabaseContext database)
+    private string mockUserkEmail = "user@gmail.com";
+    private string mockUserName = "Dazai Ken";
+    private int mockUserID = 7; 
+
+    public AccountService(
+        ILogger<AccountService> logger, 
+        StationeryAndSuppliesDatabaseContext database, 
+        IHttpContextAccessor httpContextAccessor)
     {
         this.logger = logger;
         this.database = database;
+        this.httpContextAccessor = httpContextAccessor;
     }
 
 
     // mock user for testing
     public async Task<LoggedInUser?> AuthenticateUserAsync(string email, string password)
     {
-        logger.LogInformation("Requested to Authenticate user with email {Email}", email);
-
         return await Task.Run(() =>
         {
+            logger.LogInformation("Requested to Authenticate user with email {Email}", email);
+
             if (string.IsNullOrEmpty(email) || 
                 string.IsNullOrEmpty(password))
             {
@@ -37,7 +44,7 @@ public class AccountService : IAccountService
             if (email == mockUserkEmail &&  password == "pass")
             {
                 logger.LogInformation("User with email {Email} has provided correct credentials", email); 
-                return new LoggedInUser(7, mockUserName, email);
+                return new LoggedInUser(mockUserID, mockUserName, mockUserkEmail);
             }
 
             logger.LogWarning("Authentication failed for the user with email {Eamil}", email); 
@@ -45,26 +52,54 @@ public class AccountService : IAccountService
         }); 
     }
 
-    public async Task<UserDetails?> GetUserDetailsByEmailAsync(string email)
+    public async Task<UserDetails?> GetUserDetailsByIDAsync(int id)
     {
-        logger.LogInformation("Requested detailes of user with eamil {Email}", email);
-
         return await Task.Run(() =>
         {
-            if (string.IsNullOrEmpty(email))
+            logger.LogInformation("Requested detailes of user with ID {UserID}", id);
+
+            if (id < 1)
             {
-                logger.LogWarning("User Email is null or empty");
+                logger.LogWarning("User ID is less than 1");
                 return null; 
             }
 
-            if (email == mockUserkEmail)
+            if (id == mockUserID)
             {
-                return new UserDetails(mockUserName, mockUserkEmail); 
+                return new UserDetails(mockUserName, mockUserkEmail, phone: "939384940"); 
             }
 
-            logger.LogWarning("User with email {Email} was not Found", email); 
+            logger.LogWarning("User with ID {userID} was not Found", id); 
             return null; 
         }); 
+    }
+
+    public async Task<int?> GetUserIDFromHttpContextAsync()
+    {
+        return await Task.Run(GetUserID);
+
+        int? GetUserID()
+        {
+            logger.LogInformation("Requested user id from HttpContext");
+
+            string? userIDClaimValue = httpContextAccessor.HttpContext?.User.FindFirst("UserID")?.Value;
+
+            if (string.IsNullOrEmpty(userIDClaimValue))
+            {
+                logger.LogWarning("No UserID Claim exists in claims principal");
+                return null;
+            }
+
+            if (int.TryParse(userIDClaimValue, out int userID))
+            {
+                logger.LogInformation("Found User with ID {UserID} in Claims principal", userID);
+                return userID;
+            }
+
+
+            logger.LogInformation("User with ID {userIDClaimValue} failed to Parse", userIDClaimValue);
+            return null;
+        }
 
     }
 }
