@@ -7,8 +7,8 @@
         <div class="navigation-content-container">
             <div class="navigation-container">
                 @* Add links to navigation *@
-                <a href="#" class="navigation-link">User Details</a>
-                <a href="#" class="navigation-logo">Orders</a>
+                <a asp-page="/Account/UserDetails" class="navigation-link">User Details</a>
+                <a href="#" class="navigation-link">Orders</a>
             </div>
             <div class="content-container">
                 @RenderBody()
@@ -16,7 +16,7 @@
         </div>
 
         <div class="logout-container">
-            @* Add link to logout *@
+            @* Link to logout *@
             <form asp-page="/Account/Logout">
                 <button type="submit" class="log-out-button">Logout</button>
             </form>

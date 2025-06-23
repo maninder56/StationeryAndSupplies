@@ -8,12 +8,28 @@
 <section class="user-details-section">
     @if(Model.UserDetails is null)
     {
-        <div>Unable to load use Details, Please try again later.</div>
+        <div class="failed-to-load-user-details">Unable to load use Details, Please try again later.</div>
     }
     else
     {
-        <div>Name : @Model.UserDetails.UserName</div>
-        <div>Email: @Model.UserDetails.Email</div>
-        <div>Phone Number: @Model.UserDetails.Phone</div>
+        <header class="title">User Details</header>
+        <div class="user-details-table-container">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>@Model.UserDetails.UserName</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@Model.UserDetails.Email</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td>@Model.UserDetails.Phone</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     }
 </section>
