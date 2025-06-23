@@ -1,26 +1,50 @@
 ﻿:root {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
+    /*----------------------------------------*/
     --primary-background-color-cream: #f5f5dc;
     --primary-background-color-light-yellow: #f6ffd4;
     --primary-background-color-dark-green: #6ca46c;
+    /*----------------------------------------*/
     --navigation-background-color: white;
+    /*----------------------------------------*/
     --primary-text-color: black;
+    /*----------------------------------------*/
     --footer-text-color: #e0e0e0;
     --footer-text-hover-color: white;
+    /*----------------------------------------*/
     --link-hover-text-color: rgb(73, 73, 73);
+    /*----------------------------------------*/
     --button-hover-background-color: #ebf1bd;
     --button-active-background-color: #d4d9ab;
     --button-background-color: #f5f5dc;
+    /*----------------------------------------*/
     --out-of-stock-text-color: orangered;
+    /*----------------------------------------*/
     --product-card-background-color: white;
+    /*----------------------------------------*/
     --add-to-bag-button-color: black;
     --add-to-bag-hover-button-color: #3a3a3a;
     --add-to-bag-active-button-color: #7a7a7a;
+    /*----------------------------------------*/
     --bottom-border-line-color: #282828;
+    /*----------------------------------------*/
     --contactus-link-text-color: #3e3e3e;
     --contactus-link-text-hover-color: black;
-
+    /*----------------------------------------*/
+    --forgot-password-text-color: #2b2b2b;
+    --forgot-password-text-hover-active-color: black;
+    /*----------------------------------------*/
+    --create-account-text-color: black;
+    --create-account-text-hover-color: white;
+    --create-account-background-hover-color: black;
+    --create-account-background-active-color: transparent;
+    /*----------------------------------------*/
+    --login-button-text-color: white;
+    --login-button-text-hover-color: black;
+    --login-button-background-color: black;
+    --login-button-background-hover-color: transparent;
+    /*----------------------------------------*/
     transition: font-size 0.5s ease-in-out;
 }
 
@@ -157,9 +181,6 @@ footer {
     display: none;
 }
 
-.main-navigation .login-link {
-
-}
 
 
 
@@ -1301,10 +1322,7 @@ footer {
 
 
 
-/*
-body * {
-    border: solid 1px;
-}*/
+/* Contact us page */
 
 .contact-us-page {
     height: 100%; 
@@ -1367,8 +1385,128 @@ body * {
             text-decoration-line: underline;
         }
 
-    
 
 
 
 
+/* Login Page */
+
+.login-page {
+    height: 100%;
+    background-color: var(--primary-background-color-cream);
+    display: flex;
+    justify-content: center;
+}
+
+    .login-page .login-section {
+        flex: 1 1 auto;
+        margin: 20px 0px;
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .login-page .login-container {
+        margin-top: 50px; 
+    }
+
+    .login-page .title {
+        text-align: center; 
+        font-size: 1.8rem;
+    }
+
+    .login-page .validation-message {
+        color: red; 
+        text-align:center; 
+        margin-top: 10px; 
+    }
+
+    .login-page form {
+
+    }
+
+    .login-page .form-group {
+        margin-bottom: 20px; 
+    }
+
+    .login-page .input-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .login-page .input-container label {
+            font-size: 1.2rem;
+            margin-left: 3px; 
+        }
+
+        .login-page .input-container input {
+            font-size: 1.2rem;
+            border-radius: 5px;
+        }
+
+
+    .login-page .forgot-password-link {
+        color: var(--forgot-password-text-color); 
+        font-size: 1.1rem;
+    }
+
+        .login-page .forgot-password-link:hover,
+        .login-page .forgot-password-link:active {
+            color: var(--forgot-password-text-hover-active-color);
+            font-size: 1.1rem;
+            text-decoration-line:none; 
+        }
+
+
+    .login-page .login-create-account-container {
+        display: flex; 
+        justify-content: space-evenly; 
+    }
+
+        .login-page .login-create-account-container .create-account-link,
+        .login-page .login-create-account-container .login-button {
+            font-size: 1rem;
+            padding: 10px; 
+            border-radius: 10px; 
+        }
+
+        .login-page .login-create-account-container .create-account-link {
+            display: block;
+            color: var(--create-account-text-color);
+            text-decoration-line: none;
+            border: solid 2px;
+            border-radius: 10px;
+        }
+
+            .login-page .login-create-account-container .create-account-link:hover {
+                color: var(--create-account-text-hover-color);
+                background-color: var(--create-account-background-hover-color);
+            }
+
+            .login-page .login-create-account-container .create-account-link:active {
+                color: var(--create-account-text-color);
+                background-color: var(--create-account-background-active-color);
+            }
+
+        .login-page .login-create-account-container .login-button {
+            color: var(--login-button-text-color);
+            background-color: var(--login-button-background-color);
+            cursor: pointer;
+        }
+
+            .login-page .login-create-account-container .login-button:hover {
+                color: var(--login-button-text-hover-color);
+                background-color: var(--login-button-background-hover-color);
+            }
+
+            .login-page .login-create-account-container .login-button:active {
+                color: var(--login-button-text-color);
+                background-color: var(--login-button-background-color);
+            }
+
+
+
+
+
+/*body * {
+    border: solid 1px;
+}*/
