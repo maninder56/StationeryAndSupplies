@@ -157,10 +157,13 @@ footer {
     display: none;
 }
 
+.main-navigation .login-link {
+
+}
+
 
 
 /* Search Overlay */
-
 .main-navigation .search-area {
     height: 0;
     width: 100%;
@@ -381,11 +384,22 @@ footer {
         }
 
 
+
+
 .product-navigation {
     list-style-type: none;
     padding: 10px;
     margin: 10px;
 }
+
+    .product-navigation .login-link {
+        margin-bottom: 30px; 
+        padding-bottom: 10px; 
+        border-bottom: solid 1px; 
+    }
+    .product-navigation .login-link img {
+        display: none; 
+    }
 
     .product-navigation li {
         margin: 20px;
@@ -439,7 +453,7 @@ footer {
             margin: 0;
         }
 
-        .product-navigation .login {
+        .product-navigation .login-link {
             display: none;
         }
 }

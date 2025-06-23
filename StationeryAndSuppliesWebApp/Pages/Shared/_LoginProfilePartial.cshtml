@@ -11,7 +11,7 @@
 @if(isAuthenticated)
 {
     <!-- link to user details page-->
-    <a asp-page="/Account/UserDetails">
+    <a asp-page="/Account/UserDetails" class="navigation-logo-link">
         <span class="word">@(userName is null ? "User": userName)</span>
     </a>
 }
