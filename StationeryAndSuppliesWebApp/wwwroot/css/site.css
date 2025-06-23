@@ -1555,7 +1555,7 @@ footer {
         font-size: 1.4rem;
         text-decoration-line:none; 
         padding: 10px; 
-        border:solid 2px; 
+/*        border:solid 2px; */
         border-radius:10px; 
         color: var(--primary-text-color);
         background-color: var(--button-background-color-transparent); 
@@ -1575,7 +1575,7 @@ footer {
     .profile-navigation-layout .content-container {
         margin: 5px;
         background-color: var(--profile-navigation-content-background-color); 
-        border: solid 2px; 
+/*        border: solid 2px; */
         border-radius: 10px; 
         padding: 5px; 
     }
