@@ -60,7 +60,7 @@ public class LoginModel : PageModel
 
         if (user is null)
         {
-            logger.LogWarning("User {Email} had Invalid login attempt", Input.Email); 
+            logger.LogWarning("User with Email {Email} had Invalid login attempt", Input.Email); 
             ValidationMessage = "Invalid Email or Password";
             return Page();
         }
