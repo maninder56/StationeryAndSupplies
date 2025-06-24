@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using DataBaseContextLibrary;
 using StationeryAndSuppliesWebApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Eventing.Reader;
 
 namespace StationeryAndSuppliesWebApp.Services;
 
@@ -53,7 +54,8 @@ public class AccountService : IAccountService
 
 
 
-    // mock user for testing
+    // Account service methods
+    
     public async Task<LoggedInUser?> AuthenticateUserAsync(string email, string password)
     {
         return await Task.Run(async () =>
@@ -140,6 +142,81 @@ public class AccountService : IAccountService
             logger.LogInformation("User with ID {userIDClaimValue} failed to Parse", userIDClaimValue);
             return null;
         }
+    }
+
+
+    public async Task<bool> CreateNewAccountAsync(string userName, string email, string password, string? phone)
+    {
+        logger.LogInformation("Requested to create new accout with User name {UserName} and Email {Email}",
+            userName, email); 
+
+        if (string.IsNullOrEmpty(userName) || 
+            string.IsNullOrEmpty(email) || 
+            string.IsNullOrEmpty(password))
+        {
+            logger.LogWarning("User name, email or password is null"); 
+            return false;
+        }
+
+        bool anotherEmailExists = database.Users.AsNoTracking().Any(u => u.Email == email); 
+
+        if (anotherEmailExists)
+        {
+            logger.LogWarning("Another Account already exists with eamil {Email}", email); 
+            return false;
+        }
+
+
+        // Generate password hash 
+
+        byte[] saltBytes = new byte[16];
+
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(saltBytes);
+        }
+
+        byte[] hashedPasswordBytes = await CreateHashFromPassword(password, saltBytes);
+
+        string saltToStore = Convert.ToBase64String(saltBytes);
+        string passwordToStore = Convert.ToBase64String(hashedPasswordBytes);
+
+        database.Users.Add(new User()
+        {
+            Name = userName,
+            Email = email,
+            Phone = phone,
+            PasswordHash = passwordToStore,
+            PasswordSalt = saltToStore
+        }); 
+
+        int userSaved = database.SaveChanges();
+
+        if (userSaved == 0)
+        {
+            logger.LogWarning("Failed to Add new user with email {Email}", email);
+            return false;
+        }
+
+        return true;
 
     }
+
+
+    public async Task<bool?> CheckAnotherEmailExistsAsync(string email)
+    {
+        return await Task.Run(CheckDublicateEmail); 
+
+        bool? CheckDublicateEmail()
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
+
+            return database.Users.AsNoTracking().Any(u => u.Email == email);
+        }
+
+    }
+
 }

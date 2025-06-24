@@ -10,6 +10,10 @@ public interface IAccountService
 
     public Task<UserDetails?> GetUserDetailsByIDAsync(int id);
 
-    public Task<int?> GetUserIDFromHttpContextAsync(); 
+    public Task<int?> GetUserIDFromHttpContextAsync();
+
+    public Task<bool> CreateNewAccountAsync(string userName, string email, string password, string? phone);
+
+    public Task<bool?> CheckAnotherEmailExistsAsync(string email); 
 
 }
