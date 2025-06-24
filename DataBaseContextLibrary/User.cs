@@ -26,6 +26,12 @@ public partial class User
     [Column(TypeName = "datetime")]
     public DateTime? CreatedAt { get; set; }
 
+    [StringLength(255)]
+    public string PasswordHash { get; set; } = null!;
+
+    [StringLength(255)]
+    public string PasswordSalt { get; set; } = null!;
+
     [InverseProperty("User")]
     public virtual Cart? Cart { get; set; }
 
