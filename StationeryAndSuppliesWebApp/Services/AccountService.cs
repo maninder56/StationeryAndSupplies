@@ -272,8 +272,9 @@ public class AccountService : IAccountService
             return false; 
         }
 
+        // only allow users who have user id bigger than 10 to avoid mock users
         User? user = await database.Users
-            .Where(u => u.Email == email)
+            .Where(u => u.Email == email && u.UserId > 10)
             .FirstOrDefaultAsync();
 
         if (user is null)
