@@ -40,7 +40,7 @@ public class AccountService : IAccountService
                 salt: saltBytes,
                 // Three properties below can never change
                 prf: KeyDerivationPrf.HMACSHA512,
-                iterationCount: 10_000,
+                iterationCount: 210_000,
                 numBytesRequested: 64);
         }); 
     }
@@ -106,7 +106,7 @@ public class AccountService : IAccountService
                 return new LoggedInUser(user.UserId, user.Name, email); 
             }
 
-            logger.LogWarning("Authentication failed for the user with email {Eamil}", email); 
+            logger.LogWarning("Authentication failed for the user with email {Eamil}, Invalid password", email); 
             return null;
         }); 
     }
