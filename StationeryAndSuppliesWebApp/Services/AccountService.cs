@@ -75,7 +75,80 @@ public class AccountService : IAccountService
 
 
     // Account service methods
-    
+
+
+    // Create Operations
+
+    public async Task<bool> CreateNewAccountAsync(string userName, string email, string password, string? phone)
+    {
+        logger.LogInformation("Requested to create new accout with User name {UserName} and Email {Email}",
+            userName, email);
+
+        if (string.IsNullOrEmpty(userName) ||
+            string.IsNullOrEmpty(email) ||
+            string.IsNullOrEmpty(password))
+        {
+            logger.LogWarning("User name, email or password is null");
+            return false;
+        }
+
+        bool anotherEmailExists = await database.Users.AsNoTracking().AnyAsync(u => u.Email == email);
+
+        if (anotherEmailExists)
+        {
+            logger.LogWarning("Another Account already exists with eamil {Email}", email);
+            return false;
+        }
+
+        // Generate password hash and salt hash to store
+        (string passwordToStore, string saltToStore) = await GeneratePasswordAndSaltHash(password);
+
+        database.Users.Add(new User()
+        {
+            Name = userName,
+            Email = email,
+            Phone = phone,
+            PasswordHash = passwordToStore,
+            PasswordSalt = saltToStore
+        });
+
+        int userSaved = await database.SaveChangesAsync();
+
+        if (userSaved == 0)
+        {
+            logger.LogWarning("Failed to Add new user with email {Email}", email);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public async Task<ClaimsPrincipal> CreateClaimsPrincipalAsync(int id, string userName)
+    {
+        return await Task.Run(() =>
+        {
+            logger.LogInformation("Requested to create claims principal for user ID {UserID} and user name {UserName}",
+                id, userName);
+
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim("UserID", id.ToString()),
+                new Claim("FullName", userName)
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return new ClaimsPrincipal(claimsIdentity);
+        });
+    }
+
+
+
+
+    // Read Operations
+
     public async Task<LoggedInUser?> AuthenticateUserAsync(string email, string password)
     {
         return await Task.Run(async () =>
@@ -110,6 +183,7 @@ public class AccountService : IAccountService
             return null;
         }); 
     }
+
 
     public async Task<UserDetails?> GetUserDetailsByIDAsync(int id)
     {
@@ -162,53 +236,7 @@ public class AccountService : IAccountService
         }
     }
 
-
-    public async Task<bool> CreateNewAccountAsync(string userName, string email, string password, string? phone)
-    {
-        logger.LogInformation("Requested to create new accout with User name {UserName} and Email {Email}",
-            userName, email); 
-
-        if (string.IsNullOrEmpty(userName) || 
-            string.IsNullOrEmpty(email) || 
-            string.IsNullOrEmpty(password))
-        {
-            logger.LogWarning("User name, email or password is null"); 
-            return false;
-        }
-
-        bool anotherEmailExists = await database.Users.AsNoTracking().AnyAsync(u => u.Email == email); 
-
-        if (anotherEmailExists)
-        {
-            logger.LogWarning("Another Account already exists with eamil {Email}", email); 
-            return false;
-        }
-
-        // Generate password hash and salt hash to store
-        (string passwordToStore, string saltToStore) = await GeneratePasswordAndSaltHash(password); 
-
-        database.Users.Add(new User()
-        {
-            Name = userName,
-            Email = email,
-            Phone = phone,
-            PasswordHash = passwordToStore,
-            PasswordSalt = saltToStore
-        }); 
-
-        int userSaved = await database.SaveChangesAsync();
-
-        if (userSaved == 0)
-        {
-            logger.LogWarning("Failed to Add new user with email {Email}", email);
-            return false;
-        }
-
-        return true;
-
-    }
-
-
+   
     public async Task<bool?> EmailExistsAsync(string email)
     {
         logger.LogInformation("Requested to check Email {Email} Exists", email);
@@ -224,27 +252,7 @@ public class AccountService : IAccountService
         return anotherEmail;
     }
 
-    public async Task<ClaimsPrincipal> CreateClaimsPrincipalAsync(int id, string userName)
-    {
-        return await Task.Run(() =>
-        {
-            logger.LogInformation("Requested to create claims principal for user ID {UserID} and user name {UserName}", 
-                id, userName);
-
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim("UserID", id.ToString()),
-                new Claim("FullName", userName)
-            };
-
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
-                CookieAuthenticationDefaults.AuthenticationScheme);
-
-            return new ClaimsPrincipal(claimsIdentity);
-        });
-    }
-
-
+    
     public async Task<int?> GetUserIDByEmailAsync(string email)
     {
         logger.LogInformation("Requested to get user ID by email {Email}", email); 
@@ -261,6 +269,11 @@ public class AccountService : IAccountService
 
         return userID == 0 ? null : userID;
     }
+
+
+
+
+    // Update Operations
 
     public async Task<bool> UpdateUserPasswordByEmail(string email, string newPassword)
     {
