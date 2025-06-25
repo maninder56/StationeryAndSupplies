@@ -15,12 +15,12 @@ public interface IAccountService
 
     public Task<bool> CreateNewAccountAsync(string userName, string email, string password, string? phone);
 
-    public Task<bool?> CheckAnotherEmailExistsAsync(string email);
+    public Task<bool?> EmailExistsAsync(string email);
 
     public Task<ClaimsPrincipal> CreateClaimsPrincipalAsync(int id, string userName); 
 
     public Task<int?> GetUserIDByEmailAsync(string email);
 
-    public Task<bool> UpdateUserPasswordByEmail(string email, string password);
+    public Task<bool> UpdateUserPasswordByEmail(string email, string newPassword);
 
 }

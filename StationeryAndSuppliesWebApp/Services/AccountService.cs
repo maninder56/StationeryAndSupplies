@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation; 
 using Microsoft.EntityFrameworkCore;
 using StationeryAndSuppliesWebApp.Models;
+using System.Data.SqlTypes;
 using System.Diagnostics.Eventing.Reader;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -52,6 +53,23 @@ public class AccountService : IAccountService
         byte[] providedPassword = await CreateHashFromPassword(password, storedsaltBytes);
 
         return CryptographicOperations.FixedTimeEquals(storedPasswordBytes, providedPassword);
+    }
+
+    private async Task<(string passwordHash, string saltHash)>GeneratePasswordAndSaltHash(string password)
+    {
+        byte[] saltBytes = new byte[16];
+
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(saltBytes);
+        }
+
+        byte[] hashedPasswordBytes = await CreateHashFromPassword(password, saltBytes);
+
+        string saltInBase64String = Convert.ToBase64String(saltBytes);
+        string passwordInBase64String = Convert.ToBase64String(hashedPasswordBytes);
+
+        return (passwordHash: passwordInBase64String, saltHash: saltInBase64String);
     }
 
 
@@ -166,20 +184,8 @@ public class AccountService : IAccountService
             return false;
         }
 
-
-        // Generate password hash 
-
-        byte[] saltBytes = new byte[16];
-
-        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
-        {
-            rng.GetBytes(saltBytes);
-        }
-
-        byte[] hashedPasswordBytes = await CreateHashFromPassword(password, saltBytes);
-
-        string saltToStore = Convert.ToBase64String(saltBytes);
-        string passwordToStore = Convert.ToBase64String(hashedPasswordBytes);
+        // Generate password hash and salt hash to store
+        (string passwordToStore, string saltToStore) = await GeneratePasswordAndSaltHash(password); 
 
         database.Users.Add(new User()
         {
@@ -190,7 +196,7 @@ public class AccountService : IAccountService
             PasswordSalt = saltToStore
         }); 
 
-        int userSaved = database.SaveChanges();
+        int userSaved = await database.SaveChangesAsync();
 
         if (userSaved == 0)
         {
@@ -203,10 +209,13 @@ public class AccountService : IAccountService
     }
 
 
-    public async Task<bool?> CheckAnotherEmailExistsAsync(string email)
+    public async Task<bool?> EmailExistsAsync(string email)
     {
+        logger.LogInformation("Requested to check Email {Email} Exists", email);
+
         if (string.IsNullOrEmpty(email))
         {
+            logger.LogWarning("Provided Email is empty"); 
             return null;
         }
 
@@ -219,6 +228,9 @@ public class AccountService : IAccountService
     {
         return await Task.Run(() =>
         {
+            logger.LogInformation("Requested to create claims principal for user ID {UserID} and user name {UserName}", 
+                id, userName);
+
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("UserID", id.ToString()),
@@ -235,6 +247,8 @@ public class AccountService : IAccountService
 
     public async Task<int?> GetUserIDByEmailAsync(string email)
     {
+        logger.LogInformation("Requested to get user ID by email {Email}", email); 
+
         if (string.IsNullOrEmpty(email))
         {
             return null;
@@ -248,8 +262,43 @@ public class AccountService : IAccountService
         return userID == 0 ? null : userID;
     }
 
-    public Task<bool> UpdateUserPasswordByEmail(string email, string password)
+    public async Task<bool> UpdateUserPasswordByEmail(string email, string newPassword)
     {
-        throw new NotImplementedException();
+        logger.LogInformation("Requested to update user password by email {Email}", email); 
+
+        if (string.IsNullOrEmpty(email))
+        {
+            logger.LogWarning("Provided email is empty"); 
+            return false; 
+        }
+
+        User? user = await database.Users
+            .Where(u => u.Email == email)
+            .FirstOrDefaultAsync();
+
+        if (user is null)
+        {
+            logger.LogWarning("User with {Email} does not exists", email); 
+            return false;
+        }
+
+        // Generate password hash and salt hash to store for new password
+        (string passwordToStore, string saltToStore) = await GeneratePasswordAndSaltHash(newPassword);
+
+        user.PasswordHash = passwordToStore;
+        user.PasswordSalt = saltToStore;
+
+        int updated = await database.SaveChangesAsync();
+
+        if (updated == 0)
+        {
+            logger.LogWarning("Failed to save new password by eamil {Email}", email); 
+            return false;
+        }
+        else
+        {
+            logger.LogInformation("Successfully updated user password by email {Email}", email); 
+            return true;
+        }
     }
 }

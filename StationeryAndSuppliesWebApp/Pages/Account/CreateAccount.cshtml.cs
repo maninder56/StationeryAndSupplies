@@ -98,11 +98,11 @@ public class CreateAccountModel : PageModel
         if (Input.Password != Input.Repeat_Password)
         {
             logger.LogWarning("User with email {Email} failed to repeat password", Input.Email);
-            ValidationMessage = "Repeated password is incorrect, Please Try again";
+            ValidationMessage = "Repeated password does not match, Please Try again";
             return false;
         }
 
-        bool? anotherEmailExists = await accountService.CheckAnotherEmailExistsAsync(Input.Email);
+        bool? anotherEmailExists = await accountService.EmailExistsAsync(Input.Email);
 
         if (anotherEmailExists is null)
         {
@@ -140,9 +140,11 @@ public class CreateAccountModel : PageModel
         [StringLength(100)]
         public string? Phone { get; set; }
 
+        [Required]
         [StringLength(64)] 
         public string Password { get; set; } = string.Empty;
 
+        [Required]
         [StringLength(64)]
         public string Repeat_Password { get; set; } = string.Empty;
     }

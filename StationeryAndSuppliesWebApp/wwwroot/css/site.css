@@ -62,6 +62,11 @@
     --logout-button-background-color: black;
     --logout-button-background-hover-color: transparent;
     /*----------------------------------------*/
+    --black-button-text-color: white;
+    --black-button-text-hover-color: black;
+    --black-button-background-color: black;
+    --black-button-background-hover-color: transparent;
+    /*----------------------------------------*/
     --warning-text-color: red;
     /*----------------------------------------*/
     --profile-navigation-content-background-color: #f9f9ed;
@@ -91,6 +96,48 @@
 
 @media (min-width: 1000px) {
 }
+
+
+/* General Styles */
+
+.black-button {
+    color: var(--black-button-text-color); 
+    background-color: var(--black-button-background-color); 
+}
+
+    .black-button:hover {
+        color: var(--black-button-text-hover-color);
+        background-color: var(--black-button-background-hover-color);
+    }
+
+    .black-button:active {
+        color: var(--black-button-text-color);
+        background-color: var(--black-button-background-color);
+    }
+
+
+
+.transparent-black-button {
+
+}
+
+.transparent-black-button:hover {
+}
+
+.transparent-black-button:active {
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 body {
     margin: 0px 0px;
@@ -1633,6 +1680,72 @@ footer {
 
 
 
+/* Reset Password */
+
+.reset-password-page {
+    height: 100%;
+    background-color: var(--primary-background-color-cream);
+    display: flex;
+    justify-content: center;
+}
+
+    .reset-password-page .reset-password-section {
+        flex: 1 1 auto;
+        margin: 20px 0px;
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .reset-password-page .reset-password-container {
+        margin-top: 50px;
+    }
+
+    .reset-password-page .title {
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .reset-password-page .validation-message {
+        color: var(--warning-text-color);
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .reset-password-page form {
+    }
+
+    .reset-password-page .form-group {
+        margin-bottom: 20px;
+    }
+
+    .reset-password-page .input-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .reset-password-page .input-container label {
+            font-size: 1.2rem;
+            margin-left: 3px;
+        }
+
+        .reset-password-page .input-container input {
+            font-size: 1.2rem;
+            border-radius: 5px;
+        }
+
+    .reset-password-page .save-button-container {
+        display: flex;
+        justify-content: end;
+    }
+
+    .reset-password-page .save-button {
+        font-size: 1rem;
+        padding: 10px 15px;
+        margin-right: 5px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
 
 
 
@@ -1794,8 +1907,6 @@ footer {
     border: solid 1px;
 }
 */
-
-
 
 
 
