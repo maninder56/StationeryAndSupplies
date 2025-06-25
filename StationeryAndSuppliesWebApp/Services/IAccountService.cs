@@ -21,4 +21,6 @@ public interface IAccountService
 
     public Task<int?> GetUserIDByEmailAsync(string email);
 
+    public Task<bool> UpdateUserPasswordByEmail(string email, string password);
+
 }

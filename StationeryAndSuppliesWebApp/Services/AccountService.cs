@@ -71,8 +71,8 @@ public class AccountService : IAccountService
                 return null;
             }
 
-            User? user = database.Users.AsNoTracking()
-                .FirstOrDefault(u => u.Email == email);
+            User? user = await database.Users.AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Email == email);
 
             if (user is null)
             {
@@ -95,28 +95,26 @@ public class AccountService : IAccountService
 
     public async Task<UserDetails?> GetUserDetailsByIDAsync(int id)
     {
-        return await Task.Run(() =>
+        logger.LogInformation("Requested detailes of user with ID {UserID}", id);
+
+        if (id < 1)
         {
-            logger.LogInformation("Requested detailes of user with ID {UserID}", id);
-
-            if (id < 1)
-            {
-                logger.LogWarning("User ID is less than 1");
-                return null; 
-            }
-
-            User? user = database.Users.AsNoTracking()
-                .FirstOrDefault(u => u.UserId == id);   
-
-            if (user is not null)
-            {
-                return new UserDetails(id, user.Name, user.Email, user.Phone); 
-            }
-
-            logger.LogWarning("User with ID {userID} was not Found", id); 
+            logger.LogWarning("User ID is less than 1");
             return null; 
-        }); 
+        }
+
+        User? user = await database.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.UserId == id);   
+
+        if (user is not null)
+        {
+            return new UserDetails(id, user.Name, user.Email, user.Phone); 
+        }
+
+        logger.LogWarning("User with ID {userID} was not Found", id); 
+        return null;    
     }
+
 
     public async Task<int?> GetUserIDFromHttpContextAsync()
     {
@@ -160,7 +158,7 @@ public class AccountService : IAccountService
             return false;
         }
 
-        bool anotherEmailExists = database.Users.AsNoTracking().Any(u => u.Email == email); 
+        bool anotherEmailExists = await database.Users.AsNoTracking().AnyAsync(u => u.Email == email); 
 
         if (anotherEmailExists)
         {
@@ -207,18 +205,14 @@ public class AccountService : IAccountService
 
     public async Task<bool?> CheckAnotherEmailExistsAsync(string email)
     {
-        return await Task.Run(CheckDublicateEmail); 
-
-        bool? CheckDublicateEmail()
+        if (string.IsNullOrEmpty(email))
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return null;
-            }
-
-            return database.Users.AsNoTracking().Any(u => u.Email == email);
+            return null;
         }
 
+        bool anotherEmail = await database.Users.AsNoTracking().AnyAsync(u => u.Email == email);
+
+        return anotherEmail;
     }
 
     public async Task<ClaimsPrincipal> CreateClaimsPrincipalAsync(int id, string userName)
@@ -238,23 +232,24 @@ public class AccountService : IAccountService
         });
     }
 
+
     public async Task<int?> GetUserIDByEmailAsync(string email)
     {
-        return await Task.Run(GetID); 
-
-        int? GetID()
+        if (string.IsNullOrEmpty(email))
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return null;
-            }
-
-            int userID = database.Users.AsNoTracking()
-                .Where(u => u.Email == email)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
-
-            return userID == 0 ? null : userID;
+            return null;
         }
+
+        int userID =  await database.Users.AsNoTracking()
+            .Where(u => u.Email == email)
+            .Select(u => u.UserId)
+            .FirstOrDefaultAsync();
+
+        return userID == 0 ? null : userID;
+    }
+
+    public Task<bool> UpdateUserPasswordByEmail(string email, string password)
+    {
+        throw new NotImplementedException();
     }
 }
