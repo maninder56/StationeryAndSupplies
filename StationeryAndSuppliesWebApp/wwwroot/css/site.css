@@ -37,15 +37,25 @@
     --forgot-password-text-color: #2b2b2b;
     --forgot-password-text-hover-active-color: black;
     /*----------------------------------------*/
-    --create-account-text-color: black;
-    --create-account-text-hover-color: white;
-    --create-account-background-hover-color: black;
-    --create-account-background-active-color: transparent;
+    --create-account-link-text-color: black;
+    --create-account-link-text-hover-color: white;
+    --create-account-link-background-hover-color: black;
+    --create-account-link-background-active-color: transparent;
+    /*----------------------------------------*/
+    --create-account-button-text-color: white;
+    --create-account-button-text-hover-color: black;
+    --create-account-button-background-color: black;
+    --create-account-button-background-hover-color: transparent;
     /*----------------------------------------*/
     --login-button-text-color: white;
     --login-button-text-hover-color: black;
     --login-button-background-color: black;
     --login-button-background-hover-color: transparent;
+    /*----------------------------------------*/
+    --login-link-text-color: black;
+    --login-link-text-hover-color: white;
+    --login-link-background-hover-color: black;
+    --login-link-background-active-color: transparent;
     /*----------------------------------------*/
     --logout-button-text-color: white;
     --logout-button-text-hover-color: black;
@@ -54,7 +64,7 @@
     /*----------------------------------------*/
     --warning-text-color: red;
     /*----------------------------------------*/
-    --profile-navigation-content-background-color: #f9f9ed; 
+    --profile-navigation-content-background-color: #f9f9ed;
     /*----------------------------------------*/
     transition: font-size 0.5s ease-in-out;
 }
@@ -1422,8 +1432,9 @@ footer {
     }
 
     .login-page .title {
-        text-align: center; 
+        text-align: center;
         font-size: 1.8rem;
+        margin-bottom: 20px;
     }
 
     .login-page .validation-message {
@@ -1483,20 +1494,20 @@ footer {
 
         .login-page .login-create-account-container .create-account-link {
             display: block;
-            color: var(--create-account-text-color);
+            color: var(--create-account-link-text-color);
             text-decoration-line: none;
             border: solid 2px;
             border-radius: 10px;
         }
 
             .login-page .login-create-account-container .create-account-link:hover {
-                color: var(--create-account-text-hover-color);
-                background-color: var(--create-account-background-hover-color);
+                color: var(--create-account-link-text-hover-color);
+                background-color: var(--create-account-link-background-hover-color);
             }
 
             .login-page .login-create-account-container .create-account-link:active {
-                color: var(--create-account-text-color);
-                background-color: var(--create-account-background-active-color);
+                color: var(--create-account-link-text-color);
+                background-color: var(--create-account-link-background-active-color);
             }
 
         .login-page .login-create-account-container .login-button {
@@ -1519,10 +1530,114 @@ footer {
 
 
 
+/* Create Account page  */
+
+.create-account-page {
+    height: 100%;
+    background-color: var(--primary-background-color-cream);
+    display: flex;
+    justify-content: center;
+}
+
+    .create-account-page .create-account-section {
+        flex: 1 1 auto;
+        margin: 20px 0px;
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .create-account-page .create-account-container {
+        margin-top: 50px;
+    }
+
+    .create-account-page .title {
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 20px; 
+    }
+
+    .create-account-page .validation-message {
+        color: var(--warning-text-color);
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .create-account-page form {
+    }
+
+    .create-account-page .form-group {
+        margin-bottom: 20px;
+    }
+
+    .create-account-page .input-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .create-account-page .input-container label {
+            font-size: 1.2rem;
+            margin-left: 3px;
+        }
+
+        .create-account-page .input-container input {
+            font-size: 1.2rem;
+            border-radius: 5px;
+        }
+
+    .create-account-page .login-create-account-container {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .create-account-page .login-link,
+    .create-account-page .create-account-button {
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .create-account-page .login-link {
+        display: block;
+        color: var(--login-link-text-color);
+        text-decoration-line: none;
+        border: solid 2px;
+        border-radius: 10px;
+    }
+
+        .create-account-page .login-link:hover {
+            color: var(--login-link-text-hover-color);
+            background-color: var(--login-link-background-hover-color);
+        }
+
+        .create-account-page .login-link:active {
+            color: var(--login-link-text-color);
+            background-color: var(--login-link-background-active-color);
+        }
+
+    .create-account-page .create-account-button {
+        cursor: pointer;
+        color: var(--create-account-button-text-color);
+        background-color: var(--create-account-button-background-color);
+    }
+
+        .create-account-page .create-account-button:hover {
+            color: var(--create-account-button-text-hover-color);
+            background-color: var(--create-account-button-background-hover-color);
+        }
+
+        .create-account-page .create-account-button:active {
+            color: var(--create-account-button-text-color);
+            background-color: var(--create-account-button-background-color);
+        }
+
+
+
+
+
+
 
 
 /* Profile Navigation layout */
-
 .profile-navigation-layout {
     height: 100%;
     background-color: var(--primary-background-color-cream);
@@ -1640,9 +1755,6 @@ footer {
 
 /* User Details Section */
 
-/*body * {
-    border: solid 1px;
-}*/
 
 
 .user-details-section {
@@ -1675,6 +1787,21 @@ footer {
         .user-details-section table th {
             padding: 5px 10px;
         }
+
+
+
+/*body * {
+    border: solid 1px;
+}
+*/
+
+
+
+
+
+
+
+
 
 
 
