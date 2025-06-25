@@ -1,4 +1,5 @@
-﻿using StationeryAndSuppliesWebApp.Models;
+﻿using System.Security.Claims; 
+using StationeryAndSuppliesWebApp.Models;
 
 namespace StationeryAndSuppliesWebApp.Services; 
 
@@ -14,6 +15,10 @@ public interface IAccountService
 
     public Task<bool> CreateNewAccountAsync(string userName, string email, string password, string? phone);
 
-    public Task<bool?> CheckAnotherEmailExistsAsync(string email); 
+    public Task<bool?> CheckAnotherEmailExistsAsync(string email);
+
+    public Task<ClaimsPrincipal> CreateClaimsPrincipalAsync(int id, string userName); 
+
+    public Task<int?> GetUserIDByEmailAsync(string email);
 
 }

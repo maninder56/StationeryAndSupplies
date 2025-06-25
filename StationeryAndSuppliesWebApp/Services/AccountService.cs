@@ -1,9 +1,11 @@
-﻿using System.Security.Cryptography;
+﻿using DataBaseContextLibrary;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation; 
-using DataBaseContextLibrary;
-using StationeryAndSuppliesWebApp.Models;
 using Microsoft.EntityFrameworkCore;
+using StationeryAndSuppliesWebApp.Models;
 using System.Diagnostics.Eventing.Reader;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace StationeryAndSuppliesWebApp.Services;
 
@@ -219,4 +221,40 @@ public class AccountService : IAccountService
 
     }
 
+    public async Task<ClaimsPrincipal> CreateClaimsPrincipalAsync(int id, string userName)
+    {
+        return await Task.Run(() =>
+        {
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim("UserID", id.ToString()),
+                new Claim("FullName", userName)
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return new ClaimsPrincipal(claimsIdentity);
+        });
+    }
+
+    public async Task<int?> GetUserIDByEmailAsync(string email)
+    {
+        return await Task.Run(GetID); 
+
+        int? GetID()
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
+
+            int userID = database.Users.AsNoTracking()
+                .Where(u => u.Email == email)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userID == 0 ? null : userID;
+        }
+    }
 }

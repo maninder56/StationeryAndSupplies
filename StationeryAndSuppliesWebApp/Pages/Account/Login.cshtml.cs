@@ -65,17 +65,7 @@ public class LoginModel : PageModel
             return Page();
         }
 
-
-        List<Claim> claims = new List<Claim>()
-        {
-            new Claim("UserID", user.Id.ToString()), 
-            new Claim("FullName", user.UserName)
-        }; 
-
-        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, 
-            CookieAuthenticationDefaults.AuthenticationScheme);
-
-        ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+        ClaimsPrincipal claimsPrincipal = await accountService.CreateClaimsPrincipalAsync(user.Id, user.UserName); 
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
             claimsPrincipal);
@@ -96,7 +86,7 @@ public class LoginModel : PageModel
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(100)]
+        [StringLength(64)]
         public string Password { get; set; } = string.Empty;
     }
 }

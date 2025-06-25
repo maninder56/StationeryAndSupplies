@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding; 
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StationeryAndSuppliesWebApp.Services;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding; 
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+
 
 namespace StationeryAndSuppliesWebApp.Pages.Account;
 
@@ -21,9 +25,8 @@ public class CreateAccountModel : PageModel
     // data for the view 
     public string? ValidationMessage { get; private set; }
 
-
     [BindProperty]
-    public InputMode Input {  get; set; } = new InputMode();
+    public InputModel Input {  get; set; } = new InputModel();
 
     public IActionResult OnGet()
     {
@@ -33,43 +36,12 @@ public class CreateAccountModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-        {
-            if (ModelState.GetValidationState("Input.Phone") == ModelValidationState.Invalid)
-            {
-                logger.LogWarning("User with email {Email} provided invalid phone number", Input.Email);
-                ValidationMessage = "Phone number is Invalid"; 
-                return Page();
-            }
+        bool validateInput = await ValidateUserDetailsAsync(); 
 
-            logger.LogWarning("Model state is invalid for Create Account page");
-            ValidationMessage = "Please provide all non-optional details"; 
+        if (!validateInput)
+        {
             return Page();
         }
-
-        if (Input.Password != Input.Repeat_Password)
-        {
-            logger.LogWarning("User with email {Email} failed to repeat password", Input.Email);
-            ValidationMessage = "Repeated password is incorrect, Please Try again"; 
-            return Page();
-        }
-
-        bool? anotherEmailExists = await accountService.CheckAnotherEmailExistsAsync(Input.Email); 
-
-        if (anotherEmailExists is null)
-        {
-            logger.LogWarning("User provided null or empty email");
-            ValidationMessage = "Please provide your email"; 
-            return Page();
-        }
-
-        if ((bool)anotherEmailExists)
-        {
-            logger.LogWarning("User provided email {Email} which already exists", Input.Email);
-            ValidationMessage = "An account already exists with this email"; 
-            return Page();
-        }
-
 
         bool accountCreated = await accountService.CreateNewAccountAsync(
             Input.Name, Input.Email, Input.Password, Input.Phone);
@@ -82,17 +54,78 @@ public class CreateAccountModel : PageModel
         }
         else
         {
-            logger.LogInformation("Successfuly created new account with email {Email}, redirected user to log in page",
+            logger.LogInformation("Successfuly created new account with email {Email}",
                 Input.Email); 
-            return RedirectToPage("/Account/Login"); 
+
+            int? userID = await accountService.GetUserIDByEmailAsync(Input.Email);
+
+            if (userID is null)
+            {
+                ValidationMessage = "Problem occured while automatic login, Please go to log in page"; 
+                return Page();
+            }
+
+            ClaimsPrincipal claimsPrincipal = await accountService.CreateClaimsPrincipalAsync((int)userID, Input.Name);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                claimsPrincipal);
+
+            logger.LogInformation("User with eamil {Email} logged in at {Time}",
+                Input.Email, DateTime.UtcNow);
+
+            return RedirectToPage("/Index");
         }
+    }
+
+
+
+    private async Task<bool> ValidateUserDetailsAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            if (ModelState.GetValidationState("Input.Phone") == ModelValidationState.Invalid)
+            {
+                logger.LogWarning("User with email {Email} provided invalid phone number", Input.Email);
+                ValidationMessage = "Phone number is Invalid";
+                return false;
+            }
+
+            logger.LogWarning("Model state is invalid for Create Account page");
+            ValidationMessage = "Please provide all non-optional details";
+            return false; 
+        }
+
+        if (Input.Password != Input.Repeat_Password)
+        {
+            logger.LogWarning("User with email {Email} failed to repeat password", Input.Email);
+            ValidationMessage = "Repeated password is incorrect, Please Try again";
+            return false;
+        }
+
+        bool? anotherEmailExists = await accountService.CheckAnotherEmailExistsAsync(Input.Email);
+
+        if (anotherEmailExists is null)
+        {
+            logger.LogWarning("User provided null or empty email");
+            ValidationMessage = "Please provide your email";
+            return false;
+        }
+
+        if ((bool)anotherEmailExists)
+        {
+            logger.LogWarning("User provided email {Email} which already exists", Input.Email);
+            ValidationMessage = "An account already exists with this email";
+            return false;
+        }
+
+        return true;
     }
 
 
 
 
 
-    public class InputMode
+    public class InputModel
     {
         [Required]
         [StringLength(50)]
