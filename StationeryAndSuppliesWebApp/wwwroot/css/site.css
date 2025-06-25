@@ -37,35 +37,15 @@
     --forgot-password-text-color: #2b2b2b;
     --forgot-password-text-hover-active-color: black;
     /*----------------------------------------*/
-    --create-account-link-text-color: black;
-    --create-account-link-text-hover-color: white;
-    --create-account-link-background-hover-color: black;
-    --create-account-link-background-active-color: transparent;
-    /*----------------------------------------*/
-    --create-account-button-text-color: white;
-    --create-account-button-text-hover-color: black;
-    --create-account-button-background-color: black;
-    --create-account-button-background-hover-color: transparent;
-    /*----------------------------------------*/
-    --login-button-text-color: white;
-    --login-button-text-hover-color: black;
-    --login-button-background-color: black;
-    --login-button-background-hover-color: transparent;
-    /*----------------------------------------*/
-    --login-link-text-color: black;
-    --login-link-text-hover-color: white;
-    --login-link-background-hover-color: black;
-    --login-link-background-active-color: transparent;
-    /*----------------------------------------*/
-    --logout-button-text-color: white;
-    --logout-button-text-hover-color: black;
-    --logout-button-background-color: black;
-    --logout-button-background-hover-color: transparent;
-    /*----------------------------------------*/
     --black-button-text-color: white;
-    --black-button-text-hover-color: black;
     --black-button-background-color: black;
+    --black-button-text-hover-color: black;
     --black-button-background-hover-color: transparent;
+    /*----------------------------------------*/
+    --transparent-black-button-text-color: black;
+    --transparent-black-button-background-color: transparent;
+    --transparent-black-button-text-hover-color: white;
+    --transparent-black-button-background-hover-color: black;
     /*----------------------------------------*/
     --warning-text-color: red;
     /*----------------------------------------*/
@@ -118,14 +98,19 @@
 
 
 .transparent-black-button {
-
+    color: var(--transparent-black-button-text-color); 
+    background-color: var(--transparent-black-button-background-color); 
 }
 
-.transparent-black-button:hover {
-}
+    .transparent-black-button:hover {
+        color: var(--transparent-black-button-text-hover-color);
+        background-color: var(--transparent-black-button-background-hover-color);
+    }
 
-.transparent-black-button:active {
-}
+    .transparent-black-button:active {
+        color: var(--transparent-black-button-text-color);
+        background-color: var(--transparent-black-button-background-color);
+    }
 
 
 
@@ -1085,7 +1070,7 @@ footer {
 
 
 
-/* Singel product page */
+/* Single product page */
 
 
 .single-product-page {
@@ -1199,9 +1184,7 @@ footer {
             
         }
 
-            .single-product-page .add-to-bag form button {
-                color: var(--add-to-bag-button-text-color); 
-                background-color: var(--add-to-bag-button-background-color); 
+            .single-product-page .add-to-bag form button { 
                 cursor: pointer;
                 font-size: 1.2rem;
                 width: 200px;
@@ -1209,16 +1192,7 @@ footer {
                 border-radius: 10px;
             }
 
-                .single-product-page .add-to-bag form button:hover {
-                    color: var(--add-to-bag-button-text-hover-color); 
-                    background-color: var(--add-to-bag-button-background-hover-color);
-                }
-
-                .single-product-page .add-to-bag form button:active {
-                    color: var(--add-to-bag-button-text-color);
-                    background-color: var(--add-to-bag-button-background-color);
-                }
-
+   
 
 
 /* Desktop view */
@@ -1541,37 +1515,16 @@ footer {
 
         .login-page .login-create-account-container .create-account-link {
             display: block;
-            color: var(--create-account-link-text-color);
             text-decoration-line: none;
             border: solid 2px;
             border-radius: 10px;
         }
 
-            .login-page .login-create-account-container .create-account-link:hover {
-                color: var(--create-account-link-text-hover-color);
-                background-color: var(--create-account-link-background-hover-color);
-            }
-
-            .login-page .login-create-account-container .create-account-link:active {
-                color: var(--create-account-link-text-color);
-                background-color: var(--create-account-link-background-active-color);
-            }
-
         .login-page .login-create-account-container .login-button {
-            color: var(--login-button-text-color);
-            background-color: var(--login-button-background-color);
             cursor: pointer;
         }
 
-            .login-page .login-create-account-container .login-button:hover {
-                color: var(--login-button-text-hover-color);
-                background-color: var(--login-button-background-hover-color);
-            }
-
-            .login-page .login-create-account-container .login-button:active {
-                color: var(--login-button-text-color);
-                background-color: var(--login-button-background-color);
-            }
+            
 
 
 
@@ -1645,37 +1598,16 @@ footer {
 
     .create-account-page .login-link {
         display: block;
-        color: var(--login-link-text-color);
         text-decoration-line: none;
         border: solid 2px;
         border-radius: 10px;
     }
 
-        .create-account-page .login-link:hover {
-            color: var(--login-link-text-hover-color);
-            background-color: var(--login-link-background-hover-color);
-        }
-
-        .create-account-page .login-link:active {
-            color: var(--login-link-text-color);
-            background-color: var(--login-link-background-active-color);
-        }
-
     .create-account-page .create-account-button {
         cursor: pointer;
-        color: var(--create-account-button-text-color);
-        background-color: var(--create-account-button-background-color);
     }
 
-        .create-account-page .create-account-button:hover {
-            color: var(--create-account-button-text-hover-color);
-            background-color: var(--create-account-button-background-hover-color);
-        }
 
-        .create-account-page .create-account-button:active {
-            color: var(--create-account-button-text-color);
-            background-color: var(--create-account-button-background-color);
-        }
 
 
 
@@ -1819,20 +1751,8 @@ footer {
         padding: 10px 15px;
         cursor: pointer;
         border-radius: 10px;
-        color: var(--logout-button-text-color);
-        background-color: var(--logout-button-background-color);
     }
 
-
-        .profile-navigation-layout .log-out-button:hover {
-            color: var(--logout-button-text-hover-color);
-            background-color: var(--logout-button-background-hover-color);
-        }
-
-        .profile-navigation-layout .log-out-button:active {
-            color: var(--logout-button-text-color);
-            background-color: var(--logout-button-background-color);
-        }
 
 
 @media (min-width: 500px) {
