@@ -1839,14 +1839,14 @@ footer {
     }
 
     .user-orders-section .order-details-container {
-        margin-bottom: 10px; 
         border-radius: 10px; 
         background-color: var(--primary-background-color-cream); 
         display: flex; 
         flex-direction: column; 
         justify-content: center; 
-        margin: 5px; 
+        margin: 20px 5px; 
         padding: 5px; 
+        
     }
 
     .user-orders-section .order-items {
@@ -1936,11 +1936,8 @@ footer {
 @media (min-width: 800px) {
 
     .user-orders-section .order-details-container {
-        margin-bottom: 10px;
         flex-direction: row; 
         justify-content: center;
-        margin: 5px;
-        padding: 5px;
     }
 
     .user-orders-section .order-summary-container {
