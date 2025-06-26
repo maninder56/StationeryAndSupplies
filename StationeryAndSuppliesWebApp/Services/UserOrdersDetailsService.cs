@@ -24,14 +24,14 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
 
     // Read operations 
 
-    public async Task<List<UserOrderDetails>> GetUserOrdersDetailsByUserIDAsync(int userID)
+    public async Task<List<UserOrderDetails>?> GetUserOrdersDetailsByUserIDAsync(int userID)
     {
         logger.LogInformation("Requested to get User order details with Use ID {UserID}", userID);
 
         if (userID < 1)
         {
             logger.LogWarning("User ID {UserID} provided which is less than 1", userID);
-            return new List<UserOrderDetails>(); 
+            return null; 
         }
 
         bool userHasOrders = await database.Orders.AsNoTracking()
@@ -64,7 +64,7 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
         if (userOrderDetails is null)
         {
             logger.LogWarning("Failed to get user order details with User ID {UserID}", userID); 
-            return new List<UserOrderDetails>();
+            return null;
         }
 
         return userOrderDetails;

@@ -1,0 +1,26 @@
+﻿@page
+@model StationeryAndSuppliesWebApp.Pages.Account.OrdersModel
+@{
+    Layout = "_ProfileNavigationLayout";
+    ViewData["Title"] = "Orders"; 
+}
+
+
+
+<section class="user-orders-section">
+    <header>Most Recent Orders</header>
+    @if(Model.ErrorMessage is not null)
+    {
+        <div class="error-message">@Model.ErrorMessage</div>
+    }
+    else if (Model.OrderList is not null && Model.OrderList.Count == 0)
+    {
+        <div class="no-orders-text">No Orders Found</div>
+    }
+    else
+    {
+        <div class="order-details-container">
+        </div>
+    }
+</section>
+

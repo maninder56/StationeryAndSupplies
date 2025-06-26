@@ -5,6 +5,6 @@ namespace StationeryAndSuppliesWebApp.Services;
 public interface IUserOrdersDetailsService
 {
     // Read operations 
-    public Task<List<UserOrderDetails>> GetUserOrdersDetailsByUserIDAsync(int userID);
+    public Task<List<UserOrderDetails>?> GetUserOrdersDetailsByUserIDAsync(int userID);
 
 }
