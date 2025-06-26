@@ -41,7 +41,7 @@ public class ResetPasswordModel : PageModel
             return Page();
         }
 
-        bool passwordUpdated = await accountService.UpdateUserPasswordByEmail(Input.Email, Input.Password);
+        bool passwordUpdated = await accountService.UpdateUserPasswordByEmailAsync(Input.Email, Input.Password);
 
         if (!passwordUpdated)
         {

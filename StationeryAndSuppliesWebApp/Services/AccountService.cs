@@ -31,7 +31,7 @@ public class AccountService : IAccountService
 
     // Helper methods 
 
-    private async Task<byte[]> CreateHashFromPassword(string password, byte[] saltBytes)
+    private async Task<byte[]> CreateHashFromPasswordAsync(string password, byte[] saltBytes)
     {
         return await Task.Run(() =>
         {
@@ -45,12 +45,12 @@ public class AccountService : IAccountService
         }); 
     }
 
-    private async Task<bool> VerifyPassword(string password, string storedPassword, string storedSalt)
+    private async Task<bool> VerifyPasswordAsync(string password, string storedPassword, string storedSalt)
     {
         byte[] storedsaltBytes = Convert.FromBase64String(storedSalt);
         byte[] storedPasswordBytes = Convert.FromBase64String(storedPassword);
 
-        byte[] providedPassword = await CreateHashFromPassword(password, storedsaltBytes);
+        byte[] providedPassword = await CreateHashFromPasswordAsync(password, storedsaltBytes);
 
         return CryptographicOperations.FixedTimeEquals(storedPasswordBytes, providedPassword);
     }
@@ -64,7 +64,7 @@ public class AccountService : IAccountService
             rng.GetBytes(saltBytes);
         }
 
-        byte[] hashedPasswordBytes = await CreateHashFromPassword(password, saltBytes);
+        byte[] hashedPasswordBytes = await CreateHashFromPasswordAsync(password, saltBytes);
 
         string saltInBase64String = Convert.ToBase64String(saltBytes);
         string passwordInBase64String = Convert.ToBase64String(hashedPasswordBytes);
@@ -171,7 +171,7 @@ public class AccountService : IAccountService
                 return null;
             }
 
-           bool passwordIsCorrect = await VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+           bool passwordIsCorrect = await VerifyPasswordAsync(password, user.PasswordHash, user.PasswordSalt);
 
             if (passwordIsCorrect)
             {
@@ -275,7 +275,7 @@ public class AccountService : IAccountService
 
     // Update Operations
 
-    public async Task<bool> UpdateUserPasswordByEmail(string email, string newPassword)
+    public async Task<bool> UpdateUserPasswordByEmailAsync(string email, string newPassword)
     {
         logger.LogInformation("Requested to update user password by email {Email}", email); 
 
@@ -314,5 +314,69 @@ public class AccountService : IAccountService
             logger.LogInformation("Successfully updated user password by email {Email}", email); 
             return true;
         }
+    }
+
+
+    public async Task<bool> UpdateUserDetailsByIDAsync(int id, string newName, string? newPhone)
+    {
+        logger.LogInformation("Requested to update user details by user ID {UserID}", id); 
+
+        if (id < 1)
+        {
+            logger.LogWarning("Given user id {UserID} is less than 1", id); 
+            return false;
+        }
+
+        if (string.IsNullOrEmpty (newName))
+        {
+            logger.LogWarning("Provided user name is null or empty for user id {UserID}", id); 
+            return false;
+        }
+
+        // only allow users who have user id bigger than 10 to avoid mock users
+        User? user = await database.Users
+            .Where(u => u.UserId == id && u.UserId > 10)
+            .FirstOrDefaultAsync();
+
+        if (user is null)
+        {
+            logger.LogWarning("User with ID {UserID} does not exists", id); 
+            return false;
+        }
+
+        bool isNameNew = false, isPhoneNew = false; 
+
+        // Only make changes if new data is differenct than existing one
+        if (user.Name != newName)
+        {
+            user.Name = newName;
+            isNameNew = true;
+        }
+
+        if ((!string.IsNullOrEmpty(newPhone)) && user.Phone != newPhone)
+        {
+            user.Phone = newPhone;
+            isPhoneNew = true;
+        }
+
+        if (!(isNameNew || isPhoneNew))
+        {
+            logger.LogInformation("No new details provided for update, no changes were made to profile"); 
+            return true; 
+        }
+
+        int updated = await database.SaveChangesAsync();
+
+        if (updated == 0)
+        {
+            logger.LogWarning("Failed to save new user details by user ID {UserID}", id); 
+            return false;
+        }
+        else
+        {
+            logger.LogInformation("Successfully updated user details by user ID {UserID}", id); 
+            return true; 
+        }
+
     }
 }

@@ -17,6 +17,7 @@ public interface IAccountService
     public Task<int?> GetUserIDByEmailAsync(string email);
 
     // Update Operations 
-    public Task<bool> UpdateUserPasswordByEmail(string email, string newPassword);
+    public Task<bool> UpdateUserPasswordByEmailAsync(string email, string newPassword);
+    public Task<bool> UpdateUserDetailsByIDAsync(int id, string newName, string? newPhone);
 
 }
