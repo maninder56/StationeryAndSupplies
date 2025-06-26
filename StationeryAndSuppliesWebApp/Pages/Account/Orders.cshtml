@@ -8,7 +8,7 @@
 
 
 <section class="user-orders-section">
-    <header>Most Recent Orders</header>
+    <header class="order-detail-title">Most Recent Orders</header>
     @if(Model.ErrorMessage is not null)
     {
         <div class="error-message">@Model.ErrorMessage</div>
@@ -24,12 +24,12 @@
             <div class="order-details-container">
                 <div class="order-items">
                     <div class="title">Order Items</div>
-                    <table>
+                    <table class="order-items-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th class="product-name-title">Name</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
+                                <th>Qty</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,8 +44,8 @@
                                 @foreach (var product in order.OrderItems)
                                 {
                                     <tr>
-                                        <td>@product.ProductName</td>
-                                        <td>£ @product.UnitPrice</td>
+                                        <td class="product-name">@product.ProductName</td>
+                                        <td>£@product.UnitPrice</td>
                                         <td>@product.Quantity</td>
                                     </tr>
                                 }
@@ -53,20 +53,23 @@
                         </tbody>
                     </table>
                 </div>
-                <div>
-                    <div>
+                <div class="order-summary-container">
+                    <div class="order-date-status-container">
                         <div>
-                            <div>Order Date</div>
-                            <dvi>@order.OrderDate</dvi>
+                            <div class="date-title">Order Date</div>
+                            <div class="order-date-container">
+                                <dvi class="order-date">@order.OrderDate.ToString("dd/MM/yyyy")</dvi>
+                            </div>
                         </div>
                         <div>
-                            <div>Status</div>
-                            <div>@order.Status</div>
+                            <div class ="status-title">Status</div>
+                            <div class="order-status-container">
+                                <div class="order-status">@order.Status</div>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <div>Total: £</div>
-                        <div>@order.TotalAmount</div>
+                    <div class="order-total-container">
+                        <div class="order-total">Total: £@order.TotalAmount</div>
                     </div>
                 </div>
             </div>

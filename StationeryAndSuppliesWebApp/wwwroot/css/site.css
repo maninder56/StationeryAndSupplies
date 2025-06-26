@@ -5,6 +5,7 @@
     --primary-background-color-cream: #f5f5dc;
     --primary-background-color-light-yellow: #f6ffd4;
     --primary-background-color-dark-green: #6ca46c;
+    --primary-background-color-very-light-yellow: #fffff2;
     /*----------------------------------------*/
     --navigation-background-color: white;
     /*----------------------------------------*/
@@ -43,8 +44,6 @@
     --transparent-black-button-background-hover-color: black;
     /*----------------------------------------*/
     --warning-text-color: red;
-    /*----------------------------------------*/
-    --profile-navigation-content-background-color: #f9f9ed;
     /*----------------------------------------*/
     transition: font-size 0.5s ease-in-out;
 }
@@ -1708,12 +1707,12 @@ footer {
         display: block;
         text-align: center;
         font-size: 1.4rem;
-        text-decoration-line:none; 
-        padding: 10px; 
-/*        border:solid 2px; */
-        border-radius:10px; 
+        text-decoration-line: none;
+        padding: 10px;
+        /*        border:solid 2px; */
+        border-radius: 10px;
         color: var(--primary-text-color);
-        background-color: var(--button-background-color-transparent); 
+        background-color: var(--primary-background-color-very-light-yellow);
     }
 
         .profile-navigation-layout .navigation-link:hover {
@@ -1729,7 +1728,7 @@ footer {
 
     .profile-navigation-layout .content-container {
         margin: 5px;
-        background-color: var(--profile-navigation-content-background-color); 
+        background-color: var(--primary-background-color-very-light-yellow); 
 /*        border: solid 2px; */
         border-radius: 10px; 
         padding: 5px; 
@@ -1783,8 +1782,6 @@ footer {
 
 /* User Details Section */
 
-
-
 .user-details-section {
     
 }
@@ -1818,15 +1815,148 @@ footer {
 
 
 
-/*body * {
+
+
+/* User orders section */
+
+.user-orders-section {
+    
+}
+
+    .user-orders-section .order-detail-title {
+        text-align: center; 
+        font-size: 1.1rem;
+        margin: 10px 0px; 
+    }
+
+    .user-orders-section .error-message {
+        color: var(--warning-text-color); 
+        text-align: center; 
+    }
+
+    .user-orders-section .no-orders-text {
+        text-align: center; 
+    }
+
+    .user-orders-section .order-details-container {
+        margin-bottom: 10px; 
+        border-radius: 10px; 
+        background-color: var(--primary-background-color-cream); 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        margin: 5px; 
+        padding: 5px; 
+    }
+
+    .user-orders-section .order-items {
+        flex: 1 1 auto; 
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .user-orders-section .order-summary-container {
+        flex: 1 1 auto;
+    }
+
+
+        .user-orders-section .order-items .title {
+            text-align: center; 
+        }
+
+    .user-orders-section .order-items-table {
+        border-collapse: collapse; 
+        table-layout: fixed; 
+        font-size: 0.9rem; 
+        text-align: center; 
+        width: 100%; 
+    }
+
+        .user-orders-section .order-items-table .product-name-title {
+            text-align: left;
+            width: 60%;
+        }
+
+        .user-orders-section .order-items-table .product-name {
+            text-align: left;  
+        }
+
+
+
+    .user-orders-section .order-summary-container {
+        margin: 5px; 
+        padding: 5px; 
+        display: flex; 
+        flex-direction: column; 
+        align-content: center; 
+        justify-content: space-around; 
+    }
+
+    .user-orders-section .order-date-status-container {
+        display: flex; 
+        justify-content: space-around; 
+    }
+
+    .user-orders-section .date-title,
+    .user-orders-section .status-title{
+        text-align: center;
+        font-size: 0.9rem; 
+    }
+
+    .user-orders-section .order-date-container {
+        display: flex; 
+        justify-content: center; 
+    }
+
+    .user-orders-section .order-date {
+        font-size: 0.8rem;
+    }
+
+    .user-orders-section .order-status-container {
+        display: flex; 
+        justify-content: center; 
+    }
+
+    .user-orders-section .order-status{
+        font-size: 0.8rem; 
+    }
+
+
+    .user-orders-section .order-total-container {
+/*        margin: 5px;*/
+    }
+
+        .user-orders-section .order-total {
+            text-align: center; 
+        }
+
+
+
+
+@media (min-width: 800px) {
+
+    .user-orders-section .order-details-container {
+        margin-bottom: 10px;
+        flex-direction: row; 
+        justify-content: center;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .user-orders-section .order-summary-container {
+        flex: 1 0 200px;
+    }
+
+}
+
+
+
+
+/*
+body * {
     border: solid 1px;
 }
 */
-
-
-
-
-
 
 
 
