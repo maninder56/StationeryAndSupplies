@@ -22,7 +22,7 @@ public class OrdersModel : PageModel
 
 
     // Data for view 
-    public List<UserOrderDetails>? OrderList { get; private set; } = new List<UserOrderDetails>();
+    public List<UserOrderDetails>? OrderDetailsList { get; private set; } = new List<UserOrderDetails>();
     public string? ErrorMessage { get; private set; }
 
     public async Task<IActionResult> OnGetAsync()
@@ -42,9 +42,9 @@ public class OrdersModel : PageModel
             return Page(); 
         }
 
-        OrderList = await orderService.GetUserOrdersDetailsByUserIDAsync(userID);
+        OrderDetailsList = await orderService.GetUserOrdersDetailsByUserIDAsync(userID);
 
-        if (OrderList is null)
+        if (OrderDetailsList is null)
         {
             logger.LogWarning("Failed to load user orders with user ID {UserID}", userID);
             ErrorMessage = "Error while loading orders, Pleae try again.";

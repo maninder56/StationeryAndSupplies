@@ -44,10 +44,10 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
         }
 
         // Get top 5 recent orders of the user
-        List<UserOrderDetails>? userOrderDetails = await database.Orders.AsNoTracking()
+        List<UserOrderDetails> userOrderDetails = await database.Orders.AsNoTracking()
             .Where(o => o.UserId == userID)
-            .Take(5)
             .OrderByDescending(o => o.OrderDate)
+            .Take(5)
             .Select(o => new UserOrderDetails
             {
                 OrderItems = o.OrderItems.Select(oi => new OrderItemDetail
@@ -61,12 +61,14 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
                 TotalAmount = o.TotalAmount
             }).ToListAsync(); 
 
-        if (userOrderDetails is null)
+        if (userOrderDetails.Count == 0)
         {
-            logger.LogWarning("Failed to get user order details with User ID {UserID}", userID); 
+            logger.LogWarning("Failed to get user orders details with User ID {UserID}", userID); 
             return null;
         }
 
+        logger.LogInformation("Total {TotalOrders} Found with user ID {UserID}", 
+            userOrderDetails.Count, userID);
         return userOrderDetails;
     }
 }

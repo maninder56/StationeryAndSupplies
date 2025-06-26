@@ -6,9 +6,9 @@
     <section class="profile-navigation-layout-section">
         <div class="navigation-content-container">
             <div class="navigation-container">
-                @* Add links to navigation *@
+                @* links to user details navigation *@
                 <a asp-page="/Account/UserDetails" class="navigation-link">User Details</a>
-                <a href="#" class="navigation-link">Orders</a>
+                <a asp-page="/Account/Orders" class="navigation-link">Orders</a>
             </div>
             <div class="content-container">
                 @RenderBody()
