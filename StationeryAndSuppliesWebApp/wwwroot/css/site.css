@@ -1949,11 +1949,77 @@ footer {
 
 
 
+
+/* Edit Profile section */
+
+
+.edit-profile-section {
+    height: 100%;
+    display: flex; 
+    justify-content: center; 
+}
+
+    .edit-profile-section .edit-profile-container {
+        flex: 1 1 auto;
+        max-width: 300px;
+    }
+
+    .edit-profile-section .title {
+        text-align: center;
+        font-size: 1.1rem;
+        margin: 10px 0px;
+    }
+
+    .edit-profile-section .validation-message {
+        color: var(--warning-text-color);
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .edit-profile-section form {
+    }
+
+    .edit-profile-section .form-group {
+        margin-bottom: 20px;
+    }
+
+    .edit-profile-section .input-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .edit-profile-section .input-container label {
+            font-size: 1rem;
+            margin-left: 3px;
+        }
+
+        .edit-profile-section .input-container input {
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+    .edit-profile-section .save-profile-container {
+        display: flex; 
+        justify-content: center; 
+    }
+
+    .edit-profile-section .save-profile-button {
+        font-size: 1rem; 
+        padding: 10px 20px; 
+        border-radius: 10px; 
+        display: block; 
+        cursor: pointer; 
+    }
+
+
+
+
 /*
 body * {
     border: solid 1px;
-}
-*/
+}*/
+
+
 
 
 

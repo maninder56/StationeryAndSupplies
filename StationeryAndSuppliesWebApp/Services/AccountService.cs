@@ -327,12 +327,6 @@ public class AccountService : IAccountService
             return false;
         }
 
-        if (string.IsNullOrEmpty (newName))
-        {
-            logger.LogWarning("Provided user name is null or empty for user id {UserID}", id); 
-            return false;
-        }
-
         // only allow users who have user id bigger than 10 to avoid mock users
         User? user = await database.Users
             .Where(u => u.UserId == id && u.UserId > 10)
@@ -347,7 +341,7 @@ public class AccountService : IAccountService
         bool isNameNew = false, isPhoneNew = false; 
 
         // Only make changes if new data is differenct than existing one
-        if (user.Name != newName)
+        if ((!string.IsNullOrEmpty(newName)) && user.Name != newName)
         {
             user.Name = newName;
             isNameNew = true;
