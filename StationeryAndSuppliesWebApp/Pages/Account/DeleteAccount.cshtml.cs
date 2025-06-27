@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -51,7 +53,9 @@ public class DeleteAccountModel : PageModel
 
         if (accountDeleted)
         {
-            logger.LogInformation("Successfully deleted user account");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            logger.LogInformation("Successfully deleted and logged out user account by user ID {UserID} at {Time}", 
+                userID, DateTime.UtcNow);
             return RedirectToPage("/Index");
         }
         else

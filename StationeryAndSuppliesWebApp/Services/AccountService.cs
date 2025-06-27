@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation; 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Tls;
 using StationeryAndSuppliesWebApp.Models;
 using System.Data.SqlTypes;
 using System.Diagnostics.Eventing.Reader;
@@ -392,18 +393,20 @@ public class AccountService : IAccountService
         // only allow users who have user id bigger than 10 to avoid mock users
         User? user = await database.Users
             .Where(u => u.UserId == id && u.UserId > 10)
+            .Include(u => u.Cart)
+                .ThenInclude(c => c!.CartItems)
             .Include(u => u.Reviews)
             .Include(u => u.Orders)
-                .ThenInclude(o => o.Payment)
-            .Include(u => u.Orders)
                 .ThenInclude(o => o.OrderItems)
+            .Include(u => u.Orders)
+                .ThenInclude(o => o.Payment)
             .FirstOrDefaultAsync();
 
         if (user is null)
         {
             logger.LogWarning("User with ID {UserID} does not exists", id);
             return false;
-        }
+        } 
 
         database.Users.Remove(user);
 
@@ -416,7 +419,7 @@ public class AccountService : IAccountService
         }
         else
         {
-            logger.LogInformation("Successfully deleted user account by user ID {UserID}", id);
+            logger.LogInformation("Successfully deleted user account by user ID {UserID} from database", id);
             return true;
         }
     }

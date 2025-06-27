@@ -43,7 +43,7 @@ public partial class StationeryAndSuppliesDatabaseContext : DbContext
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasOne(d => d.User).WithOne(p => p.Cart)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasConstraintName("cart_ibfk_1");
         });
 
@@ -52,7 +52,7 @@ public partial class StationeryAndSuppliesDatabaseContext : DbContext
             entity.HasKey(e => e.CartItemId).HasName("PRIMARY");
 
             entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasConstraintName("cart_items_ibfk_1");
 
             entity.HasOne(d => d.Product).WithMany(p => p.CartItems)
@@ -72,7 +72,7 @@ public partial class StationeryAndSuppliesDatabaseContext : DbContext
             entity.Property(e => e.OrderDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasConstraintName("orders_ibfk_1");
         });
 
@@ -81,7 +81,7 @@ public partial class StationeryAndSuppliesDatabaseContext : DbContext
             entity.HasKey(e => e.OrderItemId).HasName("PRIMARY");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasConstraintName("order_items_ibfk_1");
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
@@ -96,7 +96,7 @@ public partial class StationeryAndSuppliesDatabaseContext : DbContext
             entity.Property(e => e.PayedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasOne(d => d.Order).WithOne(p => p.Payment)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasConstraintName("payments_ibfk_1");
         });
 
@@ -122,7 +122,7 @@ public partial class StationeryAndSuppliesDatabaseContext : DbContext
                 .HasConstraintName("reviews_ibfk_2");
 
             entity.HasOne(d => d.User).WithMany(p => p.Reviews)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasConstraintName("reviews_ibfk_1");
         });
 
