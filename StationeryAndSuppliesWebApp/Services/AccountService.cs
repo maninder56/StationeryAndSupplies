@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation; 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StationeryAndSuppliesWebApp.Models;
 using System.Data.SqlTypes;
 using System.Diagnostics.Eventing.Reader;
@@ -372,5 +373,51 @@ public class AccountService : IAccountService
             return true; 
         }
 
+    }
+
+
+
+    // Delete Operations 
+
+    public async Task<bool> DeleteUserAccountByIDAsync(int id)
+    {
+        logger.LogInformation("Requested to delete user account by user ID {userID}", id);
+
+        if (id < 1)
+        {
+            logger.LogWarning("Given user id {UserID} is less than 1", id);
+            return false;
+        }
+
+        // only allow users who have user id bigger than 10 to avoid mock users
+        User? user = await database.Users
+            .Where(u => u.UserId == id && u.UserId > 10)
+            .Include(u => u.Reviews)
+            .Include(u => u.Orders)
+                .ThenInclude(o => o.Payment)
+            .Include(u => u.Orders)
+                .ThenInclude(o => o.OrderItems)
+            .FirstOrDefaultAsync();
+
+        if (user is null)
+        {
+            logger.LogWarning("User with ID {UserID} does not exists", id);
+            return false;
+        }
+
+        database.Users.Remove(user);
+
+        int deleted = await database.SaveChangesAsync();
+
+        if (deleted == 0)
+        {
+            logger.LogWarning("Failed to delete user account by user ID {UserID}", id);
+            return false;
+        }
+        else
+        {
+            logger.LogInformation("Successfully deleted user account by user ID {UserID}", id);
+            return true;
+        }
     }
 }

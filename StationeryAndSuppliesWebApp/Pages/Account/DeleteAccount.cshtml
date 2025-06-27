@@ -1,0 +1,31 @@
+﻿@page
+@model StationeryAndSuppliesWebApp.Pages.Account.DeleteAccountModel
+@{
+    Layout = "_ProfileNavigationLayout";
+    ViewData["Title"] = "Delete Account"; 
+}
+
+
+<section class="delete-account-section">
+    <div class="delete-account-container">
+        <header class="title">Delete Account</header>
+        @if (Model.ValidationMessage is not null)
+        {
+            <div class="validation-message">@Model.ValidationMessage</div>
+        }
+        <p>
+            All your account information will be permanently deleted, including your 
+            <strong>reviews, order history, payment details, and login credentials</strong>.
+        </p>
+        <p>This action is irreversible and all associated data will be removed from our systems.</p>
+        <form method="post">
+            <div class="form-group">
+                Are you Sure ? 
+            </div>
+            <div class="form-group delete-account-container">
+                <button type="submit" class="delete-account-yes-button red-button">Yes</button>
+                <a asp-page="/Account/UserDetails" class="delete-account-yes-button transparent-black-button">No</a>
+            </div>
+        </form>
+    </div>
+</section>

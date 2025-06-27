@@ -20,4 +20,6 @@ public interface IAccountService
     public Task<bool> UpdateUserPasswordByEmailAsync(string email, string newPassword);
     public Task<bool> UpdateUserDetailsByIDAsync(int id, string newName, string? newPhone);
 
+    // Delete Operations 
+    public Task<bool> DeleteUserAccountByIDAsync(int id);
 }

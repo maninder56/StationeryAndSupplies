@@ -24,7 +24,7 @@ public class EditProfileModel : PageModel
         this.accountService = accountService;
     }
 
-    // data for the view 
+    // Data for the view 
     public string? ValidationMessage { get; private set; }
 
     [BindProperty]
