@@ -45,6 +45,13 @@
     /*----------------------------------------*/
     --warning-text-color: red;
     /*----------------------------------------*/
+    --red-button-text-color: white;
+    --red-button-background-color: #FF4742;
+    --red-button-border-color: red;
+    --red-button-hover-text-color: #FF4742;
+    --red-button-hover-background-color: white;
+    --red-button-active-background-color: red;
+    /*----------------------------------------*/
     transition: font-size 0.5s ease-in-out;
 }
 
@@ -108,9 +115,22 @@
 
 
 
+.red-button {
+    color: var(--red-button-text-color);
+    background-color: var(--red-button-background-color);
+    border-color: var(--red-button-border-color);
+    font-weight: bold;
+}
 
+    .red-button:hover {
+        color: var(--red-button-hover-text-color);
+        background-color: var(--red-button-hover-background-color);
+    }
 
-
+    .red-button:active {
+        color: var(--red-button-text-color);
+        background-color: var(--red-button-active-background-color);
+    }
 
 
 
@@ -2013,14 +2033,62 @@ footer {
 
 
 
+/* Delete account section */
+
+
+.delete-account-section {
+
+}
+
+    .delete-account-section .title {
+        text-align: center;
+        font-size: 1.1rem;
+        margin: 10px 0px;
+    }
+
+    .delete-account-section .validation-message {
+        color: var(--warning-text-color);
+        text-align: center;
+        margin-top: 10px;
+    }
+
+
+    .delete-account-section .account-deletion-question {
+        text-align: center; 
+        font-size: 1.1rem; 
+        margin-bottom: 10px; 
+    }
+
+
+    .delete-account-section .delete-account-user-answer {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .delete-account-section .delete-account-yes-button,
+    .delete-account-section .delete-account-no-link {
+        font-size: 1rem; 
+        padding: 10px 20px; 
+        border-radius: 10px; 
+    }
+
+    .delete-account-section .delete-account-no-link {
+        display: block;
+        text-decoration-line: none;
+        border: solid 2px;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+    .delete-account-section .delete-account-yes-button {
+        cursor: pointer;
+    }
+
+
+
+
 
 /*
 body * {
     border: solid 1px;
 }*/
-
-
-
-
-
-
