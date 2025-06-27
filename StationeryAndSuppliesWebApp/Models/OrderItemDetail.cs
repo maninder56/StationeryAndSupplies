@@ -7,4 +7,9 @@ public class OrderItemDetail
     public decimal? UnitPrice { get; set; }
 
     public int Quantity { get; set; }
+
+    public decimal? TotalPriceByMultipyingQuntity 
+    { 
+        get { return (UnitPrice ?? 0) * Quantity; }
+    }
 }
