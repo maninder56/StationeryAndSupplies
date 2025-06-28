@@ -5,6 +5,9 @@ namespace StationeryAndSuppliesWebApp.Services;
 
 public interface IProductInformationService
 {
+    // Read Operations 
+
+
     // Category methods 
 
     // Get Category Information
@@ -15,6 +18,8 @@ public interface IProductInformationService
 
     // Get only parent categories
     public Task<List<Models.ParentCategory>> GetParentCategoryAsync(int numberOfCategories); 
+
+
 
     // Product methods 
 
@@ -40,8 +45,13 @@ public interface IProductInformationService
     // Get single product Details 
     public Task<Models.ProductDetails?> GetProductDetailsByIDAsync(int productId);
 
-
     // Serach for a product by name, get top 20 products
     public Task<List<Models.Product>> SearchProductWithNameAsync(string productName);
     
+
+    // Product Reviews
+
+    // Get recent reviews for the product by id
+    public Task<UserReviewsList> GetRecentUserReviewsListByProductID(int productId, int limit);
+
 }

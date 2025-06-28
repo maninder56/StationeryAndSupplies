@@ -11,58 +11,63 @@
         @if(Model.Product is null)
         {
             @*Need to add styles for it*@
-            <div>Missing product</div>
+            <div class="missing-product">Sorry, The product you are looking for is unavailable at the moment.</div>
         }
         else
         {
-            <div class="product-image-container">
-                @if(Model.Product.ImageUrl is null)
-                {
-                    <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
-                }
-                else
-                {
-                    <img src="~/@Model.Product.ImageUrl" alt="@Model.Product.Name Image" />
-                }
-            </div>
-            <div class="product-details-container">
-                <div class="product-details">
-                    <div class="product-details-column">
-                        <div class="product-name">@Model.Product.Name</div>
-                        <div class="product-price-container">
-                            Price: <span id="current-product-price" class="product-price">£@Model.Product.Price</span>
-                            <span id="original-product-price" hidden>@Model.Product.Price</span>
-                        </div>
-                        <div>
-                            @if (!Model.Product.InStock)
+            <div class="product-container">
+                <div class="product-image-container">
+                    @if (Model.Product.ImageUrl is null)
+                    {
+                        <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                    }
+                    else
+                    {
+                        <img src="~/@Model.Product.ImageUrl" alt="@Model.Product.Name Image" />
+                    }
+                </div>
+                <div class="product-details-container">
+                    <div class="product-details">
+                        <div class="product-details-column">
+                            <div class="product-name">@Model.Product.Name</div>
+                            <div class="product-price-container">
+                                Price: <span id="current-product-price" class="product-price">£@Model.Product.Price</span>
+                                <span id="original-product-price" hidden>@Model.Product.Price</span>
+                            </div>
+                            <div>
+                                @if (!Model.Product.InStock)
+                                {
+                                    <div class="out-of-stock">Out of Stock</div>
+                                }
+                            </div>
+                            <div class="product-description">
+                                <div class="title">About Product</div>
+                                <div class="description">@Model.Product.Description</div>
+                            </div>
+                            @if (Model.Product.InStock)
                             {
-                                <div class="out-of-stock">Out of Stock</div>
+                                <div class="drop-down">
+                                    <div class="title">Quantity: </div>
+                                    <select asp-items="Model.QuantityOptions"
+                                            id="quantity-drop-down-options"
+                                            name="quantity"
+                                            class="quantity-drop-down-select"
+                                            form="add-to-bag-form">
+                                    </select>
+                                </div>
+                                <div class="add-to-bag">
+                                    <form action="#" method="get" id="add-to-bag-form">
+                                        <input value="@Model.Product.Id" type="hidden" id="product-id" name="product-id" />
+                                        <button type="submit" class="black-button">Add to Bag</button>
+                                    </form>
+                                </div>
                             }
                         </div>
-                        <div class="product-description">
-                            <div class="title">About Product</div>
-                            <div class="description">@Model.Product.Description</div>
-                        </div>
-                        @if (Model.Product.InStock)
-                        {
-                            <div class="drop-down">
-                                <div class="title">Quantity: </div>
-                                <select asp-items="Model.QuantityOptions"
-                                        id="quantity-drop-down-options"
-                                        name="quantity"
-                                        class="quantity-drop-down-select"
-                                        form="add-to-bag-form">
-                                </select>
-                            </div>
-                            <div class="add-to-bag">
-                                <form action="#" method="get" id="add-to-bag-form">
-                                    <input value="@Model.Product.Id" type="hidden" id="product-id" name="product-id"/>
-                                    <button type="submit" class="black-button">Add to Bag</button>
-                                </form>
-                            </div>
-                        }
                     </div>
                 </div>
+            </div>
+            <div class="review-conainer">
+
             </div>
         }
     </section>

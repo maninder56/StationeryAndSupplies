@@ -14,7 +14,9 @@ public class ProductInformationService : IProductInformationService
 
     private int pageSize = 10;
 
-    public ProductInformationService(ILogger<ProductInformationService> logger, StationeryAndSuppliesDatabaseContext database)
+    public ProductInformationService(
+        ILogger<ProductInformationService> logger, 
+        StationeryAndSuppliesDatabaseContext database)
     {
         this.logger = logger;
         this.database = database;
@@ -293,6 +295,52 @@ public class ProductInformationService : IProductInformationService
         }
 
         return list ?? new List<Models.Product>();
+    }
+
+
+
+    public async Task<UserReviewsList> GetUserReviewsListByProductID(int productId, int limit)
+    {
+        logger.LogInformation("Requested to get {NumberOfReviews} recent reviews on product by id {ProductID}",
+            limit, productId); 
+
+        if (productId < 1)
+        {
+            logger.LogWarning("Product id {ProductID} is less than 1", productId); 
+            return new UserReviewsList(); 
+        }
+
+        if (limit < 1)
+        {
+            logger.LogWarning("Number of reviews requested is {NumberOfReviews} which is less than 1", 
+                limit);
+            return new UserReviewsList();
+        }
+
+        List<UserReview>? userReviews = await database.Reviews.AsNoTracking()
+            .Where(r => r.ProductId == productId)
+            .OrderByDescending(r => r.CreatedAt)
+            .Take(limit)
+            .Select(r => new UserReview
+            {
+                Comment = r.Comment,
+                Rating = r.Rating,
+                UserName = r.User.Name
+            }).ToListAsync();
+
+
+        if (userReviews is null)
+        {
+            logger.LogWarning("No review exists for the product with id {ProductID}", productId); 
+            return new UserReviewsList();
+        }
+
+        UserReviewsList userReviewsList = new UserReviewsList()
+        {
+            UserReviews = userReviews
+        }; 
+
+        return userReviewsList;
     }
 }
 
