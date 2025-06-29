@@ -77,17 +77,20 @@
             {
                 <div class="review-conainer">
                     <div class="review-child-container">
-                        <header>Reviews</header>
+                        <header class="review-title">Reviews</header>
                         <ul class="review-list">
                             @foreach(var review in Model.UserReviewsList.UserReviews)
                             {
                                 <li class="single-review-contaienr">
-                                    <div class="review-user-comment">
-                                        <p class="commnet">@review.Comment</p>
+                                    @if (!string.IsNullOrEmpty(review.Comment))
+                                    {
+                                        <div class="user-comment">
+                                            <p class="commnet">"@review.Comment"</p>
+                                        </div>
+                                    }
+                                    <div class="rating-user-name-container">
                                         <div class="user-name">- @review.UserName</div>
-                                    </div>
-                                    <div class="user-score-container">
-                                        <div class="user-score">Score: @review.Rating</div>
+                                        <div class="user-score">Ratings: @review.Rating</div>
                                     </div>
                                 </li>
                             }

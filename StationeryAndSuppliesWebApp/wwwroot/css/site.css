@@ -5,7 +5,7 @@
     --primary-background-color-cream: #f5f5dc;
     --primary-background-color-light-yellow: #f6ffd4;
     --primary-background-color-dark-green: #6ca46c;
-    --primary-background-color-very-light-yellow: #fffff2;
+    --primary-background-color-very-light-cream: #fffff9;
     /*----------------------------------------*/
     --navigation-background-color: white;
     /*----------------------------------------*/
@@ -1754,11 +1754,10 @@ footer {
         text-align: center;
         font-size: 1.4rem;
         text-decoration-line: none;
-        padding: 10px;
-        /*        border:solid 2px; */
+        padding: 10px; 
         border-radius: 10px;
         color: var(--primary-text-color);
-        background-color: var(--primary-background-color-very-light-yellow);
+        background-color: var(--primary-background-color-very-light-cream);
     }
 
         .profile-navigation-layout .navigation-link:hover {
@@ -1774,7 +1773,7 @@ footer {
 
     .profile-navigation-layout .content-container {
         margin: 5px;
-        background-color: var(--primary-background-color-very-light-yellow); 
+        background-color: var(--primary-background-color-very-light-cream); 
 /*        border: solid 2px; */
         border-radius: 10px; 
         padding: 5px; 
@@ -1816,7 +1815,7 @@ footer {
     }
 
     .profile-navigation-layout .navigation-link {
-        padding: 5px 10px;
+        padding: 10px 10px;
         font-size: 1.2rem;
     }
 
@@ -2115,20 +2114,58 @@ footer {
 
 
 
-body * {
+/*body * {
     border: solid 1px;
 }
 
-
+*/
 
 
 /* move this block to single product page area */
 .single-product-page .review-conainer {
     display: flex; 
     justify-content: center; 
+    margin-top: 50px; 
 }
 
 .single-product-page .review-child-container {
     flex: 1 1 auto; 
-    max-width: 300px; 
+    max-width: 400px; 
 }
+
+.single-product-page .review-title {
+    text-align: center; 
+    font-size: 1.5rem; 
+}
+
+
+.single-product-page .review-list {
+    list-style-type: none; 
+    padding: 5px; 
+}
+
+.single-product-page .single-review-contaienr {
+    border-radius: 10px; 
+    background-color: var(--primary-background-color-very-light-cream); 
+    padding: 5px 10px; 
+    margin-bottom: 20px; 
+}
+
+.single-product-page .user-comment {
+    margin: 5px; 
+}
+
+    .single-product-page .user-comment .commnet {
+        margin: 0px; 
+    }
+
+.single-product-page .rating-user-name-container {
+    display: flex; 
+    justify-content: space-between; 
+}
+
+    .single-product-page .rating-user-name-container .user-name {
+        font-size: 0.8rem; 
+        height: 1em; 
+        margin: auto 0; 
+    }
