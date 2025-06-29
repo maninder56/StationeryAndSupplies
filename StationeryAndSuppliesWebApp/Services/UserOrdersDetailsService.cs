@@ -71,4 +71,28 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
             userOrderDetails.Count, userID);
         return userOrderDetails;
     }
+
+
+
+    // Update Operations
+
+    public async Task<bool> AddProductByIDInBaketByUserID(int userID, int productID, int quantity)
+    {
+        logger.LogInformation("Requested to add Product by ID {ProductID} with Quanitity {Quanitity} for user with ID {UserID}", 
+            productID, quantity, userID);
+
+        if (productID < 1 ||  quantity < 1)
+        {
+            logger.LogWarning("Product id or quantity is less than 1"); 
+        }
+
+        User? user = await database.Users.AsNoTracking()
+            .Where(u => u.UserId == userID)
+            .FirstOrDefaultAsync();
+
+
+
+    }
+
+
 }

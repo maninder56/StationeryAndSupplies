@@ -57,14 +57,14 @@
                                     <div class="title">Quantity: </div>
                                     <select asp-items="Model.QuantityOptions"
                                             id="quantity-drop-down-options"
-                                            name="quantity"
+                                            asp-for="Input.Quantity"
                                             class="quantity-drop-down-select"
                                             form="add-to-bag-form">
                                     </select>
                                 </div>
                                 <div class="add-to-bag">
-                                    <form action="#" method="post" id="add-to-bag-form">
-                                        <input value="@Model.Product.Id" type="hidden" id="product-id" name="product-id" />
+                                    <form method="post" id="add-to-bag-form">
+                                        <input value="@Model.Product.Id" type="hidden" asp-for="Input.ProductID" />
                                         <button type="submit" class="black-button">Add to Bag</button>
                                     </form>
                                 </div>

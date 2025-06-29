@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StationeryAndSuppliesWebApp.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace StationeryAndSuppliesWebApp.Pages;
 
@@ -17,6 +18,10 @@ public class ProductModel : PageModel
         this.logger = logger;
         this.productInformationService = productInformationService;
     }
+
+
+    [BindProperty]
+    public InputModel Input {  get; set; } = new InputModel();
 
     // Properties shared with view 
     public Models.ProductDetails? Product { get; private set; }
@@ -53,6 +58,23 @@ public class ProductModel : PageModel
         }
 
         return Page();
+    }
+
+
+    //public async Task<IAccountService>
+
+
+
+
+    public class InputModel
+    {
+        [Required]
+        [Range(1,int.MaxValue)]
+        public int ProductID {  get; set; }
+
+        [Required]
+        [Range(1,10)]
+        public int Quantity { get; set; }
     }
 
     
