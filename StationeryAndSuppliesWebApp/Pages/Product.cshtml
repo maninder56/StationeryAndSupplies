@@ -1,5 +1,5 @@
 ﻿@page "{productname?}/{productid:int}"
-@model ProductModel
+@model StationeryAndSuppliesWebApp.Pages.ProductModel
 
 @{
     ViewData["Title"] = "Product";
@@ -30,6 +30,13 @@
                     <div class="product-details">
                         <div class="product-details-column">
                             <div class="product-name">@Model.Product.Name</div>
+                            @if(Model.UserReviewsList is not null)
+                            {
+                                <div class="review-summary">
+                                    <div class="review-average-score">Ratings: @Model.UserReviewsList.AverageScore/5</div>
+                                    <div class="total-reviews">@Model.UserReviewsList.TotalReviews Reviews</div>
+                                </div>
+                            }
                             <div class="product-price-container">
                                 Price: <span id="current-product-price" class="product-price">£@Model.Product.Price</span>
                                 <span id="original-product-price" hidden>@Model.Product.Price</span>
@@ -56,7 +63,7 @@
                                     </select>
                                 </div>
                                 <div class="add-to-bag">
-                                    <form action="#" method="get" id="add-to-bag-form">
+                                    <form action="#" method="post" id="add-to-bag-form">
                                         <input value="@Model.Product.Id" type="hidden" id="product-id" name="product-id" />
                                         <button type="submit" class="black-button">Add to Bag</button>
                                     </form>
@@ -66,9 +73,28 @@
                     </div>
                 </div>
             </div>
-            <div class="review-conainer">
-
-            </div>
+            @if (Model.UserReviewsList is not null)
+            {
+                <div class="review-conainer">
+                    <div class="review-child-container">
+                        <header>Reviews</header>
+                        <ul class="review-list">
+                            @foreach(var review in Model.UserReviewsList.UserReviews)
+                            {
+                                <li class="single-review-contaienr">
+                                    <div class="review-user-comment">
+                                        <p class="commnet">@review.Comment</p>
+                                        <div class="user-name">- @review.UserName</div>
+                                    </div>
+                                    <div class="user-score-container">
+                                        <div class="user-score">Score: @review.Rating</div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
         }
     </section>
 </article>

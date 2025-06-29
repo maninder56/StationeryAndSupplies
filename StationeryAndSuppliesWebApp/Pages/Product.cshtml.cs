@@ -20,6 +20,7 @@ public class ProductModel : PageModel
 
     // Properties shared with view 
     public Models.ProductDetails? Product { get; private set; }
+    public Models.UserReviewsList? UserReviewsList { get; private set; }
 
     // Quantity drop down options 
     public IEnumerable<SelectListItem> QuantityOptions { get; private set; } = Enumerable.Range(1, 10)
@@ -40,7 +41,15 @@ public class ProductModel : PageModel
 
         if(Product is null)
         {
-            logger.LogWarning("No Product recieved from service"); 
+            logger.LogWarning("No detailes recieved from service of product with ID {ProductID}", productid); 
+        }
+
+        // get 10 most recent reviews of given product
+        UserReviewsList = await productInformationService.GetRecentUserReviewsListByProductID(productid, 10); 
+
+        if (UserReviewsList is null)
+        {
+            logger.LogWarning("No reviews recieved from service of product with ID {ProductID}", productid); 
         }
 
         return Page();

@@ -299,22 +299,22 @@ public class ProductInformationService : IProductInformationService
 
 
 
-    public async Task<UserReviewsList> GetUserReviewsListByProductID(int productId, int limit)
+    public async Task<UserReviewsList?> GetRecentUserReviewsListByProductID(int productId, int limit)
     {
         logger.LogInformation("Requested to get {NumberOfReviews} recent reviews on product by id {ProductID}",
             limit, productId); 
 
         if (productId < 1)
         {
-            logger.LogWarning("Product id {ProductID} is less than 1", productId); 
-            return new UserReviewsList(); 
+            logger.LogWarning("Product id {ProductID} is less than 1", productId);
+            return null; 
         }
 
         if (limit < 1)
         {
             logger.LogWarning("Number of reviews requested is {NumberOfReviews} which is less than 1", 
                 limit);
-            return new UserReviewsList();
+            return null; 
         }
 
         List<UserReview>? userReviews = await database.Reviews.AsNoTracking()
@@ -329,10 +329,10 @@ public class ProductInformationService : IProductInformationService
             }).ToListAsync();
 
 
-        if (userReviews is null)
+        if (userReviews is null || userReviews.Count == 0)
         {
             logger.LogWarning("No review exists for the product with id {ProductID}", productId); 
-            return new UserReviewsList();
+            return null;
         }
 
         UserReviewsList userReviewsList = new UserReviewsList()
@@ -342,6 +342,7 @@ public class ProductInformationService : IProductInformationService
 
         return userReviewsList;
     }
+
 }
 
 

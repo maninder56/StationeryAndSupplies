@@ -52,6 +52,6 @@ public interface IProductInformationService
     // Product Reviews
 
     // Get recent reviews for the product by id
-    public Task<UserReviewsList> GetRecentUserReviewsListByProductID(int productId, int limit);
+    public Task<UserReviewsList?> GetRecentUserReviewsListByProductID(int productId, int limit);
 
 }
