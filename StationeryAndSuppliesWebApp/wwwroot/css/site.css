@@ -1221,7 +1221,55 @@ footer {
                 border-radius: 10px;
             }
 
-    
+
+
+    .single-product-page .review-conainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    .single-product-page .review-child-container {
+        flex: 1 1 auto;
+        max-width: 400px;
+    }
+
+    .single-product-page .review-title {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+
+    .single-product-page .review-list {
+        list-style-type: none;
+        padding: 5px;
+    }
+
+    .single-product-page .single-review-contaienr {
+        border-radius: 10px;
+        background-color: var(--primary-background-color-very-light-cream);
+        padding: 20px 10px;
+        margin-bottom: 20px;
+    }
+
+    .single-product-page .user-comment {
+        margin: 5px;
+    }
+
+        .single-product-page .user-comment .commnet {
+            margin: 0px;
+        }
+
+    .single-product-page .rating-user-name-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .single-product-page .rating-user-name-container .user-name {
+            font-size: 0.8rem;
+            height: 1em;
+            margin: auto 0;
+        }
 
 
 
@@ -2120,52 +2168,3 @@ footer {
 
 */
 
-
-/* move this block to single product page area */
-.single-product-page .review-conainer {
-    display: flex; 
-    justify-content: center; 
-    margin-top: 50px; 
-}
-
-.single-product-page .review-child-container {
-    flex: 1 1 auto; 
-    max-width: 400px; 
-}
-
-.single-product-page .review-title {
-    text-align: center; 
-    font-size: 1.5rem; 
-}
-
-
-.single-product-page .review-list {
-    list-style-type: none; 
-    padding: 5px; 
-}
-
-.single-product-page .single-review-contaienr {
-    border-radius: 10px; 
-    background-color: var(--primary-background-color-very-light-cream); 
-    padding: 5px 10px; 
-    margin-bottom: 20px; 
-}
-
-.single-product-page .user-comment {
-    margin: 5px; 
-}
-
-    .single-product-page .user-comment .commnet {
-        margin: 0px; 
-    }
-
-.single-product-page .rating-user-name-container {
-    display: flex; 
-    justify-content: space-between; 
-}
-
-    .single-product-page .rating-user-name-container .user-name {
-        font-size: 0.8rem; 
-        height: 1em; 
-        margin: auto 0; 
-    }
