@@ -91,7 +91,7 @@ public class ProductModel : PageModel
             return await OnGetAsync(Input.ProductID);
         }
 
-        ProductAddedToCart = await userOrdersDetailsService.AddProductByIDInBaketByUserID(
+        ProductAddedToCart = await userOrdersDetailsService.AddProductByIDInCartByUserID(
             (int)userID, Input.ProductID, Input.Quantity);
 
         // @page "{productname?}/{productid:int}"

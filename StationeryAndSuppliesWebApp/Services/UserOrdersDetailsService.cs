@@ -1,4 +1,5 @@
 ﻿using DataBaseContextLibrary;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.EntityFrameworkCore;
 using StationeryAndSuppliesWebApp.Models;
 using System.Security.AccessControl;
@@ -9,7 +10,9 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
 {
     private ILogger<UserOrdersDetailsService> logger;
 
-    private StationeryAndSuppliesDatabaseContext database; 
+    private StationeryAndSuppliesDatabaseContext database;
+
+    private readonly decimal shippingCost = 2.99M; 
 
     public UserOrdersDetailsService(
         ILogger<UserOrdersDetailsService> logger, 
@@ -73,10 +76,67 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
     }
 
 
+    public async Task<UserCartDetails?> GetUserCartDetailsByUserIDAsync(int userID)
+    {
+        logger.LogInformation("Requested to get user cart details by user ID {UserID}", userID); 
+
+        if (userID < 1)
+        {
+            logger.LogWarning("User ID {UserID} is less than 1", 
+                userID);
+            return null;
+        }
+
+        User? user = await database.Users.AsNoTracking()
+            .Where(u => u.UserId == userID)
+            .Include(u => u.Cart)
+            .FirstOrDefaultAsync();
+
+        if (user is null)
+        {
+            logger.LogWarning("User with ID {UserID} does not exists", userID);
+            return null;
+        }
+
+        if (user.Cart is null)
+        {
+            logger.LogWarning("User with ID {UserID} have Empty cart", userID); 
+            return null;
+        }
+
+        UserCartDetails userCartDetails = new UserCartDetails()
+        {
+            Items = await database.CartItems.AsNoTracking()
+                .Where(ci => ci.CartId == user.Cart.CartId)
+                .Select(ci => new UserCartIItem
+                {
+                    Name = ci.Product.Name,
+                    Price = ci.Product.Price,
+                    Quantity = ci.Quantity,
+                    ImageUrl = ci.Product.ImageUrl
+                }).ToListAsync(),
+
+            ShippingCost = shippingCost
+        };   
+
+        if (userCartDetails.Items.Count == 0)
+        {
+            logger.LogWarning("Failed to get cart detail of user with ID {UserID}", userID); 
+            return null; 
+        }
+        else
+        {
+            logger.LogInformation("Loaded total {NumberOfItems} items in user cart detials",
+                userCartDetails.Items.Count); 
+            return userCartDetails;
+        }
+    }
+
+
 
     // Update Operations
 
-    public async Task<bool> AddProductByIDInBaketByUserID(int userID, int productID, int quantity)
+    public async Task<bool> AddProductByIDInCartByUserID(int userID, int productID, int quantity)
     {
         logger.LogInformation("Requested to add Product in user's cart by product ID {ProductID} with Quanitity {Quanitity} for user with ID {UserID}", 
             productID, quantity, userID);
@@ -139,6 +199,4 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
             return false;
         }
     }
-
-
 }

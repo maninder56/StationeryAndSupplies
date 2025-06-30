@@ -7,7 +7,9 @@ public interface IUserOrdersDetailsService
     // Read Operations
     public Task<List<UserOrderDetails>?> GetUserOrdersDetailsByUserIDAsync(int userID);
 
+    public Task<UserCartDetails?> GetUserCartDetailsByUserIDAsync(int userID); 
+
     // Update Operations
-    public Task<bool> AddProductByIDInBaketByUserID(int userID, int productID, int quantity); 
+    public Task<bool> AddProductByIDInCartByUserID(int userID, int productID, int quantity); 
 
 }
