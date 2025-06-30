@@ -78,20 +78,66 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
 
     public async Task<bool> AddProductByIDInBaketByUserID(int userID, int productID, int quantity)
     {
-        logger.LogInformation("Requested to add Product by ID {ProductID} with Quanitity {Quanitity} for user with ID {UserID}", 
+        logger.LogInformation("Requested to add Product in user's cart by product ID {ProductID} with Quanitity {Quanitity} for user with ID {UserID}", 
             productID, quantity, userID);
 
         if (productID < 1 ||  quantity < 1)
         {
             logger.LogWarning("Product id or quantity is less than 1"); 
+            return false;
         }
 
-        User? user = await database.Users.AsNoTracking()
+        User? user = await database.Users
             .Where(u => u.UserId == userID)
+            .Include(u => u.Cart)
             .FirstOrDefaultAsync();
 
+        if (user is null)
+        {
+            logger.LogWarning("User with ID {UserID} does not exists", userID); 
+            return false; 
+        }
 
+        if (user.Cart is not null)
+        {
+            logger.LogInformation("User with ID {UserID} has cart with ID {CartID}", userID, user.Cart.CartId); 
 
+            user.Cart.CartItems.Add(new CartItem
+            {
+                ProductId = productID,
+                Quantity = quantity,
+            }); 
+        }
+        else
+        {
+            logger.LogInformation("User with ID {UserID} does not yet have cart, creating new cart", userID); 
+
+            user.Cart = new Cart()
+            {
+                CartItems = new List<CartItem>()
+                {
+                    new CartItem()
+                    {
+                        ProductId = productID, 
+                        Quantity= quantity, 
+                    }
+                }
+            }; 
+        }
+
+        int itemsAddedInCart = await database.SaveChangesAsync(); 
+
+        if (itemsAddedInCart > 0)
+        {
+            logger.LogInformation("Product with ID {ProductID} has been added to user's cart with user ID {UserID}",
+                productID, userID); 
+            return true;
+        }
+        else
+        {
+            logger.LogWarning("Failed to add product in user's cart, user ID {UserID}", userID); 
+            return false;
+        }
     }
 
 

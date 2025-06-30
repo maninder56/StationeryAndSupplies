@@ -68,6 +68,23 @@
                                         <button type="submit" class="black-button">Add to Bag</button>
                                     </form>
                                 </div>
+                                @if(Model.ProductAddedToCart is not null)
+                                {
+                                    <div class="product-added-to-cart-confirmation">
+                                        @if ((bool)Model.ProductAddedToCart)
+                                        {
+                                            <div class="product-successfully-added">
+                                                @Model.Input.Quantity @Model.Product.Name, has been added to your basket
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="failed-add-product-to-cart">
+                                                Error occured while adding product to your basket, please try again
+                                            </div>
+                                        }
+                                    </div>
+                                }
                             }
                         </div>
                     </div>
