@@ -1227,9 +1227,19 @@ footer {
 
 
     .single-product-page .product-added-to-cart-confirmation {
-        margin: 10px; 
-        font-size: 0.9rem; 
+        padding: 10px; 
+        font-size: 0.9rem;
+        max-width: 200px; 
     }
+
+    .single-product-page .product-successfully-added {
+        color: var(--success-text-color);
+    }
+
+    .single-product-page .failed-add-product-to-cart {
+        color: var(--warning-text-color);
+    }
+
 
 
     .single-product-page .review-conainer {
@@ -1312,7 +1322,6 @@ footer {
         flex-direction: column;
         margin-left: 0px;
     }
-
 }
 
 
