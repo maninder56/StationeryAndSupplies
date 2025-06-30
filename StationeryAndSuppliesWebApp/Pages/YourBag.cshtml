@@ -6,6 +6,72 @@
 
 <article class="your-bag-page">
     <section class="your-bag-section">
-        <div style="font-size:xx-large; color:darkblue">Your Bag yo</div>
+        @if(Model.userCartDetails is not null)
+        {
+            <header class="bag-title">Your Bag</header>
+            <div class="bag-items-and-summary-container">
+                <div class="items-container">
+                    <ul class="items-list">
+                        @foreach (var item in Model.userCartDetails.Items)
+                        {
+                            <li class="single-item-container">
+                                <div class="item-image-container">
+                                    @if (item.ImageUrl is null)
+                                    {
+                                        <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/@item.ImageUrl" alt="@item.Name image" />
+                                    }
+                                </div>
+                                <div class="item-summary">
+                                    <div class="item-summary-container">
+                                        <div class="item-name item-info">@item.Name</div>
+                                        <div class="item-price item-info">Price: £@item.TotalPriceWithQunatity</div>
+                                        <div class="item-quantity item-info">Qty: @item.Quantity</div>
+                                        <form method="post"
+                                              class="item-remove-form">
+                                            <input asp-for="Input.CartItemId" value="@item.cartItemID" hidden />
+                                            <button type="submit" class="item-remove-button red-button">Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="bag-summary-container">
+                    <div class="bag-summary">
+                        <header class="summary-title">Your Bag Summary</header>
+                        <div class="total-items">@Model.userCartDetails.TotalItems items</div>
+                        <table class="summary-table">
+                            <tbody>
+                                <tr>
+                                    <th>Subtotal</th>
+                                    <td>£@Model.userCartDetails.Subtotal</td>
+                                </tr>
+                                <tr>
+                                    <th>Shipping</th>
+                                    <td>£@Model.userCartDetails.ShippingCost</td>
+                                </tr>
+                                <tr>
+                                    <th>Total</th>
+                                    <td>£@Model.userCartDetails.TotalCost</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="check-out-container">
+                            @* Add link to checkout page  *@
+                            <a href="#" class="checkout-button black-button">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <header>Your Bag is Empty</header>
+        }
     </section>
 </article>

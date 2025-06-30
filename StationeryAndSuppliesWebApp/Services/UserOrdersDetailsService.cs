@@ -110,10 +110,11 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
                 .Where(ci => ci.CartId == user.Cart.CartId)
                 .Select(ci => new UserCartIItem
                 {
+                    cartItemID = ci.CartItemId,
                     Name = ci.Product.Name,
                     Price = ci.Product.Price,
                     Quantity = ci.Quantity,
-                    ImageUrl = ci.Product.ImageUrl
+                    ImageUrl = ci.Product.ImageUrl, 
                 }).ToListAsync(),
 
             ShippingCost = shippingCost

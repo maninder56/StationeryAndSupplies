@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StationeryAndSuppliesWebApp.Models;
 using StationeryAndSuppliesWebApp.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace StationeryAndSuppliesWebApp.Pages;
 
@@ -24,9 +25,11 @@ public class YourBagModel : PageModel
     }
 
 
+    [BindProperty]
+    public InputModel? Input { get; set; }
+
     // Data for view 
     public UserCartDetails? userCartDetails { get; private set; } 
-
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -52,5 +55,13 @@ public class YourBagModel : PageModel
             logger.LogInformation("Successfully loaded items in userbag"); 
             return Page();
         }
+    }
+
+
+    public class InputModel
+    {
+        [Required]
+        [Range(0, int.MaxValue)]    
+        public int CartItemId { get; set; }
     }
 }
