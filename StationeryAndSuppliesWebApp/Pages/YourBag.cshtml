@@ -9,6 +9,17 @@
         @if(Model.userCartDetails is not null)
         {
             <header class="bag-title">Your Bag</header>
+            @if (Model.ItemRemovedFromCart is not null)
+            {
+                @if ((bool)Model.ItemRemovedFromCart)
+                {
+                    <div class="successfully-removed-item">Item Removed</div>
+                }
+                else
+                {
+                    <div class="failed-to-removed-item">Error while removing Item from Cart, Please Try again</div>
+                }
+            }
             <div class="bag-items-and-summary-container">
                 <div class="items-container">
                     <ul class="items-list">

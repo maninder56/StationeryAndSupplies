@@ -12,4 +12,8 @@ public interface IUserOrdersDetailsService
     // Update Operations
     public Task<bool> AddProductByIDInCartByUserID(int userID, int productID, int quantity); 
 
+
+    // Delete Operations 
+    public Task<bool> RemoveCartItemFromCartByID(int userID, int cartItemID);    
+
 }

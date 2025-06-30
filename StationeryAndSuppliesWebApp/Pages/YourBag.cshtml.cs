@@ -30,6 +30,7 @@ public class YourBagModel : PageModel
 
     // Data for view 
     public UserCartDetails? userCartDetails { get; private set; } 
+    public bool? ItemRemovedFromCart { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -52,16 +53,58 @@ public class YourBagModel : PageModel
         }
         else
         {
-            logger.LogInformation("Successfully loaded items in userbag"); 
+            logger.LogInformation("Successfully loaded {NumberOfItems} items in userbag",
+                userCartDetails.Items.Count); 
             return Page();
         }
+    }
+
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            logger.LogWarning("Invalid Input model, when attempted to remove item from cart");
+            return await OnGetAsync(); 
+        }
+
+        if (Input is null)
+        {
+            logger.LogWarning("Input is null, item id can not be obtained to remove item from cart"); 
+            return await OnGetAsync();
+        }
+
+        int? userID = await accountService.GetUserIDFromHttpContextAsync();
+
+        if (userID is null)
+        {
+            logger.LogWarning("Failed to get user id from HttpContext service");
+            return await OnGetAsync();
+        }
+
+        bool removed = await userOrdersDetailsService.RemoveCartItemFromCartByID((int)userID, Input.CartItemId); 
+
+        if (removed)
+        {
+            logger.LogInformation("Cart Item with ID {CartItemID} has been removed from user's cart with user ID {UserID}",
+                Input.CartItemId, userID); 
+            ItemRemovedFromCart = true; 
+        }
+        else
+        {
+            logger.LogWarning("Failed to remove cart item from user's cart, CartItemID {CartItemID} UserID {UserID}",
+                Input.CartItemId, userID); 
+            ItemRemovedFromCart = false;
+        }
+
+        return await OnGetAsync();
     }
 
 
     public class InputModel
     {
         [Required]
-        [Range(0, int.MaxValue)]    
+        [Range(1, int.MaxValue)]    
         public int CartItemId { get; set; }
     }
 }

@@ -200,4 +200,72 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
             return false;
         }
     }
+
+
+
+    // Delete Operations 
+    public async Task<bool> RemoveCartItemFromCartByID(int userID, int cartItemID)
+    {
+        logger.LogInformation("Requested to remove cart item from cart by cart item ID {cartItemID} for user with ID {UserID}",
+            cartItemID, userID);
+
+        if (userID < 1 || cartItemID < 1)
+        {
+            logger.LogInformation("User id {UserID} or cartItemID {CartItemID} is less than 1",
+                userID, cartItemID);
+            return false;
+        }
+
+
+        User? user = await database.Users.AsNoTracking()
+            .Where(u => u.UserId == userID)
+            .Include(u => u.Cart)
+            .FirstOrDefaultAsync();
+
+        if (user is null)
+        {
+            logger.LogWarning("User with ID {UserID} does not exists", userID);
+            return false;
+        }
+
+        if (user.Cart is null)
+        {
+            logger.LogWarning("User with ID {UserID} have Empty cart", userID);
+            return false;
+        }
+
+        CartItem? cartItem = await database.CartItems
+            .Where(c => c.CartItemId == cartItemID && c.CartId == user.Cart.CartId)
+            .FirstOrDefaultAsync();
+
+        if (cartItem is null)
+        {
+            logger.LogWarning("User with ID {UserID} does not have cart item with ID {cartItemID} in cart with ID {cartID}",
+                userID, cartItemID, user.Cart.CartId);
+            return false;
+        }
+
+        database.CartItems.Remove(cartItem);
+
+        int deleted = await database.SaveChangesAsync();
+
+        if (deleted > 0)
+        {
+            logger.LogInformation("Successfully removed cart item from user's cart, UserID {UserID}, CartID {CartID}, CartItemID {CartItemID}", 
+                userID, user.Cart.CartId, cartItemID);
+            return true;
+        }
+        else
+        {
+            logger.LogWarning("Failed to remove cart item from user's cart, UserID {UserID}, CartID {CartID}, CartItemID {CartItemID}",
+                userID, user.Cart.CartId, cartItemID);
+            return false;
+        }
+    }
+
+
+
+
+
+
 }

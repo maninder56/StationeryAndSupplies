@@ -45,6 +45,8 @@
     /*----------------------------------------*/
     --warning-text-color: red;
     /*----------------------------------------*/
+    --success-text-color: green; 
+    /*----------------------------------------*/
     --red-button-text-color: white;
     --red-button-background-color: #FF4742;
     --red-button-border-color: red;
@@ -2331,10 +2333,26 @@ footer {
     }
 
 
+    .your-bag-page .successfully-removed-item,
+    .your-bag-page .failed-to-removed-item {
+        font-size: 0.8rem;
+        margin: 10px 0px 0px 0px; 
+        text-align: center; 
+    }
 
-@media (min-width: 340px) {
+    .your-bag-page .successfully-removed-item {
+        color: var(--success-text-color);
+        
+    }
 
-    .your-bag-page .single-item-container {
+    .your-bag-page .failed-to-removed-item {
+        color: var(--warning-text-color); 
+    }
+
+
+
+    @media (min-width: 340px) {
+        .your-bag-page .single-item-container {
         flex-direction: row;
     }
 

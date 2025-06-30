@@ -31,7 +31,7 @@ public class UserDetailsModel : PageModel
 
         if (userID is null)
         {
-            logger.LogWarning("Failed to get user id from service"); 
+            logger.LogWarning("Failed to get user id from HttpContext service"); 
             return Page(); 
         }
 
