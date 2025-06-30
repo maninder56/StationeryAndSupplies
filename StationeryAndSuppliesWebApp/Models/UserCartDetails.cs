@@ -6,6 +6,8 @@ public class UserCartDetails
 
     public int TotalItems => Items.Count;
 
+    public int TotalItemsWithQuantity => Items.Sum(i => i.Quantity);
+
     public decimal Subtotal => Items.Sum(i => i.TotalPriceWithQunatity);
 
     public decimal ShippingCost;

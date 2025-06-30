@@ -44,7 +44,7 @@
                 <div class="bag-summary-container">
                     <div class="bag-summary">
                         <header class="summary-title">Your Bag Summary</header>
-                        <div class="total-items">@Model.userCartDetails.TotalItems items</div>
+                        <div class="total-items">@Model.userCartDetails.TotalItemsWithQuantity items</div>
                         <table class="summary-table">
                             <tbody>
                                 <tr>
@@ -71,7 +71,7 @@
         }
         else
         {
-            <header>Your Bag is Empty</header>
+            <header class="bag-title">Your Bag is Empty</header>
         }
     </section>
 </article>
