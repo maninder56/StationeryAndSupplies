@@ -29,6 +29,9 @@ public partial class Order
     [Column(TypeName = "text")]
     public string ShippingAddress { get; set; } = null!;
 
+    [Precision(10)]
+    public decimal ShippingCost { get; set; }
+
     [InverseProperty("Order")]
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
