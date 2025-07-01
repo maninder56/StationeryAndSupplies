@@ -32,6 +32,7 @@ public class CheckoutModel : PageModel
     // Data for view 
     public UserCartDetails? OrderSummary { get; private set; }
     public UserDetails? CurrnetUserDetails { get; private set; }
+    public bool? ErrorWhilePlacingOrder { get; private set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -69,6 +70,56 @@ public class CheckoutModel : PageModel
         {
             logger.LogInformation("Successfully loaded {NumberOfItems} items in order summary for user with ID {UserID}",
                 OrderSummary.Items.Count, userID);
+            return Page();
+        }
+    }
+
+
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            logger.LogWarning("Invalid Model State, while attempting to place order");
+            ErrorWhilePlacingOrder = true;
+            return Page();
+        }
+
+        int? userID = await accountService.GetUserIDFromHttpContextAsync();
+
+        if (userID is null)
+        {
+            logger.LogWarning("Failed to get user id from HttpContext service");
+            ErrorWhilePlacingOrder = true;
+            return Page();
+        }
+
+        if (Input is null)
+        {
+            logger.LogWarning("Input Model is null, so can not get shipping address for user with ID {UserID}",
+                userID);
+            ErrorWhilePlacingOrder = true;
+            return Page();
+        }
+
+        if (string.IsNullOrEmpty(Input.ShippingAddress))
+        {
+            logger.LogWarning("Empty shipping address recieved for user with ID {UserID}", userID);
+            ErrorWhilePlacingOrder = true;
+            return Page();
+        }
+
+        bool orderPlaced = await userOrdersDetailsService.PlaceAnOrderForUserByID((int)userID,Input.ShippingAddress); 
+
+        if (orderPlaced)
+        {
+            ErrorWhilePlacingOrder = false;
+            return RedirectToPage("/Account/Orders"); 
+
+        }
+        else
+        {
+            ErrorWhilePlacingOrder = true; 
             return Page();
         }
     }

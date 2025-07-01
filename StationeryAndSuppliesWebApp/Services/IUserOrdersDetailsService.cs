@@ -12,6 +12,7 @@ public interface IUserOrdersDetailsService
     // Update Operations
     public Task<bool> AddProductByIDInCartByUserID(int userID, int productID, int quantity); 
 
+    public Task<bool> PlaceAnOrderForUserByID(int userID, string shippingAddress);
 
     // Delete Operations 
     public Task<bool> RemoveCartItemFromCartByID(int userID, int cartItemID);    

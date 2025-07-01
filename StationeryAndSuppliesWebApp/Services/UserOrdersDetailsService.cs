@@ -61,7 +61,8 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
                 }).ToList(),
                 OrderDate = o.OrderDate,
                 Status = o.Status,
-                TotalAmount = o.TotalAmount
+                TotalAmount = o.TotalAmount,
+                ShippingCost = o.ShippingCost
             }).ToListAsync(); 
 
         if (userOrderDetails.Count == 0)
@@ -203,6 +204,79 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
 
 
 
+    public async Task<bool> PlaceAnOrderForUserByID(int userID, string shippingAddress)
+    {
+        logger.LogInformation("Requested to place an order for the user with ID {UserID}", userID);
+
+        if (userID < 1)
+        {
+            logger.LogWarning("User ID {UserID} provided to place order is less than 1", userID);
+            return false;
+        }
+
+        User? user = await database.Users
+            .Where(u => u.UserId == userID)
+            .Include(u => u.Cart)
+                .ThenInclude(c => c!.CartItems)
+                .ThenInclude(ci => ci.Product)
+            .FirstOrDefaultAsync();
+
+        if (user is null)
+        {
+            logger.LogWarning("User with ID {UserID} does not exists", userID);
+            return false;
+        }
+
+        if (user.Cart is null)
+        {
+            logger.LogWarning("User with ID {UserID} have Empty cart", userID);
+            return false;
+        }
+
+        decimal totalPriceOfOrder = user.Cart.CartItems.Sum(c => c.Product.Price * c.Quantity) + shippingCost ?? 0.0M; 
+
+        Order userOrder = new Order
+        {
+            TotalAmount = totalPriceOfOrder,
+            Status = "shipped",
+            ShippingAddress = shippingAddress,
+            ShippingCost = shippingCost
+        };
+
+        userOrder.OrderItems = user.Cart.CartItems.Select(ci => new OrderItem
+        {
+            ProductId = ci.ProductId,
+            Quantity = ci.Quantity,
+            UnitPrice = ci.Product.Price ?? 0.0M
+        }).ToList();
+
+        userOrder.Payment = new Payment
+        {
+            Amount = totalPriceOfOrder,
+            PymentMethod = "Card", 
+            Status = "success"
+        }; 
+
+        user.Orders.Add(userOrder);
+
+        database.Carts.Remove(user.Cart);
+
+        int orderPlaced = await database.SaveChangesAsync(); 
+
+        if (orderPlaced > 0)
+        {
+            logger.LogInformation("Successfully placed user orcer with user ID {UserID}", userID); 
+            return true;
+        }
+        else
+        {
+            logger.LogWarning("Failed to place usesr order with user ID {UserID}", userID); 
+            return false;
+        }
+    }
+
+
+
     // Delete Operations 
     public async Task<bool> RemoveCartItemFromCartByID(int userID, int cartItemID)
     {
@@ -211,7 +285,7 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
 
         if (userID < 1 || cartItemID < 1)
         {
-            logger.LogInformation("User id {UserID} or cartItemID {CartItemID} is less than 1",
+            logger.LogWarning("User id {UserID} or cartItemID {CartItemID} is less than 1",
                 userID, cartItemID);
             return false;
         }
@@ -262,10 +336,5 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
             return false;
         }
     }
-
-
-
-
-
 
 }

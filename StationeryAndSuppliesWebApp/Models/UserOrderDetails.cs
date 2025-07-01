@@ -9,4 +9,6 @@ public class UserOrderDetails
     public string? Status { get; set; }
 
     public decimal? TotalAmount { get; set; }
+
+    public decimal ShippingCost { get; set; }
 }
