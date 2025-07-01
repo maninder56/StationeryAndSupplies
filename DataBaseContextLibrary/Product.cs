@@ -21,7 +21,7 @@ public partial class Product
     public string? Descripttion { get; set; }
 
     [Precision(10)]
-    public decimal? Price { get; set; }
+    public decimal Price { get; set; }
 
     public int Stock { get; set; }
 

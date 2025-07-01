@@ -21,7 +21,7 @@ public partial class Payment
     public decimal Amount { get; set; }
 
     [StringLength(50)]
-    public string PymentMethod { get; set; } = null!;
+    public string PaymentMethod { get; set; } = null!;
 
     [Column(TypeName = "enum('success','failed')")]
     public string? Status { get; set; }
