@@ -2564,6 +2564,13 @@ footer {
         cursor: pointer; 
     }
 
+    .checkout-page .error-message {
+        color: var(--warning-text-color); 
+        text-align: center; 
+        margin-top: 10px; 
+    }
+
+
 
 
 

@@ -67,13 +67,17 @@
                         <div class="user-email">@Model.CurrnetUserDetails.Email</div>
                         <form method="post" class="shipping-form">
                             <div class="form-group shipping-input">
-                                <label asp-for="Input.ShippingAddress"></label>
+                                <label asp-for="Input.ShippingAddress">Shipping Address</label>
                                 <input asp-for="Input.ShippingAddress" type="text"/>
                             </div>
                             <div class="place-order-button-container">
                                 <button type="submit" class="place-order-button black-button">Place Order</button>
                             </div>
                         </form>
+                        @if(Model.ErrorMessage is not null)
+                        {
+                            <div class="error-message">@Model.ErrorMessage</div>
+                        }
                     </div>
                 </div>
             </div>

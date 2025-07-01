@@ -32,7 +32,8 @@ public class CheckoutModel : PageModel
     // Data for view 
     public UserCartDetails? OrderSummary { get; private set; }
     public UserDetails? CurrnetUserDetails { get; private set; }
-    public bool? ErrorWhilePlacingOrder { get; private set; }
+    public string? ErrorMessage { get; private set; }
+    
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -81,8 +82,8 @@ public class CheckoutModel : PageModel
         if (!ModelState.IsValid)
         {
             logger.LogWarning("Invalid Model State, while attempting to place order");
-            ErrorWhilePlacingOrder = true;
-            return Page();
+            ErrorMessage = "Please Fill in all the Details"; 
+            return await OnGetAsync(); 
         }
 
         int? userID = await accountService.GetUserIDFromHttpContextAsync();
@@ -90,37 +91,35 @@ public class CheckoutModel : PageModel
         if (userID is null)
         {
             logger.LogWarning("Failed to get user id from HttpContext service");
-            ErrorWhilePlacingOrder = true;
-            return Page();
+            ErrorMessage = "There was an error getting user details, please try again";
+            return await OnGetAsync();
         }
 
         if (Input is null)
         {
             logger.LogWarning("Input Model is null, so can not get shipping address for user with ID {UserID}",
                 userID);
-            ErrorWhilePlacingOrder = true;
-            return Page();
+            ErrorMessage = "Error Occured, please try again"; 
+            return await OnGetAsync();
         }
 
         if (string.IsNullOrEmpty(Input.ShippingAddress))
         {
             logger.LogWarning("Empty shipping address recieved for user with ID {UserID}", userID);
-            ErrorWhilePlacingOrder = true;
-            return Page();
+            ErrorMessage = "Shipping Address is missing"; 
+            return await OnGetAsync();
         }
 
         bool orderPlaced = await userOrdersDetailsService.PlaceAnOrderForUserByID((int)userID,Input.ShippingAddress); 
 
         if (orderPlaced)
         {
-            ErrorWhilePlacingOrder = false;
             return RedirectToPage("/Account/Orders"); 
-
         }
         else
         {
-            ErrorWhilePlacingOrder = true; 
-            return Page();
+            ErrorMessage = "Error while processing your order, please try again";
+            return await OnGetAsync();
         }
     }
 
