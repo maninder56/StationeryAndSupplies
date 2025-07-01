@@ -29,33 +29,31 @@
                                 @foreach(var item in Model.OrderSummary.Items)
                                 {
                                     <tr>
-                                        <td>@item.Quantity</td>
-                                        <td>@item.Name</td>
-                                        <td>£@item.Price</td>
+                                        <td class="quantity-in-table">@item.Quantity</td>
+                                        <td class="product-name-in-table">@item.Name</td>
+                                        <td class="price-in-table">£@item.Price</td>
                                     </tr>
                                 }
 
                                 <tr>
-                                    <th></th>
-                                    <td></td>
+                                    <td colspan="3"></td>
                                 </tr>
 
                                 <tr>
-                                    <th>Subtotal</th>
+                                    <th colspan="2">Subtotal</th>
                                     <td>£@Model.OrderSummary.Subtotal</td>
                                 </tr>
                                 <tr>
-                                    <th>Shipping</th>
+                                    <th colspan="2">Shipping</th>
                                     <td>£@Model.OrderSummary.ShippingCost</td>
                                 </tr>
 
                                 <tr>
-                                    <th></th>
-                                    <td></td>
+                                    <td colspan="3"></td>
                                 </tr>
 
                                 <tr>
-                                    <th>Total</th>
+                                    <th colspan="2">Total</th>
                                     <td>£@Model.OrderSummary.TotalCost</td>
                                 </tr>
                             </tbody>
@@ -64,13 +62,13 @@
                     <div class="payment-container">
                         <div class="payment-title">Payment</div>
                         <div class="user-name-title">Name</div>
-                        <div>@Model.CurrnetUserDetails.UserName</div>
+                        <div class="user-name">@Model.CurrnetUserDetails.UserName</div>
                         <div class="user-email-title">Email</div>
-                        <div>@Model.CurrnetUserDetails.Email</div>
+                        <div class="user-email">@Model.CurrnetUserDetails.Email</div>
                         <form method="post" class="shipping-form">
                             <div class="form-group">
                                 <label asp-for="Input.ShippingAddress"></label>
-                                <input asp-for="Input.ShippingAddress" />
+                                <input asp-for="Input.ShippingAddress" type="text"/>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="place-order-button">Place Order</button>
