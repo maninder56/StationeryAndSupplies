@@ -66,12 +66,12 @@
                         <div class="user-email-title">Email</div>
                         <div class="user-email">@Model.CurrnetUserDetails.Email</div>
                         <form method="post" class="shipping-form">
-                            <div class="form-group">
+                            <div class="form-group shipping-input">
                                 <label asp-for="Input.ShippingAddress"></label>
                                 <input asp-for="Input.ShippingAddress" type="text"/>
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="place-order-button">Place Order</button>
+                            <div class="place-order-button-container">
+                                <button type="submit" class="place-order-button black-button">Place Order</button>
                             </div>
                         </form>
                     </div>

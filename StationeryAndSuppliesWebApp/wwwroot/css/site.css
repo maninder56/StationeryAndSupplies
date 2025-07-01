@@ -2537,10 +2537,10 @@ footer {
         
     }
 
-        .checkout-page .shipping-form .form-group {
-            margin: 10px 0px; 
-            display: flex; 
-            flex-direction:column; 
+        .checkout-page .shipping-form .shipping-input {
+            margin: 10px 0px;
+            display: flex;
+            flex-direction: column;
         }
 
         .checkout-page .shipping-form .form-group label{
@@ -2551,15 +2551,42 @@ footer {
                 font-size: 1rem; 
             }
 
+    .checkout-page .place-order-button-container {
+        display: flex; 
+        justify-content: center; 
+    }
+
+    .checkout-page .place-order-button {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 10px;
+        cursor: pointer; 
+    }
 
 
 
 
 
-body * {
+/*body * {
     border: solid 1px;
-}
+}*/
 
+
+@media (min-width: 800px) {
+
+    .checkout-page .order-summary-and-payment-container {
+        display: flex; 
+    }
+
+
+    .checkout-page .order-summary {
+        flex: 1 1 auto; 
+    }
+
+    .checkout-page .payment-container {
+        flex: 1 1 auto; 
+    }
+}
 
 
 
