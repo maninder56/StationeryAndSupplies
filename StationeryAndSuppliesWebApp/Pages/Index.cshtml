@@ -73,8 +73,8 @@
                             <div class="product-link-and-image">
                                 @* Links to product details page *@
                                 <a asp-page="/Product"
-                                   asp-route-productname="@product.Name.Replace(' ', '-')"
                                    asp-route-productid="@product.Id"
+                                   asp-route-productname="@product.Name.Replace(' ', '-')"
                                    class="product-link">
                                     <img src="~/@product.ImageUrl" alt="@product.Name image" />
                                 </a>

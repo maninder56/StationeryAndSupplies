@@ -31,8 +31,8 @@
                         <div class="product-link-container">
                             @* Link to single product details *@
                             <a asp-page="/Product"
-                               asp-route-productname="@product.Name.Replace(' ', '-')"
                                asp-route-productid="@product.Id"
+                               asp-route-productname="@product.Name.Replace(' ', '-')"
                                class="product-link">
                                 @if (product.ImageUrl is null)
                                 {
