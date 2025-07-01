@@ -233,7 +233,7 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
             return false;
         }
 
-        decimal totalPriceOfOrder = user.Cart.CartItems.Sum(c => c.Product.Price * c.Quantity) + shippingCost ?? 0.0M; 
+        decimal totalPriceOfOrder = user.Cart.CartItems.Sum(c => c.Product.Price * c.Quantity) + shippingCost; 
 
         Order userOrder = new Order
         {
@@ -247,13 +247,13 @@ public class UserOrdersDetailsService : IUserOrdersDetailsService
         {
             ProductId = ci.ProductId,
             Quantity = ci.Quantity,
-            UnitPrice = ci.Product.Price ?? 0.0M
+            UnitPrice = ci.Product.Price
         }).ToList();
 
         userOrder.Payment = new Payment
         {
             Amount = totalPriceOfOrder,
-            PymentMethod = "Card", 
+            PaymentMethod = "Card", 
             Status = "success"
         }; 
 
