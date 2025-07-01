@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -80,7 +81,15 @@ public class ProductModel : PageModel
             return RedirectToPage("/Index"); 
         }
 
-        // need to have another mehtod for anonymous users 
+        // Redirect user is not logged in 
+
+        bool userLoggedIn = HttpContext.User.Identity?.IsAuthenticated ?? false; 
+
+        if (!userLoggedIn)
+        {
+            logger.LogWarning("Anonymous user tried to add product to bag, redirected to login page");
+            return RedirectToPage("/Account/Login", new { returnUrl = $"/Product/{Input.ProductID}"}); 
+        }
 
         int? userID = await accountService.GetUserIDFromHttpContextAsync();
 
@@ -94,7 +103,6 @@ public class ProductModel : PageModel
         ProductAddedToCart = await userOrdersDetailsService.AddProductByIDInCartByUserID(
             (int)userID, Input.ProductID, Input.Quantity);
 
-        // @page "{productname?}/{productid:int}"
         return await OnGetAsync(Input.ProductID);
     }
 
