@@ -2656,3 +2656,36 @@ footer {
 
 
 
+
+/* Missing Page */
+
+.missing-page {
+    height: 100%;
+    background-color: var(--primary-background-color-cream);
+    display: flex;
+    justify-content: center;
+}
+
+    .missing-page .missing-page-section {
+        flex: 1 1 auto;
+        margin: 20px 0px;
+        max-width: 800px;
+        padding: 10px;
+    }
+
+
+    .missing-page .title {
+        font-weight: bold;
+        font-size: 2.5rem;
+        text-align: center;
+    }
+
+    .missing-page .explanation {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+}
+
+
+
+

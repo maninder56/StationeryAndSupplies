@@ -55,27 +55,25 @@ WebApplication app = builder.Build();
 switch (app.Environment.IsDevelopment())
 {
     case true:
-        //app.UseHttpLogging();
         app.UseDeveloperExceptionPage();
         break;
+
     case false:
-        app.UseExceptionHandler("/Error"); // need to add error page to handle 404 and 500 erorr
+        app.UseExceptionHandler("/Error");
         app.UseHsts();
         break;
 }
 
-
-app.UseExceptionHandler("/Error");// fortesting 
-
 app.UseHttpsRedirection(); 
 app.UseStaticFiles();
+
 
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.UseStatusCodePagesWithReExecute("/"); 
+app.UseStatusCodePagesWithReExecute("/MissingPage");
 
 app.MapStaticAssets();
 app.MapRazorPages()
