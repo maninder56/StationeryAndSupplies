@@ -13,7 +13,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 //        context.Configuration.GetSection("Serilog").GetSection("Serilog"))); 
 
 // Only needed if you are adding configuration manager manually
-//builder.Configuration.AddUserSecrets<Program>();
+builder.Configuration.AddUserSecrets<Program>();
 
 // get connection string from environment variables in production
 string connectionString = builder.Configuration["ConnectionStrings:StationeryAndSuppliesDatabase"]
@@ -40,10 +40,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 // To access HttpContext for custom components
-builder.Services.AddHttpContextAccessor(); 
+builder.Services.AddHttpContextAccessor();
 
 // Add Razor page services
 builder.Services.AddRazorPages();
+
 
 WebApplication app = builder.Build();
 
@@ -58,10 +59,13 @@ switch (app.Environment.IsDevelopment())
         app.UseDeveloperExceptionPage();
         break;
     case false:
-        app.UseStatusCodePagesWithReExecute("/{0}"); // need to add error page to handle 404 and 500 erorr
+        app.UseExceptionHandler("/Error"); // need to add error page to handle 404 and 500 erorr
         app.UseHsts();
         break;
 }
+
+
+app.UseExceptionHandler("/Error");// fortesting 
 
 app.UseHttpsRedirection(); 
 app.UseStaticFiles();
@@ -70,6 +74,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+//app.UseStatusCodePagesWithReExecute("/"); 
 
 app.MapStaticAssets();
 app.MapRazorPages()
