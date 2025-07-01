@@ -2572,14 +2572,6 @@ footer {
 
 
 
-
-
-
-/*body * {
-    border: solid 1px;
-}*/
-
-
 @media (min-width: 800px) {
 
     .checkout-page .order-summary-and-payment-container {
@@ -2598,14 +2590,40 @@ footer {
 
 
 
-   
+/* Access denied page */
+
+.access-denied-page {
+    height: 100%;
+    background-color: var(--primary-background-color-cream);
+    display: flex;
+    justify-content: center;
+}
+
+    .access-denied-page .access-denied-section {
+        flex: 1 1 auto;
+        margin: 20px 0px;
+        max-width: 800px;
+        padding: 10px;
+    }
+
+    .access-denied-page .title {
+        font-size: 1.8rem; 
+        text-align: center; 
+    }
+
+    .access-denied-page .explanation {
+        text-align: center; 
+    }
 
 
 
 
 
 
-
+/*body * {
+    border: solid 1px;
+}
+*/
 
 
 
