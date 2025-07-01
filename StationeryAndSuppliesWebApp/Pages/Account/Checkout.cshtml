@@ -1,0 +1,86 @@
+﻿@page
+@model StationeryAndSuppliesWebApp.Pages.Account.CheckoutModel
+@{
+    ViewData["Title"] = "Checkout"; 
+}
+
+
+<article class="checkout-page">
+    <section class="checkout-page-section">
+        <header class="checkout-title">Checkout</header>
+        @if(Model.CurrnetUserDetails is null)
+        {
+            <div class="failed-to-load-user-details">Failed to load user Details, Please try again later</div>
+        }
+        else if (Model.OrderSummary is null)
+        {
+            <div class="user-cart-empty">Failed to load user order summary, Please try again later</div>
+        }
+        else
+        {
+            <div class="checkout-container">
+                <div class="message">This is an example website please DO NOT give your real address</div>
+                <div class="order-summary-and-payment-container">
+                    <div class="order-summary">
+                        <div class="summary-title">Order Summary</div>
+                        <dvi class="total-items">@Model.OrderSummary.TotalItemsWithQuantity items</dvi>
+                        <table class="summary-table">
+                            <tbody>
+                                @foreach(var item in Model.OrderSummary.Items)
+                                {
+                                    <tr>
+                                        <td>@item.Quantity</td>
+                                        <td>@item.Name</td>
+                                        <td>£@item.Price</td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Subtotal</th>
+                                    <td>£@Model.OrderSummary.Subtotal</td>
+                                </tr>
+                                <tr>
+                                    <th>Shipping</th>
+                                    <td>£@Model.OrderSummary.ShippingCost</td>
+                                </tr>
+
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Total</th>
+                                    <td>£@Model.OrderSummary.TotalCost</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="payment-container">
+                        <div class="payment-title">Payment</div>
+                        <div class="user-name-title">Name</div>
+                        <div>@Model.CurrnetUserDetails.UserName</div>
+                        <div class="user-email-title">Email</div>
+                        <div>@Model.CurrnetUserDetails.Email</div>
+                        <form method="post" class="shipping-form">
+                            <div class="form-group">
+                                <label asp-for="Input.ShippingAddress"></label>
+                                <input asp-for="Input.ShippingAddress" />
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="place-order-button">Place Order</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </section>
+</article>
+
+

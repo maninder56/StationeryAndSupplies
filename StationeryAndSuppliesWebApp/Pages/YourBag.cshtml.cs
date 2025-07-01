@@ -30,7 +30,7 @@ public class YourBagModel : PageModel
 
     // Data for view 
     public UserCartDetails? userCartDetails { get; private set; } 
-    public bool? ItemRemovedFromCart { get; set; }
+    public bool? ItemRemovedFromCart { get; private set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
