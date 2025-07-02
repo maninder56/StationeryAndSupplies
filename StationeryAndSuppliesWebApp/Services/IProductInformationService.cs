@@ -14,7 +14,7 @@ public interface IProductInformationService
     public Task<List<Category>> GetAllCategoriesAsync(); 
 
     // Get only child categories 
-    public Task<List<ChildCategory>> GetAllChildCategoriesAsync();
+    public Task<List<ChildCategory>> GetChildCategoriesAsync(int numberOfCategories);
 
     // Get only parent categories
     public Task<List<Models.ParentCategory>> GetParentCategoryAsync(int numberOfCategories); 

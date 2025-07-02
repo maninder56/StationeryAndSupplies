@@ -1,6 +1,7 @@
 ﻿using DataBaseContextLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Serilog.Data;
 using StationeryAndSuppliesWebApp.Models;
 using System.Runtime.CompilerServices;
 
@@ -68,14 +69,21 @@ public class ProductInformationService : IProductInformationService
     }
 
 
-    public async Task<List<ChildCategory>> GetAllChildCategoriesAsync()
+    public async Task<List<ChildCategory>> GetChildCategoriesAsync(int numberOfCategories)
     {
-        logger.LogInformation("Requested all child categories from service");
+        logger.LogInformation("Requested {NumberOfCategories} child categories from service", numberOfCategories);
+
+        if (numberOfCategories < 1)
+        {
+            logger.LogWarning("{NumberOfCategories} categories requested, which is less than 1", numberOfCategories);
+            return new List<ChildCategory>();
+        }
 
         List<ChildCategory>? list = await database.Categories.AsNoTracking()
             .Join(database.Categories.AsNoTracking(), c1 => c1.ParentId, c2 => c2.CategoryId,
             (c1, c2) => new { parentCategory = c2, childCategory = c1 })
             .OrderBy(c => c.childCategory.CategoryId)
+            .Take(numberOfCategories)
             .Select(c => 
                 new ChildCategory
                 (
@@ -95,6 +103,8 @@ public class ProductInformationService : IProductInformationService
     }
 
 
+
+
     // Products 
 
     public async Task<List<Models.Product>> GetEightProductsAsync()
@@ -105,7 +115,7 @@ public class ProductInformationService : IProductInformationService
             .OrderBy(p => p.ProductId)
             .Take(8)
             .Select(c => new Models.Product
-                (c.CategoryId, c.Name, c.Price, c.ImageUrl, c.Stock > 0))
+                (c.ProductId, c.Name, c.Price, c.ImageUrl, c.Stock > 0))
             .ToListAsync();
 
         if (list is null || list.Count == 0)
@@ -114,7 +124,6 @@ public class ProductInformationService : IProductInformationService
         }
 
         return list ?? new List<Models.Product>();
-
     }
 
 

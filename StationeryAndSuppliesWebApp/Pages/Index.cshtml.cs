@@ -31,7 +31,7 @@ public class IndexModel : PageModel
 
         // Get category list 
 
-        List<ChildCategory> categoryList = await productInformationService.GetAllChildCategoriesAsync();
+        List<ChildCategory> categoryList = await productInformationService.GetChildCategoriesAsync(8);
 
         logger.LogInformation("Total {NumberOfChildCategories} child categories loaded in category list", categoryList.Count);
 
@@ -40,7 +40,7 @@ public class IndexModel : PageModel
             logger.LogWarning("Failed to get any category from service"); 
         }
 
-        if (categoryList.Count > 8)
+        if (categoryList.Count >= 8)
         {
             ChildCategoriesListInFirstSection = categoryList.Slice(0, 4);
             ChildCategoriesListInSecondSection = categoryList.Slice(4, 4);
