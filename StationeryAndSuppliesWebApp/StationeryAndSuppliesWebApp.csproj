@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\icons\" />
+    <Folder Include="wwwroot\images\WebsiteLogo\" />
     <Folder Include="wwwroot\images\products\ArtSupplies\ColorPencils\" />
     <Folder Include="wwwroot\images\products\ArtSupplies\PaintBrushes\" />
     <Folder Include="wwwroot\images\products\ArtSupplies\Sketchbooks\" />
