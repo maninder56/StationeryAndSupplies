@@ -13,11 +13,22 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 //        context.Configuration.GetSection("Serilog").GetSection("Serilog"))); 
 
 // Only needed if you are adding configuration manager manually
-builder.Configuration.AddUserSecrets<Program>();
+//builder.Configuration.AddUserSecrets<Program>();
 
-// get connection string from environment variables in production
-string connectionString = builder.Configuration["ConnectionStrings:StationeryAndSuppliesDatabase"]
-    ?? throw new InvalidOperationException("Failed to get connection string");
+string connectionString;
+
+if (builder.Environment.IsDevelopment())
+{
+    connectionString = builder.Configuration["ConnectionStrings:StationeryAndSuppliesDatabase"]
+        ?? throw new InvalidOperationException("Failed to get connection string");
+}
+else
+{
+    // get connection string from environment variables in production
+    connectionString = builder.Configuration.GetConnectionString("Default")
+        ?? throw new InvalidOperationException("Failed to get connection string");
+}
+
 
 // Add Database service
 builder.Services.AddDbContext<StationeryAndSuppliesDatabaseContext>(options
@@ -52,17 +63,17 @@ WebApplication app = builder.Build();
 //app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
-switch (app.Environment.IsDevelopment())
-{
-    case true:
-        app.UseDeveloperExceptionPage();
-        break;
 
-    case false:
-        app.UseExceptionHandler("/Error");
-        app.UseHsts();
-        break;
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
 
 app.UseHttpsRedirection(); 
 app.UseStaticFiles();
