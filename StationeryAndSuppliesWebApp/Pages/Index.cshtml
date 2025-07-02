@@ -69,21 +69,36 @@
                 <div class="products-container">
                     @foreach (var product in Model.ProductsInThirdSection)
                     {
-                        <div class="product">
-                            <div class="product-link-and-image">
-                                @* Links to product details page *@
+                        <div class="product-container">
+                            <div class="product-link-container">
+                                @* Link to single product details *@
                                 <a asp-page="/Product"
                                    asp-route-productid="@product.Id"
                                    asp-route-productname="@product.Name.Replace(' ', '-')"
                                    class="product-link">
-                                    <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                    @if (product.ImageUrl is null)
+                                    {
+                                        <div class="image-container">
+                                            <img src="~/images/products/PlaceholderForMissingImages.svg" alt="placeholder image" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="image-container">
+                                            <img src="~/@product.ImageUrl" alt="@product.Name image" />
+                                        </div>
+                                    }
                                 </a>
                             </div>
                             <div class="product-details-container">
-                                <div class="product-name-and-price">
+                                <div class="product-details">
                                     <div class="product-name">@product.Name</div>
-                                    <div class="product-price">@(product.Price?.ToString("C"))</div>
+                                    <div class="product-price">£@product.Price</div>
                                 </div>
+                                @if (!product.InStock)
+                                {
+                                    <div class="out-of-stock">Out of Stock</div>
+                                }
                             </div>
                         </div>
                     }
