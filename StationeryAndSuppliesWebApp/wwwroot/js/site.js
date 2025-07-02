@@ -1,7 +1,6 @@
-﻿const productMenu = document.getElementById("product-menu-overlay");
-const searchOverlay = document.getElementById("search-overlay");
+﻿// Menu overlay buttons
+const productMenu = document.getElementById("product-menu-overlay");
 
-// overlay buttons
 function openMenu() {
     productMenu.style.width = "100%";
 }
@@ -9,6 +8,11 @@ function openMenu() {
 function closeMenu() {
     productMenu.style.width = "0%";
 }
+
+
+// Search overlay buttons
+
+const searchOverlay = document.getElementById("search-overlay");
 
 function OpenSearch() {
     let currentHeight = window.innerHeight; 
@@ -20,7 +24,8 @@ function OpenSearch() {
     //    searchOverlay.style.height = "300px";
     //}
 
-    searchOverlay.style.height = "300px";
+    //searchOverlay.style.height = "300px";
+    searchOverlay.style.height = "100%";
     
 }
 
