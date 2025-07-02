@@ -765,7 +765,7 @@ footer {
 
 .second-categories-section .section-container {
     flex: 1 0 auto; 
-    max-width: 1000px; 
+/*    max-width: 1000px; */
 }
 
     .second-categories-section .product-categories-container {
@@ -807,6 +807,27 @@ footer {
         font-size: 1.3rem;
         margin-top: 5px; 
     }
+
+
+
+@media (min-width: 500px) {
+
+    .second-categories-section .section-container {
+        max-width: 500px;
+    }
+}
+
+@media (min-width: 800px) {
+
+    .second-categories-section .section-container {
+        max-width: 1000px;
+    }
+}
+
+
+
+
+
 
 
 
@@ -904,10 +925,6 @@ footer {
         color: var(--out-of-stock-text-color);
     }
 
-
-/*    body * {
-        border: solid 1px; 
-    }*/
 
 
 @media (min-width: 500px) {
