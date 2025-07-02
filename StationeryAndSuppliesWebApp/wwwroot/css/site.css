@@ -197,7 +197,7 @@ footer {
 
     .main-navigation .navigation-icons {
         display: flex;
-        flex: 0 1 auto;
+        flex: 0 1 auto; 
     }
 
     /* Main Title */
@@ -250,6 +250,10 @@ footer {
 
 .main-navigation .desktop-link .word {
     display: none;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
@@ -506,9 +510,12 @@ footer {
 }
 
     .product-navigation .login-link {
-        margin-bottom: 30px; 
-        padding-bottom: 10px; 
-        border-bottom: solid 1px; 
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+        border-bottom: solid 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .product-navigation .login-link img {
         display: none; 
@@ -1923,6 +1930,7 @@ footer {
 /*        border: solid 2px; */
         border-radius: 10px; 
         padding: 5px; 
+/*        overflow: hidden; */
     }
 
     .profile-navigation-layout .logout-container {
@@ -1970,7 +1978,6 @@ footer {
 
 
 
-
 /* User Details Section */
 
 .user-details-section {
@@ -1996,12 +2003,24 @@ footer {
     .user-details-section table {
         border-collapse: collapse; 
         table-layout:fixed; 
-        font-size: 1.2rem; 
+        font-size: 1rem; 
+        width: 100%; 
     }
 
         .user-details-section table tr,
         .user-details-section table th {
             padding: 5px 10px;
+        }
+
+        .user-details-section table .property {
+            font-size: 1.1rem; 
+            width: 20%; 
+        }
+
+        .user-details-section table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
 
