@@ -3,8 +3,28 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Compact;
+using Serilog.Formatting.Json;
 using StationeryAndSuppliesWebApp.Services;
 using System.Reflection.Metadata.Ecma335;
+
+
+// Configuring Serilog logger
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
+    .WriteTo.Console()
+    .WriteTo.File(
+        path:"Logs/log.json", 
+        restrictedToMinimumLevel: LogEventLevel.Information,
+        fileSizeLimitBytes: 100_000_000, // file limit is 100 MB
+        rollingInterval: RollingInterval.Day, 
+        rollOnFileSizeLimit: true, 
+        formatter: new CompactJsonFormatter())
+    .CreateLogger();
+
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +35,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Only needed if you are adding configuration manager manually
 //builder.Configuration.AddUserSecrets<Program>();
+
+builder.Services.AddSerilog(); 
 
 string connectionString;
 
@@ -50,7 +72,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Account/Login"; 
         options.AccessDeniedPath = "/Account/AccessDenied";
         
-        //options.SessionStore  need to use it later to store cart items in session
+        //options.SessionStore
     });
 
 // To access HttpContext for custom components
