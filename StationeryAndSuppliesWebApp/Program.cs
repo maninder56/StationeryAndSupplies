@@ -1,9 +1,10 @@
 using DataBaseContextLibrary;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using StationeryAndSuppliesWebApp.Services;
 using System.Reflection.Metadata.Ecma335;
-using Serilog;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ else
     // get connection string from environment variables in production
     connectionString = builder.Configuration.GetConnectionString("Default")
         ?? throw new InvalidOperationException("Failed to get connection string");
+
+    StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 }
 
 
@@ -41,7 +44,7 @@ builder.Services.AddAccountService();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20); // change it later for production
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); 
         options.SlidingExpiration = true;
 
         options.LoginPath = "/Account/Login"; 
