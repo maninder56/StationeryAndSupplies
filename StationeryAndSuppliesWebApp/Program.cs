@@ -10,33 +10,7 @@ using StationeryAndSuppliesWebApp.Services;
 using System.Reflection.Metadata.Ecma335;
 
 
-// Configuring Serilog logger
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
-    .WriteTo.Console()
-    .WriteTo.File(
-        path:"Logs/log.json", 
-        restrictedToMinimumLevel: LogEventLevel.Information,
-        fileSizeLimitBytes: 100_000_000, // file limit is 100 MB
-        rollingInterval: RollingInterval.Day, 
-        rollOnFileSizeLimit: true, 
-        formatter: new CompactJsonFormatter())
-    .CreateLogger();
-
-
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-// Add Logging
-//builder.Host.UseSerilog((context, configuration)
-//    => configuration.ReadFrom.Configuration(
-//        context.Configuration.GetSection("Serilog").GetSection("Serilog"))); 
-
-// Only needed if you are adding configuration manager manually
-//builder.Configuration.AddUserSecrets<Program>();
-
-builder.Services.AddSerilog(); 
 
 string connectionString;
 
@@ -47,6 +21,25 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
+    // Configuring Serilog logger
+    Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Information()
+        .MinimumLevel.Override("System", LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
+        .WriteTo.Console()
+        .WriteTo.File(
+            path: "Logs/log-.json",
+            restrictedToMinimumLevel: LogEventLevel.Information,
+            fileSizeLimitBytes: 100_000_000, // file limit is 100 MB
+            rollingInterval: RollingInterval.Day,
+            rollOnFileSizeLimit: true,
+            formatter: new CompactJsonFormatter())
+        .Enrich.FromLogContext()
+        .CreateLogger();
+
+    builder.Host.UseSerilog();
+
     // get connection string from environment variables in production
     connectionString = builder.Configuration.GetConnectionString("Default")
         ?? throw new InvalidOperationException("Failed to get connection string");
