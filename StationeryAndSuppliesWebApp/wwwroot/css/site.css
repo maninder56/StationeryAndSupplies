@@ -1567,6 +1567,14 @@ footer {
         text-align: center; 
     }
 
+        .about-us-page .about-us-paragraph a {
+            color: var(--primary-text-color);
+        }
+
+        .about-us-page .about-us-paragraph a:hover {
+            text-decoration:none; 
+        }
+
 
 
 
@@ -1625,13 +1633,11 @@ footer {
         font-size: 1.2rem;
         padding: 5px 5px; 
         color: var(--contactus-link-text-color); 
-        text-decoration-line: none; 
-        
     }
 
         .contact-us-page .external-link a:hover {
-            color: var(--contactus-link-text-hover-color); 
-            text-decoration-line: underline;
+            color: var(--contactus-link-text-hover-color);
+            text-decoration-line: none; 
         }
 
 
