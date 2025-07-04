@@ -12,12 +12,20 @@ using System.Reflection.Metadata.Ecma335;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-string connectionString;
+ILoggerFactory factory = LoggerFactory.Create(c => c.AddConsole());
+ILogger<Program> logger = factory.CreateLogger<Program>();
+
+string? connectionString;
 
 if (builder.Environment.IsDevelopment())
 {
-    connectionString = builder.Configuration["ConnectionStrings:StationeryAndSuppliesDatabase"]
-        ?? throw new InvalidOperationException("Failed to get connection string");
+    connectionString = builder.Configuration["ConnectionStrings:StationeryAndSuppliesDatabase"];
+
+    if (connectionString is null)
+    {
+        logger.LogCritical("Failed to get connection string in {Environment}", builder.Environment.EnvironmentName);
+        throw new InvalidOperationException("Failed to get connection string");
+    }
 }
 else
 {
@@ -41,12 +49,21 @@ else
     builder.Host.UseSerilog();
 
     // get connection string from environment variables in production
-    connectionString = builder.Configuration.GetConnectionString("Default")
-        ?? throw new InvalidOperationException("Failed to get connection string");
+    connectionString = builder.Configuration.GetConnectionString("Default");
+
+    if (connectionString is null)
+    {
+        factory = LoggerFactory.Create(c => c.AddSerilog());
+        logger = factory.CreateLogger<Program>();
+        logger.LogCritical("Failed to get connection string in {Environment}", builder.Environment.EnvironmentName);
+        throw new InvalidOperationException("Failed to get connection string");
+    }
+
 
     StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 }
 
+factory.Dispose(); 
 
 // Add Database service
 builder.Services.AddDbContext<StationeryAndSuppliesDatabaseContext>(options
