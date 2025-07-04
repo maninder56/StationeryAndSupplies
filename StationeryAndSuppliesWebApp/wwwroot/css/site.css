@@ -642,15 +642,6 @@ footer {
 
 
 
-
-
-
-
-
-
-
-
-
 /* Home page */
 
 .home-page {
@@ -698,9 +689,10 @@ footer {
         }
 
 
-
     /* Category cards */
     .first-categories-section .product-categories-container {
+        flex: 1 1 auto; 
+        height: 100%;
         margin: 10px 0px;
         display: flex;
         flex-direction: row;
@@ -719,7 +711,7 @@ footer {
         }
 
     .first-categories-section .product-category {
-        flex: 0 0 auto;
+        flex: 1 0 auto;
         margin: 20px 5px;
     }
 
@@ -810,12 +802,6 @@ footer {
 
 
 
-@media (min-width: 500px) {
-
-    .second-categories-section .section-container {
-        max-width: 500px;
-    }
-}
 
 @media (min-width: 800px) {
 

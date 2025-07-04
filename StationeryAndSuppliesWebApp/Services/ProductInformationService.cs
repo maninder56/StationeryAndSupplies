@@ -102,6 +102,30 @@ public class ProductInformationService : IProductInformationService
         return list ?? new List<ChildCategory>();
     }
 
+    public async Task<List<ChildCategory>> GetAllChildCategoriesAsync()
+    {
+        logger.LogInformation("Requested All child categories from service"); 
+
+        List<ChildCategory>? list = await database.Categories.AsNoTracking()
+            .Where(c => c.ParentId != null)
+            .Select(c =>
+                new ChildCategory
+                (
+                    c.CategoryId,
+                    c.Name,
+                    c.Name,
+                    c.ImageUrl
+                )
+            ).ToListAsync();
+
+        if (list is null || list.Count == 0)
+        {
+            logger.LogError("No Category exists in category table");
+        }
+
+        return list ?? new List<ChildCategory>();
+    }
+
 
 
 
