@@ -1233,7 +1233,7 @@ footer {
     }
 
     .single-product-page .product-name {
-/*        text-align: center; */
+        text-align: center; 
         font-size: 1.6rem; 
         margin: 10px 0px; 
     }
@@ -1298,10 +1298,10 @@ footer {
 
     .single-product-page .add-to-bag {
         display: flex; 
-        justify-content: start; 
+        justify-content: center; 
         margin-top: 30px; 
-        margin-left: 10px; 
     }
+
 
         .single-product-page .add-to-bag form {
             
@@ -1331,6 +1331,8 @@ footer {
     }
 
 
+
+/* Sinlge product reviews */
 
     .single-product-page .review-conainer {
         display: flex;
@@ -1412,6 +1414,14 @@ footer {
         flex-direction: column;
         margin-left: 0px;
     }
+
+        .single-product-page .product-name {
+            text-align: start;
+        }
+
+        .single-product-page .add-to-bag {
+            justify-content: start;
+        }
 }
 
 
