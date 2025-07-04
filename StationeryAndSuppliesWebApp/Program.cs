@@ -37,7 +37,7 @@ else
         .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
         .WriteTo.Console()
         .WriteTo.File(
-            path: "Logs/log-.json",
+            path: Path.Combine("Logs","log-.json"),
             restrictedToMinimumLevel: LogEventLevel.Information,
             fileSizeLimitBytes: 100_000_000, // file limit is 100 MB
             rollingInterval: RollingInterval.Day,
