@@ -2,6 +2,8 @@
 @model StationeryAndSuppliesWebApp.Pages.Account.LoginModel
 @{
     ViewData["Title"] = "LogIn";
+    
+    string? messageFromSingleProduct = TempData["UserMustLoginMessage"]?.ToString(); 
 
     string retrunUrl = Model.ReturnUrl ?? "/"; 
 }
@@ -13,6 +15,10 @@
             @if (Model.ValidationMessage is not null)
             {
                 <div class="validation-message">@Model.ValidationMessage</div>
+            }
+            @if(!string.IsNullOrEmpty(messageFromSingleProduct))
+            {
+                <div class="validation-message">@messageFromSingleProduct</div>
             }
             <form method="post">
                 <input asp-for="ReturnUrl" type="hidden" value="@retrunUrl" />

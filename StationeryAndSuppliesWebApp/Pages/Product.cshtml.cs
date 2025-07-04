@@ -28,6 +28,8 @@ public class ProductModel : PageModel
         this.userOrdersDetailsService = userOrdersDetailsService;
     }
 
+    [TempData]
+    public string? UserMustLoginMessage { get; set; }
 
     [BindProperty]
     public InputModel Input {  get; set; } = new InputModel();
@@ -87,6 +89,7 @@ public class ProductModel : PageModel
 
         if (!userLoggedIn)
         {
+            UserMustLoginMessage = "Please login to save products in bag"; 
             logger.LogWarning("Anonymous user tried to add product to bag, redirected to login page");
             return RedirectToPage("/Account/Login", new { returnUrl = $"/Product/{Input.ProductID}"}); 
         }

@@ -1667,7 +1667,7 @@ footer {
     .login-page .validation-message {
         color: var(--warning-text-color); 
         text-align:center; 
-        margin-top: 10px; 
+        margin: 10px 0px; 
     }
 
     .login-page form {
@@ -2796,7 +2796,7 @@ footer {
         text-align: center;
         font-size: 1.5rem;
     }
-}
+
 
 
 
