@@ -270,9 +270,9 @@ footer {
     z-index: 2;
     left: 0;
     top: 0;
-    background-color: rgb(0 0 0 / 0.5);
+    background-color: rgb(0 0 0 / 0.1);
     overflow-y: hidden;
-    transition: height 0.1s ease-in;
+    transition: height 0.05s ease-in;
     display: flex;
     flex-direction: column;
 }
@@ -290,9 +290,10 @@ footer {
 
     .search-area .transparent-section-of-search .close-area-button {
         width: 100%;
-        height: 100%; 
-        opacity: 0.1; 
+        height: 100%;
+        background-color: rgb(0 0 0 / 0.3);
     }
+
 
 
     .search-area .search-items {
