@@ -1,6 +1,7 @@
 using DataBaseContextLibrary;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -97,8 +98,14 @@ WebApplication app = builder.Build();
 //Add support to logging request with SERILOG
 //app.UseSerilogRequestLogging();
 
-// Configure the HTTP request pipeline.
+// To configure forward headers from proxy 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+}); 
 
+
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
