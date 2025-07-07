@@ -6,21 +6,35 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
-using Serilog.Formatting.Json;
 using StationeryAndSuppliesWebApp.Services;
-using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices;
 
-
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 ILoggerFactory factory = LoggerFactory.Create(c => c.AddConsole());
 ILogger<Program> logger = factory.CreateLogger<Program>();
+
+
+// Check If application is running in supported OS 
+
+bool IsWindowsOS = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+bool IsLinuxOS = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+
+if(!(IsLinuxOS || IsWindowsOS))
+{
+    logger.LogCritical("Current OS is not supported, Only Windows OS or Linux OS is supported."); 
+    throw new PlatformNotSupportedException("Current OS is not supported"); 
+}
+
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string? connectionString;
 
 if (builder.Environment.IsDevelopment())
 {
-    connectionString = builder.Configuration["ConnectionStrings:StationeryAndSuppliesDatabase"];
+    connectionString = IsWindowsOS ? 
+        builder.Configuration["ConnectionStrings:StationeryAndSuppliesDatabase"] :
+        builder.Configuration["ConnectionStrings__StationeryAndSuppliesDatabase"];
 
     if (connectionString is null)
     {
@@ -43,6 +57,7 @@ else
             fileSizeLimitBytes: 100_000_000, // file limit is 100 MB
             rollingInterval: RollingInterval.Day,
             rollOnFileSizeLimit: true,
+            retainedFileCountLimit: 30,
             formatter: new CompactJsonFormatter())
         .Enrich.FromLogContext()
         .CreateLogger();
@@ -116,8 +131,8 @@ else
     app.UseHsts();
 }
 
-
-app.UseHttpsRedirection(); 
+// Reverse proxy will handle SSL 
+// app.UseHttpsRedirection(); 
 app.UseStaticFiles();
 
 
